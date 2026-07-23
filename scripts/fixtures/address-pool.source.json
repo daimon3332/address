@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 2,
+  "source": {
+    "id": "fixture",
+    "name": "Address Pool Fixture",
+    "homepageUrl": "https://example.test/address-fixture",
+    "dataUrl": "https://example.test/address-fixture/2026-07-15.csv",
+    "license": {
+      "code": "CC0-1.0",
+      "name": "CC0 1.0 Universal",
+      "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "attributionText": "Address Pool Fixture",
+      "attributionUrl": "https://example.test/address-fixture",
+      "termsUrl": "https://creativecommons.org/publicdomain/zero/1.0/legalcode",
+      "shareAlike": false,
+      "noticeRequired": false,
+      "redistributionAllowed": true
+    },
+    "metadata": {
+      "fixture": true
+    }
+  },
+  "dataset": {
+    "id": "fixture-2026-07-15",
+    "version": "2026-07-15",
+    "publishedAt": "2026-07-15T00:00:00Z",
+    "retrievedAt": "2026-07-16T00:00:00Z",
+    "format": "normalized",
+    "status": "active"
+  },
+  "defaults": {
+    "nativeLanguage": "und",
+    "generation": "fixture-2026-07",
+    "coveragePrefix": "canary",
+    "qualityScore": 0.95,
+    "targetCount": 1,
+    "expiresAt": "2027-07-15T00:00:00Z"
+  }
+}

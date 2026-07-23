@@ -1,0 +1,97 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import type { Locale } from '../../domain/types';
+
+export function getStaticPaths() {
+  return [
+    { params: { locale: 'en' } },
+    { params: { locale: 'zh-CN' } }
+  ];
+}
+
+const locale = Astro.params.locale as Locale;
+const zh = locale === 'zh-CN';
+const copy = zh ? {
+  title: '真实地址生成器 API',
+  intro: '每次返回一个带来源证据、坐标和国家格式的真实地址。',
+  back: '返回生成器',
+  endpoints: '接口',
+  params: '生成参数',
+  response: '响应示例',
+  sources: '数据源规则'
+} : {
+  title: 'Real Address Generator API',
+  intro: 'Each request returns one source-backed address with coordinates and country-specific formatting.',
+  back: 'Back to generator',
+  endpoints: 'Endpoints',
+  params: 'Generate parameters',
+  response: 'Response example',
+  sources: 'Source policy'
+};
+---
+<Layout locale={locale}>
+  <main class="api-page">
+    <header class="api-hero">
+      <a href={`/${locale}/?country=us`}>← {copy.back}</a>
+      <span>v1</span>
+      <h1>{copy.title}</h1>
+      <p>{copy.intro}</p>
+    </header>
+
+    <section class="api-doc-card">
+      <h2>{copy.endpoints}</h2>
+      <div class="endpoint"><b>GET</b><code>/api/v1/countries</code><span>{zh ? '国家、分组、能力、数据量与快捷入口' : 'Countries, groups, capabilities, counts and shortcuts'}</span></div>
+      <div class="endpoint"><b>GET</b><code>/api/v1/locations/search?country=US&amp;field=city&amp;regionId=1416&amp;limit=20000</code><span>{zh ? '按父级一次读取城市；州省与邮编分页' : 'Load cities by parent once; regions and postcodes are paged'}</span></div>
+      <div class="endpoint"><b>GET</b><code>/api/v1/generate?country=US&amp;residential=true&amp;requestId=UUID</code><span>{zh ? '随机生成一个地址' : 'Generate one random address'}</span></div>
+      <div class="endpoint"><b>GET</b><code>/api/v1/generate?mode=ip-region&amp;ip=198.51.100.7</code><span>{zh ? '按 IP 经纬度实时查询并回退热池' : 'Live IP-coordinate lookup with hot-pool fallback'}</span></div>
+      <div class="endpoint"><b>GET</b><code>/api/v1/data-health</code><span>{zh ? '逐国数据健康状态' : 'Per-country data health'}</span></div>
+    </section>
+
+    <section class="api-doc-card">
+      <h2>{copy.params}</h2>
+      <div class="parameter-grid">
+        <code>country</code><span>ISO 3166-1 alpha-2 · {zh ? '默认 US' : 'default US'}</span>
+        <code>residential</code><span>true | false · {zh ? '具备住宅能力的国家默认 true' : 'defaults to true where supported'}</span>
+        <code>region</code><span>{zh ? '州、省、都道府县或地区的精确值' : 'Exact state, province, prefecture or area'}</span>
+        <code>regionId</code><span>{zh ? '筛选城市和邮编的父级行政区 ID' : 'Parent region ID used to filter cities and postcodes'}</span>
+        <code>city</code><span>{zh ? '城市精确值' : 'Exact city value'}</span>
+        <code>cityId</code><span>{zh ? '筛选邮编的城市 ID' : 'City ID used to filter postcodes'}</span>
+        <code>postcode</code><span>{zh ? '邮编精确值，空格不敏感' : 'Exact postcode, space-insensitive'}</span>
+        <code>field / q</code><span>{zh ? '目录字段与搜索词：region、city、postcode' : 'Catalog field and search text: region, city or postcode'}</span>
+        <code>cursor / limit</code><span>{zh ? '州省/邮编每页 20—200 条；城市按父级最多 20,000 条' : 'Regions/postcodes: 20–200 per page; cities: up to 20,000 per parent'}</span>
+        <code>seed</code><span>{zh ? '可选的可复现随机种子' : 'Optional reproducible random seed'}</span>
+        <code>requestId</code><span>{zh ? '用于校验响应上下文的请求标识' : 'Request identifier used to validate response context'}</span>
+      </div>
+    </section>
+
+    <section class="api-doc-card">
+      <h2>{copy.response}</h2>
+      <pre><code>{`{
+  "data": {
+    "requestId": "UUID",
+    "mode": "residential",
+    "country": "US",
+    "residential": true,
+    "sourcesTried": ["address-pool-v2"],
+    "result": {
+      "addressFormats": {
+        "native": { "postalLines": ["Avery Chen", "20 W 34th Street", "New York, NY 10001", "UNITED STATES"], "singleLine": "20 W 34th Street, New York, NY 10001, UNITED STATES" },
+        "en": { "postalLines": ["..."], "singleLine": "..." },
+        "zh-CN": { "postalLines": ["..."], "singleLine": "..." }
+      },
+      "profile": { "fullName": "Olivia Carter", "email": "oliviacarter0000@outlook.com" },
+      "card": { "provider": "Stripe", "number": "4242 4242 4242 4242", "sandboxOnly": true },
+      "googleMaps": { "status": "map_query", "embedUrl": "https://www.google.com/maps?q=LAT,LNG&z=17&output=embed" }
+    }
+  }
+}`}</code></pre>
+    </section>
+
+    <section class="api-doc-card">
+      <h2>{copy.sources}</h2>
+      <p>{zh
+        ? '普通地址和真实住宅地址只读取服务器定期同步的 SQLite 地址池，运行时不调用在线 Provider、翻译或地理编码。只有显式 IP 区域模式查询实时源；失败后按附近、城市、州省、国家地址池回退。住宅模式始终要求独立住宅用途证据。'
+        : 'Standard and residential requests read only the synchronized SQLite pool, with no runtime provider, translation or geocoding call. Only explicit IP-region mode queries a live source, then falls back through nearby, city, region and country pools. Residential mode always requires independent residential-use evidence.'}</p>
+    </section>
+  </main>
+</Layout>

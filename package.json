@@ -1,0 +1,63 @@
+{
+  "name": "address",
+  "version": "1.0.1",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "scripts": {
+    "dev": "concurrently -k \"npm:dev:web\" \"npm:dev:api\"",
+    "dev:web": "astro dev",
+    "dev:api": "tsx --env-file-if-exists=.env watch server/api/server.ts",
+    "start": "tsx --env-file-if-exists=.env server/api/server.ts",
+    "build": "astro build",
+    "check": "astro check && tsc -p server/api/tsconfig.json --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "data:regions": "node scripts/update-regions.mjs",
+    "data:catalog": "node scripts/sync-location-catalog.mjs",
+    "data:catalog:import": "node scripts/import-location-catalog.mjs",
+    "data:address-pool": "node --env-file-if-exists=.env server/sync/run-address-sync.mjs",
+    "data:address-pool:etl": "node --env-file-if-exists=.env server/sync/address-etl.mjs",
+    "data:address-pool:sync": "node --env-file-if-exists=.env server/sync/run-address-sync.mjs",
+    "data:address-pool:sync:dry-run": "node --env-file-if-exists=.env server/sync/address-etl.mjs --dry-run",
+    "data:address-pool:estimate": "node --env-file-if-exists=.env server/sync/address-etl.mjs --estimate",
+    "data:address-pool:bootstrap": "node --env-file-if-exists=.env server/sync/address-etl.mjs --initial --all",
+    "sync:serve": "node --env-file-if-exists=.env server/sync/index.mjs",
+    "db:migrate": "tsx --env-file-if-exists=.env server/database/migrate.ts",
+    "test:catalog": "node scripts/validate-location-catalog.mjs",
+    "test:address-pool": "vitest run tests/sqlite-database.test.mjs tests/address-pool-v2.test.mjs",
+    "check:production": "node scripts/check-production-readiness.mjs",
+    "check:public": "node scripts/check-public-release.mjs",
+    "test:api-live": "node scripts/validate-live-api.mjs",
+    "test:addresses-live": "node scripts/validate-live-addresses.mjs",
+    "test:browser-live": "node scripts/validate-live-browser.mjs",
+    "test:production-live": "npm run test:api-live && npm run test:addresses-live && npm run test:browser-live",
+    "test:translations-live": "node scripts/validate-live-translations.mjs"
+  },
+  "dependencies": {
+    "@astrojs/react": "latest",
+    "@faker-js/faker": "^10.5.0",
+    "@hono/node-server": "latest",
+    "astro": "latest",
+    "hono": "latest",
+    "opencc-js": "^1.4.1",
+    "pinyin-pro": "^3.28.1",
+    "react": "latest",
+    "react-dom": "latest",
+    "zod": "latest"
+  },
+  "devDependencies": {
+    "@astrojs/check": "latest",
+    "@types/node": "^26.1.1",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "concurrently": "latest",
+    "fflate": "^0.8.3",
+    "tsx": "latest",
+    "typescript": "latest",
+    "vitest": "latest"
+  }
+}

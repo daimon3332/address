@@ -1,0 +1,148 @@
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Release version, for example v1.0
+        required: true
+        default: v1.0
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: npm run check
+      - run: npm run build
+      - run: npm run check:public
+      - run: bash -n ops/*.sh
+      - run: python3 -m py_compile server/sync/*.py
+
+  publish:
+    needs: verify
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: Resolve and validate version
+        id: version
+        shell: bash
+        run: |
+          if [[ "${GITHUB_EVENT_NAME}" == "workflow_dispatch" ]]; then
+            version='${{ inputs.version }}'
+          else
+            version="${GITHUB_REF_NAME}"
+          fi
+          [[ "$version" =~ ^v[0-9]+\.[0-9]+(\.[0-9]+)?$ ]]
+          echo "value=$version" >> "$GITHUB_OUTPUT"
+      - name: Reject duplicate release
+        shell: bash
+        run: |
+          if gh release view '${{ steps.version.outputs.value }}' --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            echo 'Release already exists' >&2
+            exit 1
+          fi
+      - name: Create tag for manual release
+        if: github.event_name == 'workflow_dispatch'
+        shell: bash
+        run: |
+          version='${{ steps.version.outputs.value }}'
+          if git ls-remote --exit-code --tags origin "refs/tags/$version" >/dev/null 2>&1; then
+            echo 'Tag already exists' >&2
+            exit 1
+          fi
+          gh api --method POST "/repos/$GITHUB_REPOSITORY/git/refs" -f "ref=refs/tags/$version" -f "sha=$GITHUB_SHA" >/dev/null
+      - name: Build public VPS packages
+        shell: bash
+        run: |
+          set -euo pipefail
+          version='${{ steps.version.outputs.value }}'
+          name="address-$version"
+          mkdir -p "release/$name"
+          for path in .env.example LICENSE README.md README.zh-CN.md README.zh-TW.md astro.config.mjs package.json package-lock.json tsconfig.json config docs ops public scripts server src; do
+            cp -a "$path" "release/$name/"
+          done
+          cp -a dist "release/$name/dist"
+          find "release/$name" -type d -name __pycache__ -prune -exec rm -rf {} +
+          tar -C release -czf "release/$name.tar.gz" "$name"
+          (cd release && zip -qr "$name.zip" "$name")
+          (cd release && sha256sum "$name.tar.gz" "$name.zip" > SHA256SUMS.txt)
+      - name: Audit package contents
+        shell: bash
+        run: |
+          set -euo pipefail
+          version='${{ steps.version.outputs.value }}'
+          name="address-$version"
+          test -s "release/$name.tar.gz"
+          test -s "release/$name.zip"
+          test -s release/SHA256SUMS.txt
+          if find "release/$name" -type f \( -name '.env' -o -name '*.sqlite' -o -name '*.db' -o -name '*.pem' -o -name '*.key' \) -print -quit | grep -q .; then
+            echo 'Private file shape found in release package' >&2
+            exit 1
+          fi
+          (cd release && sha256sum -c SHA256SUMS.txt)
+      - name: Write bilingual release notes
+        shell: bash
+        run: |
+          cat > release/RELEASE_NOTES.md <<'NOTES'
+          ## Address v1.0
+
+          ### New features
+          - Self-hosted address and test-profile generation for 27 countries and regions.
+          - Source-language, English, and Simplified-Chinese address presentations.
+          - Evidence-backed residential mode, location filters, IP-nearby generation, and deterministic fallbacks.
+          - Resumable Overture/Geofabrik synchronization with SQLite WAL/RTree storage.
+
+          ### Quick start
+          Download either archive, verify it with `SHA256SUMS.txt`, then follow the VPS deployment section in the README. Address databases and private credentials are intentionally excluded.
+
+          ### 新功能
+          - 支持 27 个国家和地区的自托管地址与测试资料生成。
+          - 提供原文、English、简体中文三种地址表示。
+          - 支持住宅证据、地区筛选、IP 就近生成和确定性回退。
+          - 使用 SQLite WAL/RTree，并支持 Overture/Geofabrik 断点续跑同步。
+
+          ### 快速开始
+          下载任一压缩包，使用 `SHA256SUMS.txt` 校验，然后按照 README 的 VPS 部署章节操作。发布包不包含地址数据库或私人凭据。
+
+          ### License and attribution / 许可证与来源
+          Project code is MIT-licensed. OpenStreetMap-derived data remains under ODbL and Overture records retain source-specific terms. No production database is included.
+          NOTES
+      - name: Publish stable GitHub release
+        shell: bash
+        run: |
+          version='${{ steps.version.outputs.value }}'
+          gh release create "$version" \
+            "release/address-$version.tar.gz" \
+            "release/address-$version.zip" \
+            release/SHA256SUMS.txt \
+            --repo "$GITHUB_REPOSITORY" \
+            --title "Address $version" \
+            --notes-file release/RELEASE_NOTES.md \
+            --verify-tag

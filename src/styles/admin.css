@@ -1,0 +1,52 @@
+:root {
+  color-scheme: light;
+  font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC", sans-serif;
+  color: #1f2937;
+  background: #f3f5f7;
+  font-synthesis: none;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; min-width: 320px; }
+button, input, select { font: inherit; }
+
+.sync-admin { width: min(920px, calc(100% - 32px)); margin: 0 auto; padding: 44px 0 72px; }
+.sync-header { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; padding-bottom: 20px; border-bottom: 1px solid #cfd5dc; }
+.sync-header p { margin: 0 0 5px; color: #5b6472; font-size: 12px; font-weight: 700; }
+.sync-header h1 { margin: 0; font-size: 25px; letter-spacing: 0; }
+.sync-header a { color: #155eef; font-size: 13px; font-weight: 700; text-decoration: none; }
+
+.sync-controls { margin-top: 28px; display: grid; grid-template-columns: minmax(220px, 1fr) minmax(180px, .7fr) 128px 128px; align-items: end; gap: 10px; }
+.sync-controls label { display: grid; gap: 7px; }
+.sync-controls label span { color: #344054; font-size: 12px; font-weight: 700; }
+.sync-controls input, .sync-controls select, .sync-controls button { height: 42px; border-radius: 6px; }
+.sync-controls input, .sync-controls select { width: 100%; padding: 0 11px; border: 1px solid #aeb7c4; color: #1f2937; background: #fff; outline: 0; }
+.sync-controls input:focus, .sync-controls select:focus { border-color: #155eef; box-shadow: 0 0 0 3px rgba(21, 94, 239, .12); }
+.sync-controls button { border: 1px solid #155eef; color: #fff; background: #155eef; font-size: 12px; font-weight: 800; cursor: pointer; }
+.sync-controls button.secondary { border-color: #aeb7c4; color: #344054; background: #fff; }
+.sync-controls button:disabled { opacity: .5; cursor: default; }
+
+.sync-error { margin: 16px 0 0; padding: 10px 12px; border-left: 3px solid #b42318; color: #912018; background: #fff1f0; font-size: 12px; }
+.sync-status { margin-top: 28px; border: 1px solid #cfd5dc; border-radius: 7px; background: #fff; }
+.sync-status-heading { min-height: 56px; padding: 0 18px; display: flex; align-items: center; justify-content: space-between; gap: 16px; border-bottom: 1px solid #e1e5ea; }
+.sync-status-heading h2 { margin: 0; font-size: 15px; }
+.sync-status-heading span { padding: 4px 8px; border-radius: 5px; font-size: 11px; font-weight: 800; }
+.status-queued { color: #475467; background: #eef1f4; }
+.status-running { color: #174ea6; background: #e8f0fe; }
+.status-succeeded { color: #176b3a; background: #e9f7ee; }
+.status-failed { color: #9b251d; background: #ffebe9; }
+.sync-status dl { margin: 0; }
+.sync-status dl > div { min-height: 48px; padding: 11px 18px; display: grid; grid-template-columns: 120px minmax(0, 1fr); align-items: center; gap: 14px; border-bottom: 1px solid #edf0f3; }
+.sync-status dl > div:last-child { border-bottom: 0; }
+.sync-status dt { color: #667085; font-size: 11px; font-weight: 700; }
+.sync-status dd { min-width: 0; margin: 0; overflow-wrap: anywhere; font: 12px/1.5 ui-monospace, SFMono-Regular, Consolas, monospace; }
+.sync-status .error-row dd { color: #9b251d; }
+.empty-status { margin: 0; padding: 28px 18px; color: #667085; font-size: 12px; }
+
+@media (max-width: 680px) {
+  .sync-admin { width: min(100% - 24px, 920px); padding-top: 24px; }
+  .sync-header { align-items: flex-start; }
+  .sync-controls { grid-template-columns: 1fr 1fr; }
+  .sync-controls label { grid-column: 1 / -1; }
+  .sync-status dl > div { grid-template-columns: 1fr; gap: 4px; }
+}

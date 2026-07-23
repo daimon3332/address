@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "defaultIntervalDays": 30,
+  "sources": [
+    {
+      "id": "overture-addresses",
+      "adapter": "overture",
+      "name": "Overture Maps addresses",
+      "homepageUrl": "https://overturemaps.org/",
+      "dataUrl": "https://stac.overturemaps.org/catalog.json",
+      "licenseCode": "mixed-open",
+      "licenseName": "Country-specific permissive open licences",
+      "licenseUrl": "https://docs.overturemaps.org/attribution/#addresses",
+      "attributionText": "Overture Maps Foundation and the source named in each record",
+      "attributionUrl": "https://docs.overturemaps.org/attribution/#addresses",
+      "termsUrl": "https://docs.overturemaps.org/attribution/#addresses",
+      "shareAlike": false,
+      "redistributionAllowed": true,
+      "updateCadence": "monthly",
+      "countries": ["US", "CA", "MX", "DE", "FR", "IT", "ES", "NL", "JP", "TW", "AU"]
+    },
+    {
+      "id": "geofabrik-osm",
+      "adapter": "geofabrik",
+      "name": "Geofabrik OpenStreetMap extracts",
+      "homepageUrl": "https://download.geofabrik.de/",
+      "dataUrl": "https://download.geofabrik.de/index-v1-nogeom.json",
+      "licenseCode": "ODbL-1.0",
+      "licenseName": "Open Database License 1.0",
+      "licenseUrl": "https://opendatacommons.org/licenses/odbl/1-0/",
+      "attributionText": "OpenStreetMap contributors and Geofabrik GmbH",
+      "attributionUrl": "https://www.openstreetmap.org/copyright",
+      "termsUrl": "https://download.geofabrik.de/technical.html",
+      "shareAlike": true,
+      "redistributionAllowed": true,
+      "updateCadence": "daily",
+      "extracts": [
+        { "countryCode": "GB", "extractId": "united-kingdom" },
+        { "countryCode": "CN", "extractId": "china", "excludeBoundaryIso3": ["HKG", "MAC", "TWN"] },
+        { "countryCode": "HK", "extractId": "china", "boundaryIso3": "HKG" },
+        { "countryCode": "KR", "extractId": "south-korea" },
+        { "countryCode": "MY", "extractId": "malaysia-singapore-brunei", "boundaryIso3": "MYS" },
+        { "countryCode": "SG", "extractId": "malaysia-singapore-brunei", "boundaryIso3": "SGP" },
+        { "countryCode": "TH", "extractId": "thailand" },
+        { "countryCode": "PH", "extractId": "philippines" },
+        { "countryCode": "VN", "extractId": "vietnam" },
+        { "countryCode": "TR", "extractId": "turkey" },
+        { "countryCode": "SA", "extractId": "gcc-states", "boundaryIso3": "SAU" },
+        { "countryCode": "IN", "extractId": "india" },
+        { "countryCode": "NG", "extractId": "nigeria" },
+        { "countryCode": "ZA", "extractId": "south-africa" },
+        { "countryCode": "RU", "extractId": "russia" },
+        { "countryCode": "BR", "extractId": "brazil" }
+      ]
+    }
+  ]
+}

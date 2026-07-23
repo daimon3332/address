@@ -1,0 +1,3 @@
+LON,LAT,NUMBER,STREET,UNIT,CITY,DISTRICT,REGION,POSTCODE,ID,HASH
+-73.975375,40.681116,478,Dean Street,,Brooklyn,Kings County,New York,11217,oa-us-ny-1,fixture-hash-1
+-118.242766,34.053690,200,North Spring Street,,Los Angeles,Los Angeles County,California,90012,oa-us-ca-1,fixture-hash-2

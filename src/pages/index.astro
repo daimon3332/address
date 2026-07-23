@@ -1,0 +1,19 @@
+---
+const fallback = '/en/';
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="refresh" content={`0;url=${fallback}`} />
+    <title>Real Address Generator</title>
+  </head>
+  <body>
+    <a href={fallback}>Continue</a>
+    <script is:inline>
+      const target = navigator.language.toLowerCase().startsWith('zh') ? '/zh-CN/' : '/en/';
+      location.replace(target);
+    </script>
+  </body>
+</html>

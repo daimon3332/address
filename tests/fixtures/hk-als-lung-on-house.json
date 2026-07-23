@@ -1,0 +1,51 @@
+{
+  "RequestAddress": {
+    "AddressLine": ["龍安樓"]
+  },
+  "SuggestedAddress": [
+    {
+      "Address": {
+        "PremisesAddress": {
+          "EngPremisesAddress": {
+            "BuildingName": "LUNG ON HOUSE",
+            "EngEstate": {
+              "EstateName": "LOWER WONG TAI SIN (II) ESTATE"
+            },
+            "EngStreet": {
+              "StreetName": "CHING TAK STREET",
+              "BuildingNoFrom": "103"
+            },
+            "EngDistrict": {
+              "DcDistrict": "WONG TAI SIN DISTRICT"
+            },
+            "Region": "KLN"
+          },
+          "ChiPremisesAddress": {
+            "Region": "九龍",
+            "ChiDistrict": {
+              "DcDistrict": "黃大仙區"
+            },
+            "ChiStreet": {
+              "StreetName": "正德街",
+              "BuildingNoFrom": "103"
+            },
+            "ChiEstate": {
+              "EstateName": "黃大仙下邨(二區)"
+            },
+            "BuildingName": "龍安樓"
+          },
+          "GeoAddress": "3790622475T20050430",
+          "GeospatialInformation": {
+            "Northing": "822475",
+            "Easting": "837906",
+            "Latitude": "22.34135",
+            "Longitude": "114.19278"
+          }
+        }
+      },
+      "ValidationInformation": {
+        "Score": 91
+      }
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+---
+import App from '../components/App';
+import Layout from '../layouts/Layout.astro';
+import type { Locale } from '../domain/types';
+
+export function getStaticPaths() {
+  return [
+    { params: { locale: 'en' } },
+    { params: { locale: 'zh-CN' } }
+  ];
+}
+
+const locale = Astro.params.locale as Locale;
+const apiBaseUrl = import.meta.env.PROD ? '/api' : import.meta.env.PUBLIC_API_BASE_URL || '/api';
+---
+<Layout locale={locale}>
+  <App client:load locale={locale} apiBaseUrl={apiBaseUrl} />
+</Layout>

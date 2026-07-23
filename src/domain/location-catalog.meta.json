@@ -1,0 +1,163 @@
+{
+  "sources": [
+    {
+      "name": "Countries States Cities Database",
+      "url": "https://github.com/dr5hn/countries-states-cities-database",
+      "license": "ODbL-1.0"
+    },
+    {
+      "name": "GeoNames Postal Codes",
+      "url": "https://download.geonames.org/export/zip/",
+      "license": "CC-BY-4.0",
+      "added": 864826
+    }
+  ],
+  "syncedAt": "2026-07-15T15:19:27.166Z",
+  "checksums": {
+    "states": "f2389263a1706f405755b728f16747963f179a594ca9559d6f216cfe4b04b2f3",
+    "cities": "eefdd878ef042fbf30b6c97019294a894d00b3bcb539749e42b3000d2b47b287",
+    "postcodes": "e59aae2897aadb0e1155df3696d22304480bef73a2f1893293c3207e68b658ba"
+  },
+  "totals": {
+    "regions": 1328,
+    "cities": 103474,
+    "postcodes": 1270008
+  },
+  "countries": {
+    "US": {
+      "regions": 51,
+      "cities": 16476,
+      "postcodes": 75132
+    },
+    "CA": {
+      "regions": 13,
+      "cities": 1080,
+      "postcodes": 1660
+    },
+    "MX": {
+      "regions": 32,
+      "cities": 9321,
+      "postcodes": 289151
+    },
+    "GB": {
+      "regions": 221,
+      "cities": 3879,
+      "postcodes": 27572
+    },
+    "DE": {
+      "regions": 16,
+      "cities": 7104,
+      "postcodes": 24352
+    },
+    "FR": {
+      "regions": 124,
+      "cities": 10534,
+      "postcodes": 52054
+    },
+    "IT": {
+      "regions": 126,
+      "cities": 9852,
+      "postcodes": 18650
+    },
+    "ES": {
+      "regions": 69,
+      "cities": 8405,
+      "postcodes": 45978
+    },
+    "NL": {
+      "regions": 12,
+      "cities": 1644,
+      "postcodes": 4322
+    },
+    "RU": {
+      "regions": 83,
+      "cities": 5523,
+      "postcodes": 43538
+    },
+    "JP": {
+      "regions": 47,
+      "cities": 1655,
+      "postcodes": 267124
+    },
+    "HK": {
+      "regions": 18,
+      "cities": 27,
+      "postcodes": 0
+    },
+    "SG": {
+      "regions": 5,
+      "cities": 26,
+      "postcodes": 121154
+    },
+    "TW": {
+      "regions": 22,
+      "cities": 40,
+      "postcodes": 371
+    },
+    "KR": {
+      "regions": 17,
+      "cities": 308,
+      "postcodes": 35583
+    },
+    "MY": {
+      "regions": 16,
+      "cities": 223,
+      "postcodes": 3107
+    },
+    "CN": {
+      "regions": 34,
+      "cities": 4133,
+      "postcodes": 25008
+    },
+    "TH": {
+      "regions": 78,
+      "cities": 1241,
+      "postcodes": 2092
+    },
+    "PH": {
+      "regions": 99,
+      "cities": 5357,
+      "postcodes": 2333
+    },
+    "VN": {
+      "regions": 34,
+      "cities": 488,
+      "postcodes": 63
+    },
+    "TR": {
+      "regions": 81,
+      "cities": 980,
+      "postcodes": 38418
+    },
+    "SA": {
+      "regions": 13,
+      "cities": 399,
+      "postcodes": 0
+    },
+    "IN": {
+      "regions": 36,
+      "cities": 4198,
+      "postcodes": 158086
+    },
+    "AU": {
+      "regions": 8,
+      "cities": 4147,
+      "postcodes": 18489
+    },
+    "BR": {
+      "regions": 27,
+      "cities": 5629,
+      "postcodes": 5965
+    },
+    "NG": {
+      "regions": 37,
+      "cities": 491,
+      "postcodes": 3728
+    },
+    "ZA": {
+      "regions": 9,
+      "cities": 314,
+      "postcodes": 6078
+    }
+  }
+}

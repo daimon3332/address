@@ -1,0 +1,5511 @@
+[
+  {
+    "countryCode": "AU",
+    "name": "Australian Capital Territory",
+    "native": "Australian Capital Territory",
+    "zh": "澳大利亚首都领地",
+    "code": "ACT"
+  },
+  {
+    "countryCode": "AU",
+    "name": "New South Wales",
+    "native": "New South Wales",
+    "zh": "新南威尔士州",
+    "code": "NSW"
+  },
+  {
+    "countryCode": "AU",
+    "name": "Northern Territory",
+    "native": "Northern Territory",
+    "zh": "北领地",
+    "code": "NT"
+  },
+  {
+    "countryCode": "AU",
+    "name": "Queensland",
+    "native": "Queensland",
+    "zh": "昆士兰州",
+    "code": "QLD"
+  },
+  {
+    "countryCode": "AU",
+    "name": "South Australia",
+    "native": "South Australia",
+    "zh": "南澳大利亚州",
+    "code": "SA"
+  },
+  {
+    "countryCode": "AU",
+    "name": "Tasmania",
+    "native": "Tasmania",
+    "zh": "塔斯马尼亚",
+    "code": "TAS"
+  },
+  {
+    "countryCode": "AU",
+    "name": "Victoria",
+    "native": "Victoria",
+    "zh": "维多利亚",
+    "code": "VIC"
+  },
+  {
+    "countryCode": "AU",
+    "name": "Western Australia",
+    "native": "Western Australia",
+    "zh": "西澳大利亚州",
+    "code": "WA"
+  },
+  {
+    "countryCode": "BR",
+    "name": "Acre",
+    "native": "Acre",
+    "zh": "英亩",
+    "code": "AC"
+  },
+  {
+    "countryCode": "BR",
+    "name": "Alagoas",
+    "native": "Alagoas",
+    "zh": "阿拉戈斯州",
+    "code": "AL"
+  },
+  {
+    "countryCode": "BR",
+    "name": "Amapá",
+    "native": "Amapá",
+    "zh": "阿马帕",
+    "code": "AP"
+  },
+  {
+    "countryCode": "BR",
+    "name": "Amazonas",
+    "native": "Amazonas",
+    "zh": "亚马逊",
+    "code": "AM"
+  },
+  {
+    "countryCode": "BR",
+    "name": "Bahia",
+    "native": "Bahia",
+    "zh": "巴伊亚州",
+    "code": "BA"
+  },
+  {
+    "countryCode": "BR",
+    "name": "Ceará",
+    "native": "Ceará",
+    "zh": "塞阿拉州",
+    "code": "CE"
+  },
+  {
+    "countryCode": "BR",
+    "name": "Distrito Federal",
+    "native": "Distrito Federal",
+    "zh": "联邦区",
+    "code": "DF"
+  },
+  {
+    "countryCode": "BR",
+    "name": "Espírito Santo",
+    "native": "Espírito Santo",
+    "zh": "圣埃斯皮里图州",
+    "code": "ES"
+  },
+  {
+    "countryCode": "BR",
+    "name": "Goiás",
+    "native": "Goiás",
+    "zh": "戈亚斯州",
+    "code": "GO"
+  },
+  {
+    "countryCode": "BR",
+    "name": "Maranhão",
+    "native": "Maranhão",
+    "zh": "马拉尼昂州",
+    "code": "MA"
+  },
+  {
+    "countryCode": "BR",
+    "name": "Mato Grosso",
+    "native": "Mato Grosso",
+    "zh": "马托格罗索州",
+    "code": "MT"
+  },
+  {
+    "countryCode": "BR",
+    "name": "Mato Grosso do Sul",
+    "native": "Mato Grosso do Sul",
+    "zh": "南马托格罗索州",
+    "code": "MS"
+  },
+  {
+    "countryCode": "BR",
+    "name": "Minas Gerais",
+    "native": "Minas Gerais",
+    "zh": "米纳斯吉拉斯州",
+    "code": "MG"
+  },
+  {
+    "countryCode": "BR",
+    "name": "Pará",
+    "native": "Pará",
+    "zh": "帕拉州",
+    "code": "PA"
+  },
+  {
+    "countryCode": "BR",
+    "name": "Paraíba",
+    "native": "Paraíba",
+    "zh": "帕拉伊巴州",
+    "code": "PB"
+  },
+  {
+    "countryCode": "BR",
+    "name": "Paraná",
+    "native": "Paraná",
+    "zh": "巴拉那州",
+    "code": "PR"
+  },
+  {
+    "countryCode": "BR",
+    "name": "Pernambuco",
+    "native": "Pernambuco",
+    "zh": "伯南布哥州",
+    "code": "PE"
+  },
+  {
+    "countryCode": "BR",
+    "name": "Piauí",
+    "native": "Piauí",
+    "zh": "皮奥伊州",
+    "code": "PI"
+  },
+  {
+    "countryCode": "BR",
+    "name": "Rio de Janeiro",
+    "native": "Rio de Janeiro",
+    "zh": "里约热内卢",
+    "code": "RJ"
+  },
+  {
+    "countryCode": "BR",
+    "name": "Rio Grande do Norte",
+    "native": "Rio Grande do Norte",
+    "zh": "北里奥格兰德州",
+    "code": "RN"
+  },
+  {
+    "countryCode": "BR",
+    "name": "Rio Grande do Sul",
+    "native": "Rio Grande do Sul",
+    "zh": "南里奥格兰德州",
+    "code": "RS"
+  },
+  {
+    "countryCode": "BR",
+    "name": "Rondônia",
+    "native": "Rondônia",
+    "zh": "朗多尼亚",
+    "code": "RO"
+  },
+  {
+    "countryCode": "BR",
+    "name": "Roraima",
+    "native": "Roraima",
+    "zh": "罗赖马州",
+    "code": "RR"
+  },
+  {
+    "countryCode": "BR",
+    "name": "Santa Catarina",
+    "native": "Santa Catarina",
+    "zh": "圣卡塔琳娜州",
+    "code": "SC"
+  },
+  {
+    "countryCode": "BR",
+    "name": "São Paulo",
+    "native": "São Paulo",
+    "zh": "圣保罗",
+    "code": "SP"
+  },
+  {
+    "countryCode": "BR",
+    "name": "Sergipe",
+    "native": "Sergipe",
+    "zh": "塞尔希培州",
+    "code": "SE"
+  },
+  {
+    "countryCode": "BR",
+    "name": "Tocantins",
+    "native": "Tocantins",
+    "zh": "托坎廷斯",
+    "code": "TO"
+  },
+  {
+    "countryCode": "CA",
+    "name": "Alberta",
+    "native": "Alberta",
+    "zh": "阿尔伯塔省",
+    "code": "AB"
+  },
+  {
+    "countryCode": "CA",
+    "name": "British Columbia",
+    "native": "British Columbia",
+    "zh": "不列颠哥伦比亚省",
+    "code": "BC"
+  },
+  {
+    "countryCode": "CA",
+    "name": "Manitoba",
+    "native": "Manitoba",
+    "zh": "曼尼托巴省",
+    "code": "MB"
+  },
+  {
+    "countryCode": "CA",
+    "name": "New Brunswick",
+    "native": "New Brunswick",
+    "zh": "新不伦瑞克省",
+    "code": "NB"
+  },
+  {
+    "countryCode": "CA",
+    "name": "Newfoundland and Labrador",
+    "native": "Newfoundland and Labrador",
+    "zh": "纽芬兰和拉布拉多",
+    "code": "NL"
+  },
+  {
+    "countryCode": "CA",
+    "name": "Northwest Territories",
+    "native": "Northwest Territories",
+    "zh": "西北地区",
+    "code": "NT"
+  },
+  {
+    "countryCode": "CA",
+    "name": "Nova Scotia",
+    "native": "New Scotia",
+    "zh": "新斯科舍省",
+    "code": "NS"
+  },
+  {
+    "countryCode": "CA",
+    "name": "Nunavut",
+    "native": "Nunavut",
+    "zh": "努纳武特地区",
+    "code": "NU"
+  },
+  {
+    "countryCode": "CA",
+    "name": "Ontario",
+    "native": "Ontario",
+    "zh": "安大略省",
+    "code": "ON"
+  },
+  {
+    "countryCode": "CA",
+    "name": "Prince Edward Island",
+    "native": "Prince Edward Island",
+    "zh": "爱德华王子岛",
+    "code": "PE"
+  },
+  {
+    "countryCode": "CA",
+    "name": "Quebec",
+    "native": "Quebec",
+    "zh": "魁北克",
+    "code": "QC"
+  },
+  {
+    "countryCode": "CA",
+    "name": "Saskatchewan",
+    "native": "Saskatchewan",
+    "zh": "萨斯喀彻温省",
+    "code": "SK"
+  },
+  {
+    "countryCode": "CA",
+    "name": "Yukon",
+    "native": "Yukon",
+    "zh": "育空地区",
+    "code": "YT"
+  },
+  {
+    "countryCode": "CN",
+    "name": "Anhui",
+    "native": "安徽省",
+    "zh": "安徽省",
+    "code": "AH"
+  },
+  {
+    "countryCode": "CN",
+    "name": "Beijing",
+    "native": "北京市",
+    "zh": "北京市",
+    "code": "BJ"
+  },
+  {
+    "countryCode": "CN",
+    "name": "Chongqing",
+    "native": "重庆市",
+    "zh": "重庆市",
+    "code": "CQ"
+  },
+  {
+    "countryCode": "CN",
+    "name": "Fujian",
+    "native": "福建省",
+    "zh": "福建省",
+    "code": "FJ"
+  },
+  {
+    "countryCode": "CN",
+    "name": "Gansu",
+    "native": "甘肃省",
+    "zh": "甘肃省",
+    "code": "GS"
+  },
+  {
+    "countryCode": "CN",
+    "name": "Guangdong",
+    "native": "广东省",
+    "zh": "广东省",
+    "code": "GD"
+  },
+  {
+    "countryCode": "CN",
+    "name": "Guangxi",
+    "native": "广西壮族自治区",
+    "zh": "广西壮族自治区",
+    "code": "GX"
+  },
+  {
+    "countryCode": "CN",
+    "name": "Guizhou",
+    "native": "贵州省",
+    "zh": "贵州省",
+    "code": "GZ"
+  },
+  {
+    "countryCode": "CN",
+    "name": "Hainan",
+    "native": "海南省",
+    "zh": "海南省",
+    "code": "HI"
+  },
+  {
+    "countryCode": "CN",
+    "name": "Hebei",
+    "native": "河北省",
+    "zh": "河北省",
+    "code": "HE"
+  },
+  {
+    "countryCode": "CN",
+    "name": "Heilongjiang",
+    "native": "黑龙江省",
+    "zh": "黑龙江省",
+    "code": "HL"
+  },
+  {
+    "countryCode": "CN",
+    "name": "Henan",
+    "native": "河南省",
+    "zh": "河南省",
+    "code": "HA"
+  },
+  {
+    "countryCode": "CN",
+    "name": "Hong Kong SAR",
+    "native": "香港特别行政区",
+    "zh": "香港特别行政区",
+    "code": "HK"
+  },
+  {
+    "countryCode": "CN",
+    "name": "Hubei",
+    "native": "湖北省",
+    "zh": "湖北省",
+    "code": "HB"
+  },
+  {
+    "countryCode": "CN",
+    "name": "Hunan",
+    "native": "湖南省",
+    "zh": "湖南省",
+    "code": "HN"
+  },
+  {
+    "countryCode": "CN",
+    "name": "Inner Mongolia",
+    "native": "内蒙古自治区",
+    "zh": "内蒙古自治区",
+    "code": "NM"
+  },
+  {
+    "countryCode": "CN",
+    "name": "Jiangsu",
+    "native": "江苏省",
+    "zh": "江苏省",
+    "code": "JS"
+  },
+  {
+    "countryCode": "CN",
+    "name": "Jiangxi",
+    "native": "江西省",
+    "zh": "江西省",
+    "code": "JX"
+  },
+  {
+    "countryCode": "CN",
+    "name": "Jilin",
+    "native": "吉林省",
+    "zh": "吉林省",
+    "code": "JL"
+  },
+  {
+    "countryCode": "CN",
+    "name": "Liaoning",
+    "native": "辽宁省",
+    "zh": "辽宁省",
+    "code": "LN"
+  },
+  {
+    "countryCode": "CN",
+    "name": "Macau SAR",
+    "native": "澳门特别行政区",
+    "zh": "澳门特别行政区",
+    "code": "MO"
+  },
+  {
+    "countryCode": "CN",
+    "name": "Ningxia",
+    "native": "宁夏回族自治区",
+    "zh": "宁夏回族自治区",
+    "code": "NX"
+  },
+  {
+    "countryCode": "CN",
+    "name": "Qinghai",
+    "native": "青海省",
+    "zh": "青海省",
+    "code": "QH"
+  },
+  {
+    "countryCode": "CN",
+    "name": "Shaanxi",
+    "native": "陕西省",
+    "zh": "陕西省",
+    "code": "SN"
+  },
+  {
+    "countryCode": "CN",
+    "name": "Shandong",
+    "native": "山东省",
+    "zh": "山东省",
+    "code": "SD"
+  },
+  {
+    "countryCode": "CN",
+    "name": "Shanghai",
+    "native": "上海市",
+    "zh": "上海市",
+    "code": "SH"
+  },
+  {
+    "countryCode": "CN",
+    "name": "Shanxi",
+    "native": "山西省",
+    "zh": "山西省",
+    "code": "SX"
+  },
+  {
+    "countryCode": "CN",
+    "name": "Sichuan",
+    "native": "四川省",
+    "zh": "四川省",
+    "code": "SC"
+  },
+  {
+    "countryCode": "CN",
+    "name": "Taiwan",
+    "native": "台湾",
+    "zh": "台湾",
+    "code": "TW"
+  },
+  {
+    "countryCode": "CN",
+    "name": "Tianjin",
+    "native": "天津市",
+    "zh": "天津市",
+    "code": "TJ"
+  },
+  {
+    "countryCode": "CN",
+    "name": "Tibet",
+    "native": "西藏自治区",
+    "zh": "西藏自治区",
+    "code": "XZ"
+  },
+  {
+    "countryCode": "CN",
+    "name": "Xinjiang",
+    "native": "新疆维吾尔自治区",
+    "zh": "新疆维吾尔自治区",
+    "code": "XJ"
+  },
+  {
+    "countryCode": "CN",
+    "name": "Yunnan",
+    "native": "云南省",
+    "zh": "云南省",
+    "code": "YN"
+  },
+  {
+    "countryCode": "CN",
+    "name": "Zhejiang",
+    "native": "浙江省",
+    "zh": "浙江省",
+    "code": "ZJ"
+  },
+  {
+    "countryCode": "DE",
+    "name": "Baden-Württemberg",
+    "native": "Baden-Württemberg",
+    "zh": "巴登-符腾堡州",
+    "code": "BW"
+  },
+  {
+    "countryCode": "DE",
+    "name": "Bavaria",
+    "native": "Bayern",
+    "zh": "巴伐利亚",
+    "code": "BY"
+  },
+  {
+    "countryCode": "DE",
+    "name": "Berlin",
+    "native": "Berlin",
+    "zh": "柏林",
+    "code": "BE"
+  },
+  {
+    "countryCode": "DE",
+    "name": "Brandenburg",
+    "native": "Brandenburg",
+    "zh": "勃兰登堡",
+    "code": "BB"
+  },
+  {
+    "countryCode": "DE",
+    "name": "Bremen",
+    "native": "Bremen",
+    "zh": "不来梅",
+    "code": "HB"
+  },
+  {
+    "countryCode": "DE",
+    "name": "Hamburg",
+    "native": "Hamburg",
+    "zh": "汉堡",
+    "code": "HH"
+  },
+  {
+    "countryCode": "DE",
+    "name": "Hessen",
+    "native": "Hessen",
+    "zh": "黑森州",
+    "code": "HE"
+  },
+  {
+    "countryCode": "DE",
+    "name": "Lower Saxony",
+    "native": "Niedersachsen",
+    "zh": "下萨克森州",
+    "code": "NI"
+  },
+  {
+    "countryCode": "DE",
+    "name": "Mecklenburg-Vorpommern",
+    "native": "Mecklenburg-Vorpommern",
+    "zh": "梅克伦堡-前波莫瑞州",
+    "code": "MV"
+  },
+  {
+    "countryCode": "DE",
+    "name": "North Rhine-Westphalia",
+    "native": "Nordrhein-Westfalen",
+    "zh": "北莱茵-威斯特法伦州",
+    "code": "NW"
+  },
+  {
+    "countryCode": "DE",
+    "name": "Rhineland-Palatinate",
+    "native": "Rheinland-Pfalz",
+    "zh": "莱茵兰-普法尔茨州",
+    "code": "RP"
+  },
+  {
+    "countryCode": "DE",
+    "name": "Saarland",
+    "native": "Saarland",
+    "zh": "萨尔州",
+    "code": "SL"
+  },
+  {
+    "countryCode": "DE",
+    "name": "Saxony",
+    "native": "Sachsen",
+    "zh": "萨克森州",
+    "code": "SN"
+  },
+  {
+    "countryCode": "DE",
+    "name": "Saxony-Anhalt",
+    "native": "Sachsen-Anhalt",
+    "zh": "萨克森-安哈特州",
+    "code": "ST"
+  },
+  {
+    "countryCode": "DE",
+    "name": "Schleswig-Holstein",
+    "native": "Schleswig-Holstein",
+    "zh": "石勒苏益格-荷尔斯泰因州",
+    "code": "SH"
+  },
+  {
+    "countryCode": "DE",
+    "name": "Thuringia",
+    "native": "Thüringen",
+    "zh": "图林根州",
+    "code": "TH"
+  },
+  {
+    "countryCode": "ES",
+    "name": "Andalusia",
+    "native": "Andalucía",
+    "zh": "安达卢西亚",
+    "code": "AN"
+  },
+  {
+    "countryCode": "ES",
+    "name": "Aragon",
+    "native": "Aragón",
+    "zh": "阿拉贡",
+    "code": "AR"
+  },
+  {
+    "countryCode": "ES",
+    "name": "Asturias, Principality of",
+    "native": "Principado de Asturias",
+    "zh": "阿斯图里亚斯公国",
+    "code": "AS"
+  },
+  {
+    "countryCode": "ES",
+    "name": "Balearic Islands",
+    "native": "Islas Baleares",
+    "zh": "巴利阿里群岛",
+    "code": "IB"
+  },
+  {
+    "countryCode": "ES",
+    "name": "Basque Country",
+    "native": "País vasco",
+    "zh": "巴斯克地区",
+    "code": "PV"
+  },
+  {
+    "countryCode": "ES",
+    "name": "Canary Islands",
+    "native": "Canarias",
+    "zh": "加那利群岛",
+    "code": "CN"
+  },
+  {
+    "countryCode": "ES",
+    "name": "Cantabria",
+    "native": "Cantabria",
+    "zh": "坎塔布里亚",
+    "code": "CB"
+  },
+  {
+    "countryCode": "ES",
+    "name": "Castile and Leon",
+    "native": "Castile and Leon",
+    "zh": "卡斯蒂利亚和莱昂",
+    "code": "CL"
+  },
+  {
+    "countryCode": "ES",
+    "name": "Castilla-La Mancha",
+    "native": "Castilla-La Mancha",
+    "zh": "卡斯蒂利亚-拉曼恰",
+    "code": "CM"
+  },
+  {
+    "countryCode": "ES",
+    "name": "Catalonia",
+    "native": "Cataluña",
+    "zh": "加泰罗尼亚",
+    "code": "CT"
+  },
+  {
+    "countryCode": "ES",
+    "name": "Ceuta",
+    "native": "Ceuta",
+    "zh": "休达",
+    "code": "CE"
+  },
+  {
+    "countryCode": "ES",
+    "name": "Community of Madrid",
+    "native": "Comunidad de Madrid",
+    "zh": "马德里自治区",
+    "code": "MD"
+  },
+  {
+    "countryCode": "ES",
+    "name": "Estremadura",
+    "native": "Extremo",
+    "zh": "埃斯特雷马杜拉",
+    "code": "EX"
+  },
+  {
+    "countryCode": "ES",
+    "name": "Galicia",
+    "native": "Galicia",
+    "zh": "加利西亚",
+    "code": "GA"
+  },
+  {
+    "countryCode": "ES",
+    "name": "La Rioja",
+    "native": "La Rioja",
+    "zh": "拉里奥哈",
+    "code": "RI"
+  },
+  {
+    "countryCode": "ES",
+    "name": "Melilla",
+    "native": "Melilla",
+    "zh": "梅利利亚",
+    "code": "ML"
+  },
+  {
+    "countryCode": "ES",
+    "name": "Navarre",
+    "native": "Navarra",
+    "zh": "纳瓦拉",
+    "code": "NC"
+  },
+  {
+    "countryCode": "ES",
+    "name": "Region of Murcia",
+    "native": "Región de Murcia",
+    "zh": "穆尔西亚地区",
+    "code": "MC"
+  },
+  {
+    "countryCode": "ES",
+    "name": "Valencian Community",
+    "native": "Comunidad valenciana",
+    "zh": "瓦伦西亚自治区",
+    "code": "VC"
+  },
+  {
+    "countryCode": "FR",
+    "name": "Alsace",
+    "native": "Alsace",
+    "zh": "阿尔萨斯",
+    "code": "6AE"
+  },
+  {
+    "countryCode": "FR",
+    "name": "Auvergne-Rhône-Alpes",
+    "native": "Auvergne-Rhône-Alpes",
+    "zh": "奥弗涅-罗讷-阿尔卑斯大区",
+    "code": "ARA"
+  },
+  {
+    "countryCode": "FR",
+    "name": "Bourgogne-Franche-Comté",
+    "native": "Bourgogne-Franche-Comté",
+    "zh": "勃艮第-弗朗什-孔泰",
+    "code": "BFC"
+  },
+  {
+    "countryCode": "FR",
+    "name": "Bretagne",
+    "native": "Bretagne",
+    "zh": "布列塔尼",
+    "code": "BRE"
+  },
+  {
+    "countryCode": "FR",
+    "name": "Centre-Val de Loire",
+    "native": "Centre-Val de Loire",
+    "zh": "中央-卢瓦尔河谷",
+    "code": "CVL"
+  },
+  {
+    "countryCode": "FR",
+    "name": "Clipperton",
+    "native": "Clipperton",
+    "zh": "克利珀顿",
+    "code": "CP"
+  },
+  {
+    "countryCode": "FR",
+    "name": "Corse",
+    "native": "Corse",
+    "zh": "科西嘉岛",
+    "code": "20R"
+  },
+  {
+    "countryCode": "FR",
+    "name": "French Guiana",
+    "native": "Guyane",
+    "zh": "法属圭亚那",
+    "code": "973"
+  },
+  {
+    "countryCode": "FR",
+    "name": "French Polynesia",
+    "native": "Polynésie française",
+    "zh": "法属波利尼西亚",
+    "code": "PF"
+  },
+  {
+    "countryCode": "FR",
+    "name": "French Southern and Antarctic Lands",
+    "native": "Terres du sud et de l'Antarctique français",
+    "zh": "法属南部和南极领地",
+    "code": "TF"
+  },
+  {
+    "countryCode": "FR",
+    "name": "Grand-Est",
+    "native": "Grand-Est",
+    "zh": "大东部",
+    "code": "GES"
+  },
+  {
+    "countryCode": "FR",
+    "name": "Guadeloupe",
+    "native": "Guadeloupe",
+    "zh": "瓜德罗普岛",
+    "code": "971"
+  },
+  {
+    "countryCode": "FR",
+    "name": "Hauts-de-France",
+    "native": "Hauts-de-France",
+    "zh": "上法兰西大区",
+    "code": "HDF"
+  },
+  {
+    "countryCode": "FR",
+    "name": "Île-de-France",
+    "native": "Île-de-France",
+    "zh": "法兰西岛",
+    "code": "IDF"
+  },
+  {
+    "countryCode": "FR",
+    "name": "La Réunion",
+    "native": "La Réunion",
+    "zh": "留尼汪岛",
+    "code": "974"
+  },
+  {
+    "countryCode": "FR",
+    "name": "Martinique",
+    "native": "Martinique",
+    "zh": "马提尼克岛",
+    "code": "972"
+  },
+  {
+    "countryCode": "FR",
+    "name": "Mayotte",
+    "native": "Mayotte",
+    "zh": "马约特岛",
+    "code": "976"
+  },
+  {
+    "countryCode": "FR",
+    "name": "Métropole de Lyon",
+    "native": "Métropole de Lyon",
+    "zh": "里昂大都会酒店",
+    "code": "69M"
+  },
+  {
+    "countryCode": "FR",
+    "name": "Normandie",
+    "native": "Normandie",
+    "zh": "诺曼底",
+    "code": "NOR"
+  },
+  {
+    "countryCode": "FR",
+    "name": "Nouvelle-Aquitaine",
+    "native": "Nouvelle-Aquitaine",
+    "zh": "新阿基坦",
+    "code": "NAQ"
+  },
+  {
+    "countryCode": "FR",
+    "name": "Nouvelle-Calédonie",
+    "native": "Nouvelle-Calédonie",
+    "zh": "新喀里多尼亚",
+    "code": "NC"
+  },
+  {
+    "countryCode": "FR",
+    "name": "Occitanie",
+    "native": "Occitanie",
+    "zh": "奥克西塔尼",
+    "code": "OCC"
+  },
+  {
+    "countryCode": "FR",
+    "name": "Paris",
+    "native": "Paris",
+    "zh": "巴黎",
+    "code": "75C"
+  },
+  {
+    "countryCode": "FR",
+    "name": "Pays-de-la-Loire",
+    "native": "Pays-de-la-Loire",
+    "zh": "卢瓦尔河地区",
+    "code": "PDL"
+  },
+  {
+    "countryCode": "FR",
+    "name": "Provence-Alpes-Côte-d’Azur",
+    "native": "Provence-Alpes-Côte-d’Azur",
+    "zh": "普罗旺斯-阿尔卑斯-蓝色海岸",
+    "code": "PAC"
+  },
+  {
+    "countryCode": "FR",
+    "name": "Saint Pierre and Miquelon",
+    "native": "Saint Pierre and Miquelon",
+    "zh": "圣皮埃尔和密克隆群岛",
+    "code": "PM"
+  },
+  {
+    "countryCode": "FR",
+    "name": "Saint-Barthélemy",
+    "native": "Saint-Barthélemy",
+    "zh": "圣巴泰勒米",
+    "code": "BL"
+  },
+  {
+    "countryCode": "FR",
+    "name": "Saint-Martin",
+    "native": "Saint-Martin",
+    "zh": "圣马丁",
+    "code": "MF"
+  },
+  {
+    "countryCode": "FR",
+    "name": "Wallis and Futuna",
+    "native": "Wallis et Futuna",
+    "zh": "瓦利斯和富图纳群岛",
+    "code": "WF"
+  },
+  {
+    "countryCode": "GB",
+    "name": "England",
+    "native": "England",
+    "zh": "英格兰",
+    "code": "ENG"
+  },
+  {
+    "countryCode": "GB",
+    "name": "Northern Ireland",
+    "native": "Northern Ireland",
+    "zh": "北爱尔兰",
+    "code": "NIR"
+  },
+  {
+    "countryCode": "GB",
+    "name": "Scotland",
+    "native": "Scotland",
+    "zh": "苏格兰",
+    "code": "SCT"
+  },
+  {
+    "countryCode": "GB",
+    "name": "Wales",
+    "native": "Wales",
+    "zh": "威尔士",
+    "code": "WLS"
+  },
+  {
+    "countryCode": "HK",
+    "name": "Central and Western",
+    "native": "Central and Western",
+    "zh": "中西区",
+    "code": "HCW"
+  },
+  {
+    "countryCode": "HK",
+    "name": "Eastern",
+    "native": "Eastern",
+    "zh": "东",
+    "code": "HEA"
+  },
+  {
+    "countryCode": "HK",
+    "name": "Islands",
+    "native": "Islands",
+    "zh": "岛屿",
+    "code": "NIS"
+  },
+  {
+    "countryCode": "HK",
+    "name": "Kowloon City",
+    "native": "Kowloon City",
+    "zh": "九龙城",
+    "code": "KKC"
+  },
+  {
+    "countryCode": "HK",
+    "name": "Kwai Tsing",
+    "native": "Kwai Tsing",
+    "zh": "葵青",
+    "code": "NKT"
+  },
+  {
+    "countryCode": "HK",
+    "name": "Kwun Tong",
+    "native": "Kwun Tong",
+    "zh": "观塘",
+    "code": "KKT"
+  },
+  {
+    "countryCode": "HK",
+    "name": "North",
+    "native": "North",
+    "zh": "北",
+    "code": "NNO"
+  },
+  {
+    "countryCode": "HK",
+    "name": "Sai Kung",
+    "native": "Sai Kung",
+    "zh": "西贡",
+    "code": "NSK"
+  },
+  {
+    "countryCode": "HK",
+    "name": "Sha Tin",
+    "native": "Sha Tin",
+    "zh": "沙田",
+    "code": "NST"
+  },
+  {
+    "countryCode": "HK",
+    "name": "Sham Shui Po",
+    "native": "Sham Shui Po",
+    "zh": "深水埗",
+    "code": "KSS"
+  },
+  {
+    "countryCode": "HK",
+    "name": "Southern",
+    "native": "Southern",
+    "zh": "南方",
+    "code": "HSO"
+  },
+  {
+    "countryCode": "HK",
+    "name": "Tai Po",
+    "native": "Tai Po",
+    "zh": "大埔",
+    "code": "NTP"
+  },
+  {
+    "countryCode": "HK",
+    "name": "Tsuen Wan",
+    "native": "Tsuen Wan",
+    "zh": "荃湾",
+    "code": "NTW"
+  },
+  {
+    "countryCode": "HK",
+    "name": "Tuen Mun",
+    "native": "Tuen Mun",
+    "zh": "屯门",
+    "code": "NTM"
+  },
+  {
+    "countryCode": "HK",
+    "name": "Wan Chai",
+    "native": "Wan Chai",
+    "zh": "湾仔",
+    "code": "HWC"
+  },
+  {
+    "countryCode": "HK",
+    "name": "Wong Tai Sin",
+    "native": "Wong Tai Sin",
+    "zh": "黄大仙",
+    "code": "KWT"
+  },
+  {
+    "countryCode": "HK",
+    "name": "Yau Tsim Mong",
+    "native": "Yau Tsim Mong",
+    "zh": "油尖旺",
+    "code": "KYT"
+  },
+  {
+    "countryCode": "HK",
+    "name": "Yuen Long",
+    "native": "Yuen Long",
+    "zh": "元朗",
+    "code": "NYL"
+  },
+  {
+    "countryCode": "IN",
+    "name": "Andaman and Nicobar Islands",
+    "native": "अंडमान व नोकोबार द्वीप समूह",
+    "zh": "安达曼和尼科巴群岛",
+    "code": "AN"
+  },
+  {
+    "countryCode": "IN",
+    "name": "Andhra Pradesh",
+    "native": "आंध्र प्रदेश",
+    "zh": "安得拉邦",
+    "code": "AP"
+  },
+  {
+    "countryCode": "IN",
+    "name": "Arunachal Pradesh",
+    "native": "अरुणाचल प्रदेश",
+    "zh": "阿鲁纳恰尔邦",
+    "code": "AR"
+  },
+  {
+    "countryCode": "IN",
+    "name": "Assam",
+    "native": "असम",
+    "zh": "阿萨姆",
+    "code": "AS"
+  },
+  {
+    "countryCode": "IN",
+    "name": "Bihar",
+    "native": "बिहार",
+    "zh": "比哈尔邦",
+    "code": "BR"
+  },
+  {
+    "countryCode": "IN",
+    "name": "Chandigarh",
+    "native": "चंडीगढ़",
+    "zh": "昌迪加尔",
+    "code": "CH"
+  },
+  {
+    "countryCode": "IN",
+    "name": "Chhattisgarh",
+    "native": "छत्तीसगढ",
+    "zh": "恰蒂斯加尔邦",
+    "code": "CT"
+  },
+  {
+    "countryCode": "IN",
+    "name": "Dadra and Nagar Haveli and Daman and Diu",
+    "native": "दादरा और नगर हवेली और दमन और दीव",
+    "zh": "达德拉和纳加尔哈维利以及达曼和迪乌",
+    "code": "DH"
+  },
+  {
+    "countryCode": "IN",
+    "name": "Delhi",
+    "native": "दिल्ली",
+    "zh": "德里",
+    "code": "DL"
+  },
+  {
+    "countryCode": "IN",
+    "name": "Goa",
+    "native": "गोवा",
+    "zh": "果阿",
+    "code": "GA"
+  },
+  {
+    "countryCode": "IN",
+    "name": "Gujarat",
+    "native": "गुजरात",
+    "zh": "古吉拉特邦",
+    "code": "GJ"
+  },
+  {
+    "countryCode": "IN",
+    "name": "Haryana",
+    "native": "हरियाणा",
+    "zh": "哈里亚纳邦",
+    "code": "HR"
+  },
+  {
+    "countryCode": "IN",
+    "name": "Himachal Pradesh",
+    "native": "हिमाचल प्रदेश",
+    "zh": "喜马偕尔邦",
+    "code": "HP"
+  },
+  {
+    "countryCode": "IN",
+    "name": "Jammu and Kashmir",
+    "native": "जम्मू और कश्मीर",
+    "zh": "查谟和克什米尔",
+    "code": "JK"
+  },
+  {
+    "countryCode": "IN",
+    "name": "Jharkhand",
+    "native": "झारखंड",
+    "zh": "贾坎德邦",
+    "code": "JH"
+  },
+  {
+    "countryCode": "IN",
+    "name": "Karnataka",
+    "native": "कर्नाटक",
+    "zh": "卡纳塔克邦",
+    "code": "KA"
+  },
+  {
+    "countryCode": "IN",
+    "name": "Kerala",
+    "native": "केरल",
+    "zh": "喀拉拉邦",
+    "code": "KL"
+  },
+  {
+    "countryCode": "IN",
+    "name": "Ladakh",
+    "native": "लद्दाख",
+    "zh": "拉达克",
+    "code": "LA"
+  },
+  {
+    "countryCode": "IN",
+    "name": "Lakshadweep",
+    "native": "लक्षद्वीप",
+    "zh": "拉克沙群岛",
+    "code": "LD"
+  },
+  {
+    "countryCode": "IN",
+    "name": "Madhya Pradesh",
+    "native": "मध्य प्रदेश",
+    "zh": "中央邦",
+    "code": "MP"
+  },
+  {
+    "countryCode": "IN",
+    "name": "Maharashtra",
+    "native": "महाराष्ट्र",
+    "zh": "马哈拉施特拉邦",
+    "code": "MH"
+  },
+  {
+    "countryCode": "IN",
+    "name": "Manipur",
+    "native": "मणिपुर",
+    "zh": "曼尼普尔邦",
+    "code": "MN"
+  },
+  {
+    "countryCode": "IN",
+    "name": "Meghalaya",
+    "native": "मेघालय",
+    "zh": "梅加拉亚邦",
+    "code": "ML"
+  },
+  {
+    "countryCode": "IN",
+    "name": "Mizoram",
+    "native": "मिजोरम",
+    "zh": "米佐拉姆邦",
+    "code": "MZ"
+  },
+  {
+    "countryCode": "IN",
+    "name": "Nagaland",
+    "native": "नागालैंड",
+    "zh": "那加兰邦",
+    "code": "NL"
+  },
+  {
+    "countryCode": "IN",
+    "name": "Odisha",
+    "native": "ओडिशा",
+    "zh": "奥里萨邦",
+    "code": "OR"
+  },
+  {
+    "countryCode": "IN",
+    "name": "Puducherry",
+    "native": "पुदुचेरी",
+    "zh": "本地治里",
+    "code": "PY"
+  },
+  {
+    "countryCode": "IN",
+    "name": "Punjab",
+    "native": "पंजाब",
+    "zh": "旁遮普",
+    "code": "PB"
+  },
+  {
+    "countryCode": "IN",
+    "name": "Rajasthan",
+    "native": "राजस्थान",
+    "zh": "拉贾斯坦邦",
+    "code": "RJ"
+  },
+  {
+    "countryCode": "IN",
+    "name": "Sikkim",
+    "native": "सिक्किम",
+    "zh": "锡金",
+    "code": "SK"
+  },
+  {
+    "countryCode": "IN",
+    "name": "Tamil Nadu",
+    "native": "तमिलनाडु",
+    "zh": "泰米尔纳德邦",
+    "code": "TN"
+  },
+  {
+    "countryCode": "IN",
+    "name": "Telangana",
+    "native": "तेलंगाना",
+    "zh": "特伦甘纳邦",
+    "code": "TG"
+  },
+  {
+    "countryCode": "IN",
+    "name": "Tripura",
+    "native": "त्रिपुरा",
+    "zh": "特里普拉邦",
+    "code": "TR"
+  },
+  {
+    "countryCode": "IN",
+    "name": "Uttar Pradesh",
+    "native": "उत्तर प्रदेश",
+    "zh": "北方邦",
+    "code": "UP"
+  },
+  {
+    "countryCode": "IN",
+    "name": "Uttarakhand",
+    "native": "उत्तराखंड",
+    "zh": "北阿坎德邦",
+    "code": "UK"
+  },
+  {
+    "countryCode": "IN",
+    "name": "West Bengal",
+    "native": "पश्चिम बंगाल",
+    "zh": "西孟加拉邦",
+    "code": "WB"
+  },
+  {
+    "countryCode": "IT",
+    "name": "Abruzzo",
+    "native": "Abruzzo",
+    "zh": "阿布鲁佐",
+    "code": "65"
+  },
+  {
+    "countryCode": "IT",
+    "name": "Aosta Valley",
+    "native": "Usando",
+    "zh": "瓦莱达奥斯塔",
+    "code": "23"
+  },
+  {
+    "countryCode": "IT",
+    "name": "Apulia",
+    "native": "Apulia",
+    "zh": "普利亚",
+    "code": "75"
+  },
+  {
+    "countryCode": "IT",
+    "name": "Basilicata",
+    "native": "Basilicata",
+    "zh": "巴西利卡塔",
+    "code": "77"
+  },
+  {
+    "countryCode": "IT",
+    "name": "Calabria",
+    "native": "Calabria",
+    "zh": "卡拉布里亚",
+    "code": "78"
+  },
+  {
+    "countryCode": "IT",
+    "name": "Campania",
+    "native": "Campania",
+    "zh": "坎帕尼亚",
+    "code": "72"
+  },
+  {
+    "countryCode": "IT",
+    "name": "Emilia-Romagna",
+    "native": "Emilia-Romagna",
+    "zh": "艾米利亚-罗马涅",
+    "code": "45"
+  },
+  {
+    "countryCode": "IT",
+    "name": "Friuli–Venezia Giulia",
+    "native": "Friuli–Venezia Giulia",
+    "zh": "弗留利-威尼斯朱利亚",
+    "code": "36"
+  },
+  {
+    "countryCode": "IT",
+    "name": "Lazio",
+    "native": "Lazio",
+    "zh": "拉齐奥",
+    "code": "62"
+  },
+  {
+    "countryCode": "IT",
+    "name": "Liguria",
+    "native": "Liguria",
+    "zh": "利古里亚",
+    "code": "42"
+  },
+  {
+    "countryCode": "IT",
+    "name": "Lombardy",
+    "native": "Lombardia",
+    "zh": "伦巴第",
+    "code": "25"
+  },
+  {
+    "countryCode": "IT",
+    "name": "Marche",
+    "native": "Marche",
+    "zh": "马尔凯",
+    "code": "57"
+  },
+  {
+    "countryCode": "IT",
+    "name": "Molise",
+    "native": "Molise",
+    "zh": "莫利塞",
+    "code": "67"
+  },
+  {
+    "countryCode": "IT",
+    "name": "Piedmont",
+    "native": "Piemonte",
+    "zh": "皮埃蒙特",
+    "code": "21"
+  },
+  {
+    "countryCode": "IT",
+    "name": "Sardinia",
+    "native": "Sardegna",
+    "zh": "撒丁岛",
+    "code": "88"
+  },
+  {
+    "countryCode": "IT",
+    "name": "Sicily",
+    "native": "Sicilia",
+    "zh": "西西里岛",
+    "code": "82"
+  },
+  {
+    "countryCode": "IT",
+    "name": "Trentino-South Tyrol",
+    "native": "Trentino-sud Tyrol",
+    "zh": "特伦蒂诺-南蒂罗尔",
+    "code": "32"
+  },
+  {
+    "countryCode": "IT",
+    "name": "Tuscany",
+    "native": "Toscana",
+    "zh": "托斯卡纳",
+    "code": "52"
+  },
+  {
+    "countryCode": "IT",
+    "name": "Umbria",
+    "native": "Umbria",
+    "zh": "翁布里亚",
+    "code": "55"
+  },
+  {
+    "countryCode": "IT",
+    "name": "Veneto",
+    "native": "Veneto",
+    "zh": "威尼托",
+    "code": "34"
+  },
+  {
+    "countryCode": "JP",
+    "name": "Aichi",
+    "native": "愛知",
+    "zh": "爱知县",
+    "code": "23"
+  },
+  {
+    "countryCode": "JP",
+    "name": "Akita",
+    "native": "秋田",
+    "zh": "秋田",
+    "code": "05"
+  },
+  {
+    "countryCode": "JP",
+    "name": "Aomori",
+    "native": "青森",
+    "zh": "青森",
+    "code": "02"
+  },
+  {
+    "countryCode": "JP",
+    "name": "Chiba",
+    "native": "千葉",
+    "zh": "千叶",
+    "code": "12"
+  },
+  {
+    "countryCode": "JP",
+    "name": "Ehime",
+    "native": "愛媛",
+    "zh": "爱媛县",
+    "code": "38"
+  },
+  {
+    "countryCode": "JP",
+    "name": "Fukui",
+    "native": "福井",
+    "zh": "福井",
+    "code": "18"
+  },
+  {
+    "countryCode": "JP",
+    "name": "Fukuoka",
+    "native": "福岡",
+    "zh": "福冈",
+    "code": "40"
+  },
+  {
+    "countryCode": "JP",
+    "name": "Fukushima",
+    "native": "福島",
+    "zh": "福岛",
+    "code": "07"
+  },
+  {
+    "countryCode": "JP",
+    "name": "Gifu",
+    "native": "岐阜",
+    "zh": "岐阜",
+    "code": "21"
+  },
+  {
+    "countryCode": "JP",
+    "name": "Gunma",
+    "native": "群馬",
+    "zh": "群马县",
+    "code": "10"
+  },
+  {
+    "countryCode": "JP",
+    "name": "Hiroshima",
+    "native": "広島",
+    "zh": "广岛",
+    "code": "34"
+  },
+  {
+    "countryCode": "JP",
+    "name": "Hokkaidō",
+    "native": "北海道",
+    "zh": "北海道",
+    "code": "01"
+  },
+  {
+    "countryCode": "JP",
+    "name": "Hyōgo",
+    "native": "兵庫県",
+    "zh": "兵库县",
+    "code": "28"
+  },
+  {
+    "countryCode": "JP",
+    "name": "Ibaraki",
+    "native": "茨城",
+    "zh": "茨城",
+    "code": "08"
+  },
+  {
+    "countryCode": "JP",
+    "name": "Ishikawa",
+    "native": "石川",
+    "zh": "石川",
+    "code": "17"
+  },
+  {
+    "countryCode": "JP",
+    "name": "Iwate",
+    "native": "岩手",
+    "zh": "岩手县",
+    "code": "03"
+  },
+  {
+    "countryCode": "JP",
+    "name": "Kagawa",
+    "native": "香川",
+    "zh": "香川",
+    "code": "37"
+  },
+  {
+    "countryCode": "JP",
+    "name": "Kagoshima",
+    "native": "鹿児島",
+    "zh": "鹿儿岛",
+    "code": "46"
+  },
+  {
+    "countryCode": "JP",
+    "name": "Kanagawa",
+    "native": "神奈川",
+    "zh": "神奈川县",
+    "code": "14"
+  },
+  {
+    "countryCode": "JP",
+    "name": "Kōchi",
+    "native": "高知",
+    "zh": "高知",
+    "code": "39"
+  },
+  {
+    "countryCode": "JP",
+    "name": "Kumamoto",
+    "native": "熊本",
+    "zh": "熊本",
+    "code": "43"
+  },
+  {
+    "countryCode": "JP",
+    "name": "Kyōto",
+    "native": "京都",
+    "zh": "京都",
+    "code": "26"
+  },
+  {
+    "countryCode": "JP",
+    "name": "Mie",
+    "native": "三重",
+    "zh": "三重县",
+    "code": "24"
+  },
+  {
+    "countryCode": "JP",
+    "name": "Miyagi",
+    "native": "宮城県",
+    "zh": "宫城",
+    "code": "04"
+  },
+  {
+    "countryCode": "JP",
+    "name": "Miyazaki",
+    "native": "宮崎",
+    "zh": "宫崎",
+    "code": "45"
+  },
+  {
+    "countryCode": "JP",
+    "name": "Nagano",
+    "native": "長野",
+    "zh": "长野",
+    "code": "20"
+  },
+  {
+    "countryCode": "JP",
+    "name": "Nagasaki",
+    "native": "長崎",
+    "zh": "长崎",
+    "code": "42"
+  },
+  {
+    "countryCode": "JP",
+    "name": "Nara",
+    "native": "奈良",
+    "zh": "奈良",
+    "code": "29"
+  },
+  {
+    "countryCode": "JP",
+    "name": "Niigata",
+    "native": "新潟",
+    "zh": "新潟",
+    "code": "15"
+  },
+  {
+    "countryCode": "JP",
+    "name": "Ōita",
+    "native": "大分",
+    "zh": "大分",
+    "code": "44"
+  },
+  {
+    "countryCode": "JP",
+    "name": "Okayama",
+    "native": "岡山",
+    "zh": "冈山",
+    "code": "33"
+  },
+  {
+    "countryCode": "JP",
+    "name": "Okinawa",
+    "native": "沖縄",
+    "zh": "冲绳",
+    "code": "47"
+  },
+  {
+    "countryCode": "JP",
+    "name": "Ōsaka",
+    "native": "大阪",
+    "zh": "大阪",
+    "code": "27"
+  },
+  {
+    "countryCode": "JP",
+    "name": "Saga",
+    "native": "佐賀",
+    "zh": "佐贺",
+    "code": "41"
+  },
+  {
+    "countryCode": "JP",
+    "name": "Saitama",
+    "native": "埼玉",
+    "zh": "埼玉",
+    "code": "11"
+  },
+  {
+    "countryCode": "JP",
+    "name": "Shiga",
+    "native": "滋賀",
+    "zh": "滋贺",
+    "code": "25"
+  },
+  {
+    "countryCode": "JP",
+    "name": "Shimane",
+    "native": "島根",
+    "zh": "岛根县",
+    "code": "32"
+  },
+  {
+    "countryCode": "JP",
+    "name": "Shizuoka",
+    "native": "静岡",
+    "zh": "静冈",
+    "code": "22"
+  },
+  {
+    "countryCode": "JP",
+    "name": "Tochigi",
+    "native": "栃木県",
+    "zh": "栃木",
+    "code": "09"
+  },
+  {
+    "countryCode": "JP",
+    "name": "Tokushima",
+    "native": "徳島",
+    "zh": "德岛",
+    "code": "36"
+  },
+  {
+    "countryCode": "JP",
+    "name": "Tokyo",
+    "native": "東京",
+    "zh": "东京",
+    "code": "13"
+  },
+  {
+    "countryCode": "JP",
+    "name": "Tottori",
+    "native": "鳥取",
+    "zh": "鸟取",
+    "code": "31"
+  },
+  {
+    "countryCode": "JP",
+    "name": "Toyama",
+    "native": "富山",
+    "zh": "富山",
+    "code": "16"
+  },
+  {
+    "countryCode": "JP",
+    "name": "Wakayama",
+    "native": "和歌山",
+    "zh": "和歌山",
+    "code": "30"
+  },
+  {
+    "countryCode": "JP",
+    "name": "Yamagata",
+    "native": "山形",
+    "zh": "山形",
+    "code": "06"
+  },
+  {
+    "countryCode": "JP",
+    "name": "Yamaguchi",
+    "native": "山口",
+    "zh": "山口",
+    "code": "35"
+  },
+  {
+    "countryCode": "JP",
+    "name": "Yamanashi",
+    "native": "山梨",
+    "zh": "山梨县",
+    "code": "19"
+  },
+  {
+    "countryCode": "KR",
+    "name": "Busan",
+    "native": "부산",
+    "zh": "釜山",
+    "code": "26"
+  },
+  {
+    "countryCode": "KR",
+    "name": "Daegu",
+    "native": "대구",
+    "zh": "大邱",
+    "code": "27"
+  },
+  {
+    "countryCode": "KR",
+    "name": "Daejeon",
+    "native": "대전",
+    "zh": "大田",
+    "code": "30"
+  },
+  {
+    "countryCode": "KR",
+    "name": "Gangwon",
+    "native": "강원도",
+    "zh": "江原道",
+    "code": "42"
+  },
+  {
+    "countryCode": "KR",
+    "name": "Gwangju",
+    "native": "광주",
+    "zh": "光州",
+    "code": "29"
+  },
+  {
+    "countryCode": "KR",
+    "name": "Gyeonggi",
+    "native": "경기도",
+    "zh": "京畿道",
+    "code": "41"
+  },
+  {
+    "countryCode": "KR",
+    "name": "Incheon",
+    "native": "인천",
+    "zh": "仁川",
+    "code": "28"
+  },
+  {
+    "countryCode": "KR",
+    "name": "Jeju",
+    "native": "제주",
+    "zh": "济州岛",
+    "code": "49"
+  },
+  {
+    "countryCode": "KR",
+    "name": "North Chungcheong",
+    "native": "충청북도",
+    "zh": "忠清北道",
+    "code": "43"
+  },
+  {
+    "countryCode": "KR",
+    "name": "North Gyeongsang",
+    "native": "경상북도",
+    "zh": "庆尚北道",
+    "code": "47"
+  },
+  {
+    "countryCode": "KR",
+    "name": "North Jeolla",
+    "native": "전라북도",
+    "zh": "全罗北道",
+    "code": "45"
+  },
+  {
+    "countryCode": "KR",
+    "name": "Sejong City",
+    "native": "세종시",
+    "zh": "世宗特别行政区",
+    "code": "50"
+  },
+  {
+    "countryCode": "KR",
+    "name": "Seoul",
+    "native": "서울",
+    "zh": "汉城",
+    "code": "11"
+  },
+  {
+    "countryCode": "KR",
+    "name": "South Chungcheong",
+    "native": "충청남도",
+    "zh": "忠清南道",
+    "code": "44"
+  },
+  {
+    "countryCode": "KR",
+    "name": "South Gyeongsang",
+    "native": "경상남도",
+    "zh": "庆尚南道",
+    "code": "48"
+  },
+  {
+    "countryCode": "KR",
+    "name": "South Jeolla",
+    "native": "전라남도",
+    "zh": "全罗南道",
+    "code": "46"
+  },
+  {
+    "countryCode": "KR",
+    "name": "Ulsan",
+    "native": "울산",
+    "zh": "蔚山",
+    "code": "31"
+  },
+  {
+    "countryCode": "MX",
+    "name": "Aguascalientes",
+    "native": "Aguascalientes",
+    "zh": "阿瓜斯卡连特斯",
+    "code": "AGU"
+  },
+  {
+    "countryCode": "MX",
+    "name": "Baja California",
+    "native": "Baja California",
+    "zh": "下加利福尼亚州",
+    "code": "BCN"
+  },
+  {
+    "countryCode": "MX",
+    "name": "Baja California Sur",
+    "native": "Baja California Sur",
+    "zh": "南下加利福尼亚州",
+    "code": "BCS"
+  },
+  {
+    "countryCode": "MX",
+    "name": "Campeche",
+    "native": "Campeche",
+    "zh": "坎佩切",
+    "code": "CAM"
+  },
+  {
+    "countryCode": "MX",
+    "name": "Chiapas",
+    "native": "Chiapas",
+    "zh": "恰帕斯州",
+    "code": "CHP"
+  },
+  {
+    "countryCode": "MX",
+    "name": "Chihuahua",
+    "native": "Chihuahua",
+    "zh": "吉娃娃",
+    "code": "CHH"
+  },
+  {
+    "countryCode": "MX",
+    "name": "Ciudad de México",
+    "native": "Ciudad de México",
+    "zh": "墨西哥城",
+    "code": "CMX"
+  },
+  {
+    "countryCode": "MX",
+    "name": "Coahuila de Zaragoza",
+    "native": "Coahuila de Zaragoza",
+    "zh": "科阿韦拉-德萨拉戈萨",
+    "code": "COA"
+  },
+  {
+    "countryCode": "MX",
+    "name": "Colima",
+    "native": "Colima",
+    "zh": "科利马",
+    "code": "COL"
+  },
+  {
+    "countryCode": "MX",
+    "name": "Durango",
+    "native": "Durango",
+    "zh": "杜兰戈",
+    "code": "DUR"
+  },
+  {
+    "countryCode": "MX",
+    "name": "Estado de México",
+    "native": "Estado de México",
+    "zh": "墨西哥州",
+    "code": "MEX"
+  },
+  {
+    "countryCode": "MX",
+    "name": "Guanajuato",
+    "native": "Guanajuato",
+    "zh": "瓜纳华托",
+    "code": "GUA"
+  },
+  {
+    "countryCode": "MX",
+    "name": "Guerrero",
+    "native": "Guerrero",
+    "zh": "格雷罗",
+    "code": "GRO"
+  },
+  {
+    "countryCode": "MX",
+    "name": "Hidalgo",
+    "native": "Hidalgo",
+    "zh": "伊达尔戈",
+    "code": "HID"
+  },
+  {
+    "countryCode": "MX",
+    "name": "Jalisco",
+    "native": "Jalisco",
+    "zh": "哈利斯科州",
+    "code": "JAL"
+  },
+  {
+    "countryCode": "MX",
+    "name": "Michoacán de Ocampo",
+    "native": "Michoacán de Ocampo",
+    "zh": "米却肯州奥坎波",
+    "code": "MIC"
+  },
+  {
+    "countryCode": "MX",
+    "name": "Morelos",
+    "native": "Morelos",
+    "zh": "莫雷洛斯州",
+    "code": "MOR"
+  },
+  {
+    "countryCode": "MX",
+    "name": "Nayarit",
+    "native": "Nayarit",
+    "zh": "纳亚里特州",
+    "code": "NAY"
+  },
+  {
+    "countryCode": "MX",
+    "name": "Nuevo León",
+    "native": "Nuevo León",
+    "zh": "新莱昂州",
+    "code": "NLE"
+  },
+  {
+    "countryCode": "MX",
+    "name": "Oaxaca",
+    "native": "Oaxaca",
+    "zh": "瓦哈卡州",
+    "code": "OAX"
+  },
+  {
+    "countryCode": "MX",
+    "name": "Puebla",
+    "native": "Puebla",
+    "zh": "普埃布拉",
+    "code": "PUE"
+  },
+  {
+    "countryCode": "MX",
+    "name": "Querétaro",
+    "native": "Querétaro",
+    "zh": "克雷塔罗",
+    "code": "QUE"
+  },
+  {
+    "countryCode": "MX",
+    "name": "Quintana Roo",
+    "native": "Quintana Roo",
+    "zh": "金塔纳罗奥州",
+    "code": "ROO"
+  },
+  {
+    "countryCode": "MX",
+    "name": "San Luis Potosí",
+    "native": "San Luis Potosí",
+    "zh": "圣路易斯波托西",
+    "code": "SLP"
+  },
+  {
+    "countryCode": "MX",
+    "name": "Sinaloa",
+    "native": "Sinaloa",
+    "zh": "锡那罗亚州",
+    "code": "SIN"
+  },
+  {
+    "countryCode": "MX",
+    "name": "Sonora",
+    "native": "Sonora",
+    "zh": "索诺拉",
+    "code": "SON"
+  },
+  {
+    "countryCode": "MX",
+    "name": "Tabasco",
+    "native": "Tabasco",
+    "zh": "塔巴斯科",
+    "code": "TAB"
+  },
+  {
+    "countryCode": "MX",
+    "name": "Tamaulipas",
+    "native": "Tamaulipas",
+    "zh": "塔毛利帕斯州",
+    "code": "TAM"
+  },
+  {
+    "countryCode": "MX",
+    "name": "Tlaxcala",
+    "native": "Tlaxcala",
+    "zh": "特拉斯卡拉",
+    "code": "TLA"
+  },
+  {
+    "countryCode": "MX",
+    "name": "Veracruz de Ignacio de la Llave",
+    "native": "Veracruz de Ignacio de la Llave",
+    "zh": "韦拉克鲁斯·德·伊格纳西奥·德拉·拉韦",
+    "code": "VER"
+  },
+  {
+    "countryCode": "MX",
+    "name": "Yucatán",
+    "native": "Yucatán",
+    "zh": "尤卡坦州",
+    "code": "YUC"
+  },
+  {
+    "countryCode": "MX",
+    "name": "Zacatecas",
+    "native": "Zacatecas",
+    "zh": "萨卡特卡斯州",
+    "code": "ZAC"
+  },
+  {
+    "countryCode": "MY",
+    "name": "Johor",
+    "native": "Johor",
+    "zh": "柔佛",
+    "code": "01"
+  },
+  {
+    "countryCode": "MY",
+    "name": "Kedah",
+    "native": "Kedah",
+    "zh": "吉打州",
+    "code": "02"
+  },
+  {
+    "countryCode": "MY",
+    "name": "Kelantan",
+    "native": "Kelantan",
+    "zh": "吉兰丹",
+    "code": "03"
+  },
+  {
+    "countryCode": "MY",
+    "name": "Kuala Lumpur",
+    "native": "Kuala Lumpur",
+    "zh": "吉隆坡",
+    "code": "14"
+  },
+  {
+    "countryCode": "MY",
+    "name": "Labuan",
+    "native": "Labuan",
+    "zh": "纳闽",
+    "code": "15"
+  },
+  {
+    "countryCode": "MY",
+    "name": "Malacca",
+    "native": "Melaka",
+    "zh": "马六甲",
+    "code": "04"
+  },
+  {
+    "countryCode": "MY",
+    "name": "Negeri Sembilan",
+    "native": "Negeri Sembilan",
+    "zh": "森美兰州",
+    "code": "05"
+  },
+  {
+    "countryCode": "MY",
+    "name": "Pahang",
+    "native": "Pahang",
+    "zh": "彭亨州",
+    "code": "06"
+  },
+  {
+    "countryCode": "MY",
+    "name": "Penang",
+    "native": "Pulau Pinang",
+    "zh": "槟城",
+    "code": "07"
+  },
+  {
+    "countryCode": "MY",
+    "name": "Perak",
+    "native": "Perak",
+    "zh": "霹雳州",
+    "code": "08"
+  },
+  {
+    "countryCode": "MY",
+    "name": "Perlis",
+    "native": "Perlis",
+    "zh": "玻璃市",
+    "code": "09"
+  },
+  {
+    "countryCode": "MY",
+    "name": "Putrajaya",
+    "native": "Putrajaya",
+    "zh": "布城",
+    "code": "16"
+  },
+  {
+    "countryCode": "MY",
+    "name": "Sabah",
+    "native": "Sabah",
+    "zh": "沙巴",
+    "code": "12"
+  },
+  {
+    "countryCode": "MY",
+    "name": "Sarawak",
+    "native": "Sarawak",
+    "zh": "砂拉越",
+    "code": "13"
+  },
+  {
+    "countryCode": "MY",
+    "name": "Selangor",
+    "native": "Selangor",
+    "zh": "雪兰莪",
+    "code": "10"
+  },
+  {
+    "countryCode": "MY",
+    "name": "Terengganu",
+    "native": "Terengganu",
+    "zh": "登嘉楼",
+    "code": "11"
+  },
+  {
+    "countryCode": "NG",
+    "name": "Abia",
+    "native": "Abia",
+    "zh": "阿比亚",
+    "code": "AB"
+  },
+  {
+    "countryCode": "NG",
+    "name": "Abuja Federal Capital Territory",
+    "native": "Abuja Federal Capital Territory",
+    "zh": "阿布贾联邦首都特区",
+    "code": "FC"
+  },
+  {
+    "countryCode": "NG",
+    "name": "Adamawa",
+    "native": "Adamawa",
+    "zh": "阿达玛瓦",
+    "code": "AD"
+  },
+  {
+    "countryCode": "NG",
+    "name": "Akwa Ibom",
+    "native": "Immoral",
+    "zh": "阿夸伊博姆州",
+    "code": "AK"
+  },
+  {
+    "countryCode": "NG",
+    "name": "Anambra",
+    "native": "Anambra",
+    "zh": "阿南布拉",
+    "code": "AN"
+  },
+  {
+    "countryCode": "NG",
+    "name": "Bauchi",
+    "native": "Bauchi",
+    "zh": "包奇",
+    "code": "BA"
+  },
+  {
+    "countryCode": "NG",
+    "name": "Bayelsa",
+    "native": "Bayelsa",
+    "zh": "巴耶尔萨州",
+    "code": "BY"
+  },
+  {
+    "countryCode": "NG",
+    "name": "Benue",
+    "native": "Benue",
+    "zh": "贝努埃",
+    "code": "BE"
+  },
+  {
+    "countryCode": "NG",
+    "name": "Borno",
+    "native": "Borno",
+    "zh": "博尔诺",
+    "code": "BO"
+  },
+  {
+    "countryCode": "NG",
+    "name": "Cross River",
+    "native": "Cross River",
+    "zh": "克罗斯河",
+    "code": "CR"
+  },
+  {
+    "countryCode": "NG",
+    "name": "Delta",
+    "native": "Delta",
+    "zh": "三角洲",
+    "code": "DE"
+  },
+  {
+    "countryCode": "NG",
+    "name": "Ebonyi",
+    "native": "Ebonyi",
+    "zh": "埃邦伊",
+    "code": "EB"
+  },
+  {
+    "countryCode": "NG",
+    "name": "Edo",
+    "native": "Or",
+    "zh": "江户",
+    "code": "ED"
+  },
+  {
+    "countryCode": "NG",
+    "name": "Ekiti",
+    "native": "Ekiti",
+    "zh": "埃基蒂",
+    "code": "EK"
+  },
+  {
+    "countryCode": "NG",
+    "name": "Enugu",
+    "native": "Enugu",
+    "zh": "埃努古",
+    "code": "EN"
+  },
+  {
+    "countryCode": "NG",
+    "name": "Gombe",
+    "native": "Gombe",
+    "zh": "贡贝",
+    "code": "GO"
+  },
+  {
+    "countryCode": "NG",
+    "name": "Imo",
+    "native": "Imo",
+    "zh": "伊莫",
+    "code": "IM"
+  },
+  {
+    "countryCode": "NG",
+    "name": "Jigawa",
+    "native": "Jigawa",
+    "zh": "吉加瓦",
+    "code": "JI"
+  },
+  {
+    "countryCode": "NG",
+    "name": "Kaduna",
+    "native": "Kaduna",
+    "zh": "卡杜纳",
+    "code": "KD"
+  },
+  {
+    "countryCode": "NG",
+    "name": "Kano",
+    "native": "Kano",
+    "zh": "卡诺",
+    "code": "KN"
+  },
+  {
+    "countryCode": "NG",
+    "name": "Katsina",
+    "native": "Katsina",
+    "zh": "卡齐纳",
+    "code": "KT"
+  },
+  {
+    "countryCode": "NG",
+    "name": "Kebbi",
+    "native": "Kebbi",
+    "zh": "凯比",
+    "code": "KE"
+  },
+  {
+    "countryCode": "NG",
+    "name": "Kogi",
+    "native": "Kogi",
+    "zh": "小木",
+    "code": "KO"
+  },
+  {
+    "countryCode": "NG",
+    "name": "Kwara",
+    "native": "Kwara",
+    "zh": "夸拉",
+    "code": "KW"
+  },
+  {
+    "countryCode": "NG",
+    "name": "Lagos",
+    "native": "Lagos",
+    "zh": "拉各斯",
+    "code": "LA"
+  },
+  {
+    "countryCode": "NG",
+    "name": "Nasarawa",
+    "native": "Nasarawa",
+    "zh": "纳萨拉瓦",
+    "code": "NA"
+  },
+  {
+    "countryCode": "NG",
+    "name": "Niger",
+    "native": "Niger",
+    "zh": "尼日尔",
+    "code": "NI"
+  },
+  {
+    "countryCode": "NG",
+    "name": "Ogun",
+    "native": "Ogun",
+    "zh": "奥贡",
+    "code": "OG"
+  },
+  {
+    "countryCode": "NG",
+    "name": "Ondo",
+    "native": "Ondo",
+    "zh": "翁多",
+    "code": "ON"
+  },
+  {
+    "countryCode": "NG",
+    "name": "Osun",
+    "native": "Osun",
+    "zh": "奥逊",
+    "code": "OS"
+  },
+  {
+    "countryCode": "NG",
+    "name": "Oyo",
+    "native": "Oyo",
+    "zh": "奥约",
+    "code": "OY"
+  },
+  {
+    "countryCode": "NG",
+    "name": "Plateau",
+    "native": "Plateau",
+    "zh": "高原",
+    "code": "PL"
+  },
+  {
+    "countryCode": "NG",
+    "name": "Rivers",
+    "native": "Rivers",
+    "zh": "河流",
+    "code": "RI"
+  },
+  {
+    "countryCode": "NG",
+    "name": "Sokoto",
+    "native": "Sokoto",
+    "zh": "索科托",
+    "code": "SO"
+  },
+  {
+    "countryCode": "NG",
+    "name": "Taraba",
+    "native": "Taraba",
+    "zh": "塔拉巴",
+    "code": "TA"
+  },
+  {
+    "countryCode": "NG",
+    "name": "Yobe",
+    "native": "Yobe",
+    "zh": "约贝",
+    "code": "YO"
+  },
+  {
+    "countryCode": "NG",
+    "name": "Zamfara",
+    "native": "Zamfara",
+    "zh": "赞法拉",
+    "code": "ZA"
+  },
+  {
+    "countryCode": "NL",
+    "name": "Drenthe",
+    "native": "Drenthe",
+    "zh": "德伦特",
+    "code": "DR"
+  },
+  {
+    "countryCode": "NL",
+    "name": "Flevoland",
+    "native": "Flevoland",
+    "zh": "弗莱福兰省",
+    "code": "FL"
+  },
+  {
+    "countryCode": "NL",
+    "name": "Friesland",
+    "native": "Frieland",
+    "zh": "弗里斯兰",
+    "code": "FR"
+  },
+  {
+    "countryCode": "NL",
+    "name": "Gelderland",
+    "native": "Gelderland",
+    "zh": "海尔德兰省",
+    "code": "GE"
+  },
+  {
+    "countryCode": "NL",
+    "name": "Groningen",
+    "native": "Groningen",
+    "zh": "格罗宁根",
+    "code": "GR"
+  },
+  {
+    "countryCode": "NL",
+    "name": "Limburg",
+    "native": "Limburg",
+    "zh": "林堡",
+    "code": "LI"
+  },
+  {
+    "countryCode": "NL",
+    "name": "North Brabant",
+    "native": "Noord-Brabant",
+    "zh": "北布拉班特省",
+    "code": "NB"
+  },
+  {
+    "countryCode": "NL",
+    "name": "North Holland",
+    "native": "Noord-Holland",
+    "zh": "北荷兰省",
+    "code": "NH"
+  },
+  {
+    "countryCode": "NL",
+    "name": "Overijssel",
+    "native": "Overijssel",
+    "zh": "上艾瑟尔省",
+    "code": "OV"
+  },
+  {
+    "countryCode": "NL",
+    "name": "South Holland",
+    "native": "Zuid -Holland",
+    "zh": "南荷兰",
+    "code": "ZH"
+  },
+  {
+    "countryCode": "NL",
+    "name": "Utrecht",
+    "native": "Utrecht",
+    "zh": "乌得勒支",
+    "code": "UT"
+  },
+  {
+    "countryCode": "NL",
+    "name": "Zeeland",
+    "native": "Zeeland",
+    "zh": "泽兰省",
+    "code": "ZE"
+  },
+  {
+    "countryCode": "PH",
+    "name": "Autonomous Region in Muslim Mindanao",
+    "native": "Autonomous Region in Muslim Mindanao",
+    "zh": "棉兰老穆斯林自治区",
+    "code": "14"
+  },
+  {
+    "countryCode": "PH",
+    "name": "Bicol",
+    "native": "Bicol",
+    "zh": "比科尔",
+    "code": "05"
+  },
+  {
+    "countryCode": "PH",
+    "name": "Cagayan Valley",
+    "native": "Cagayan Valley",
+    "zh": "卡加延河谷",
+    "code": "02"
+  },
+  {
+    "countryCode": "PH",
+    "name": "Calabarzon",
+    "native": "Calabarzon",
+    "zh": "卡拉巴松",
+    "code": "40"
+  },
+  {
+    "countryCode": "PH",
+    "name": "Caraga",
+    "native": "Caraga",
+    "zh": "卡拉加",
+    "code": "13"
+  },
+  {
+    "countryCode": "PH",
+    "name": "Central Luzon",
+    "native": "Central Luzon",
+    "zh": "中吕宋岛",
+    "code": "03"
+  },
+  {
+    "countryCode": "PH",
+    "name": "Central Visayas",
+    "native": "Central Visayas",
+    "zh": "中维萨亚斯",
+    "code": "07"
+  },
+  {
+    "countryCode": "PH",
+    "name": "Cordillera Administrative",
+    "native": "Cordillera Administrative",
+    "zh": "科迪勒拉行政区",
+    "code": "15"
+  },
+  {
+    "countryCode": "PH",
+    "name": "Davao",
+    "native": "Davao",
+    "zh": "达沃",
+    "code": "11"
+  },
+  {
+    "countryCode": "PH",
+    "name": "Eastern Visayas",
+    "native": "Eastern Visayas",
+    "zh": "东维萨亚斯",
+    "code": "08"
+  },
+  {
+    "countryCode": "PH",
+    "name": "Ilocos",
+    "native": "Ilocos",
+    "zh": "伊罗戈斯",
+    "code": "01"
+  },
+  {
+    "countryCode": "PH",
+    "name": "Mimaropa",
+    "native": "Mimaropa",
+    "zh": "米玛洛巴",
+    "code": "41"
+  },
+  {
+    "countryCode": "PH",
+    "name": "National Capital Region (Metro Manila)",
+    "native": "National Capital Region (Metro Manila)",
+    "zh": "国家首都区（马尼拉大都会）",
+    "code": "00"
+  },
+  {
+    "countryCode": "PH",
+    "name": "Northern Mindanao",
+    "native": "Northern Mindanao",
+    "zh": "北棉兰老岛",
+    "code": "10"
+  },
+  {
+    "countryCode": "PH",
+    "name": "Soccsksargen",
+    "native": "Soccsksargen",
+    "zh": "索契",
+    "code": "12"
+  },
+  {
+    "countryCode": "PH",
+    "name": "Western Visayas",
+    "native": "Western Visayas",
+    "zh": "西维萨亚斯",
+    "code": "06"
+  },
+  {
+    "countryCode": "PH",
+    "name": "Zamboanga Peninsula",
+    "native": "Zamboanga Peninsula",
+    "zh": "三宝颜半岛",
+    "code": "09"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Adygea",
+    "native": "Адыгея",
+    "zh": "阿迪格共和国",
+    "code": "AD"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Altai",
+    "native": "Алтай",
+    "zh": "阿尔泰",
+    "code": "ALT"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Altai",
+    "native": "Алтай",
+    "zh": "阿尔泰",
+    "code": "AL"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Amur",
+    "native": "Амур",
+    "zh": "阿穆尔河",
+    "code": "AMU"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Arkhangelsk",
+    "native": "Архангельск",
+    "zh": "阿尔汉格尔斯克",
+    "code": "ARK"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Astrakhan",
+    "native": "Астрахань",
+    "zh": "阿斯特拉罕",
+    "code": "AST"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Bashkortostan",
+    "native": "Башкортостан",
+    "zh": "巴什科尔托斯坦共和国",
+    "code": "BA"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Belgorod",
+    "native": "Белгород",
+    "zh": "别尔哥罗德",
+    "code": "BEL"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Bryansk",
+    "native": "Брянск",
+    "zh": "布良斯克",
+    "code": "BRY"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Buryatia",
+    "native": "Бурятия",
+    "zh": "布里亚特共和国",
+    "code": "BU"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Chechen",
+    "native": "чеченский",
+    "zh": "车臣",
+    "code": "CE"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Chelyabinsk",
+    "native": "Челябинск",
+    "zh": "车里雅宾斯克",
+    "code": "CHE"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Chukotka",
+    "native": "Чукотка",
+    "zh": "楚科奇",
+    "code": "CHU"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Chuvash",
+    "native": "чувашский",
+    "zh": "楚瓦什人",
+    "code": "CU"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Dagestan",
+    "native": "Дагестан",
+    "zh": "达吉斯坦",
+    "code": "DA"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Ingushetia",
+    "native": "Ингушетия",
+    "zh": "印古什共和国",
+    "code": "IN"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Irkutsk",
+    "native": "Иркутск",
+    "zh": "伊尔库茨克",
+    "code": "IRK"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Ivanovo",
+    "native": "Иваново",
+    "zh": "伊万诺沃",
+    "code": "IVA"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Jewish",
+    "native": "еврейский",
+    "zh": "犹太人",
+    "code": "YEV"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Kabardino-Balkar",
+    "native": "Кабардино-Балкарский",
+    "zh": "卡巴尔达-巴尔卡尔",
+    "code": "KB"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Kaliningrad",
+    "native": "Калининград",
+    "zh": "加里宁格勒",
+    "code": "KGD"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Kalmykia",
+    "native": "Калмыкия",
+    "zh": "卡尔梅克共和国",
+    "code": "KL"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Kaluga",
+    "native": "Калуга",
+    "zh": "卡卢加",
+    "code": "KLU"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Kamchatka",
+    "native": "Камчатка",
+    "zh": "堪察加半岛",
+    "code": "KAM"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Karachay-Cherkess",
+    "native": "Карачаево-Черкесская",
+    "zh": "卡拉恰伊-切尔克斯",
+    "code": "KC"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Karelia",
+    "native": "Карелия",
+    "zh": "卡累利阿",
+    "code": "KR"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Kemerovo",
+    "native": "Кемерово",
+    "zh": "克麦罗沃",
+    "code": "KEM"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Khabarovsk",
+    "native": "Хабаровск",
+    "zh": "哈巴罗夫斯克",
+    "code": "KHA"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Khakassia",
+    "native": "Хакасия",
+    "zh": "哈卡斯",
+    "code": "KK"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Khanty-Mansi",
+    "native": "Ханты-Мансийский",
+    "zh": "汉特-曼西",
+    "code": "KHM"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Kirov",
+    "native": "Киров",
+    "zh": "基洛夫",
+    "code": "KIR"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Komi",
+    "native": "Коми",
+    "zh": "古見",
+    "code": "KO"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Kostroma",
+    "native": "Кострома",
+    "zh": "科斯特罗马",
+    "code": "KOS"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Krasnodar",
+    "native": "Краснодар",
+    "zh": "克拉斯诺达尔",
+    "code": "KDA"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Krasnoyarsk",
+    "native": "Красноярск",
+    "zh": "克拉斯诺亚尔斯克",
+    "code": "KYA"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Kurgan",
+    "native": "Курган",
+    "zh": "库尔干",
+    "code": "KGN"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Kursk",
+    "native": "Курск",
+    "zh": "库尔斯克",
+    "code": "KRS"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Leningrad",
+    "native": "Ленинград",
+    "zh": "列宁格勒",
+    "code": "LEN"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Lipetsk",
+    "native": "Липецк",
+    "zh": "利佩茨克",
+    "code": "LIP"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Magadan",
+    "native": "Магадан",
+    "zh": "马加丹",
+    "code": "MAG"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Mari El",
+    "native": "Марий Эл",
+    "zh": "马里埃尔",
+    "code": "ME"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Mordovia",
+    "native": "Мордовия",
+    "zh": "莫尔多瓦",
+    "code": "MO"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Moscow",
+    "native": "Москва",
+    "zh": "莫斯科",
+    "code": "MOS"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Moscow",
+    "native": "Москва",
+    "zh": "莫斯科",
+    "code": "MOW"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Murmansk",
+    "native": "Мурманск",
+    "zh": "摩尔曼斯克",
+    "code": "MUR"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Nenets",
+    "native": "ненецкие",
+    "zh": "涅涅茨人",
+    "code": "NEN"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Nizhny Novgorod",
+    "native": "Нижний Новгород",
+    "zh": "下诺夫哥罗德",
+    "code": "NIZ"
+  },
+  {
+    "countryCode": "RU",
+    "name": "North Ossetia-Alania",
+    "native": "Северная Осетия-Алания",
+    "zh": "北奥塞梯-阿兰共和国",
+    "code": "SE"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Novgorod",
+    "native": "Новгород",
+    "zh": "诺夫哥罗德",
+    "code": "NGR"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Novosibirsk",
+    "native": "Новосибирск",
+    "zh": "新西伯利亚",
+    "code": "NVS"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Omsk",
+    "native": "Омск",
+    "zh": "鄂木斯克",
+    "code": "OMS"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Orenburg",
+    "native": "Оренбург",
+    "zh": "奥伦堡",
+    "code": "ORE"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Oryol",
+    "native": "Орел",
+    "zh": "奥廖尔",
+    "code": "ORL"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Penza",
+    "native": "Пенза",
+    "zh": "奔萨",
+    "code": "PNZ"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Perm",
+    "native": "Пермь",
+    "zh": "彼尔姆",
+    "code": "PER"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Primorsky",
+    "native": "Приморский",
+    "zh": "滨海边疆区",
+    "code": "PRI"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Pskov",
+    "native": "Псков",
+    "zh": "普斯科夫",
+    "code": "PSK"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Rostov",
+    "native": "Ростов",
+    "zh": "罗斯托夫",
+    "code": "ROS"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Ryazan",
+    "native": "Рязань",
+    "zh": "梁赞",
+    "code": "RYA"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Saint Petersburg",
+    "native": "Санкт-Петербург",
+    "zh": "圣彼得堡",
+    "code": "SPE"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Sakha",
+    "native": "Саха",
+    "zh": "萨哈",
+    "code": "SA"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Sakhalin",
+    "native": "Сахалин",
+    "zh": "萨哈林岛",
+    "code": "SAK"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Samara",
+    "native": "Самара",
+    "zh": "萨马拉",
+    "code": "SAM"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Saratov",
+    "native": "Саратов",
+    "zh": "萨拉托夫",
+    "code": "SAR"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Smolensk",
+    "native": "Смоленск",
+    "zh": "斯摩棱斯克",
+    "code": "SMO"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Stavropol",
+    "native": "Ставрополь",
+    "zh": "斯塔夫罗波尔",
+    "code": "STA"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Sverdlovsk",
+    "native": "Свердловск",
+    "zh": "斯维尔德洛夫斯克",
+    "code": "SVE"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Tambov",
+    "native": "Тамбов",
+    "zh": "坦波夫",
+    "code": "TAM"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Tatarstan",
+    "native": "Татарстан",
+    "zh": "鞑靼斯坦",
+    "code": "TA"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Tomsk",
+    "native": "Томск",
+    "zh": "托木斯克",
+    "code": "TOM"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Tula",
+    "native": "Тула",
+    "zh": "图拉",
+    "code": "TUL"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Tuva",
+    "native": "Тува",
+    "zh": "图瓦",
+    "code": "TY"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Tver",
+    "native": "Тверь",
+    "zh": "特维尔",
+    "code": "TVE"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Tyumen",
+    "native": "Тюмень",
+    "zh": "秋明",
+    "code": "TYU"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Udmurt",
+    "native": "удмуртский",
+    "zh": "乌德穆尔特",
+    "code": "UD"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Ulyanovsk",
+    "native": "Ульяновск",
+    "zh": "乌里扬诺夫斯克",
+    "code": "ULY"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Vladimir",
+    "native": "Владимир",
+    "zh": "弗拉基米尔",
+    "code": "VLA"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Volgograd Oblast",
+    "native": "Волгоградская область",
+    "zh": "伏尔加格勒州",
+    "code": "VGG"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Vologda",
+    "native": "Вологда",
+    "zh": "沃洛格达",
+    "code": "VLG"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Voronezh",
+    "native": "Воронеж",
+    "zh": "沃罗涅日",
+    "code": "VOR"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Yamalo-Nenets",
+    "native": "Ямало-Ненецкий",
+    "zh": "亚马尔-涅涅茨",
+    "code": "YAN"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Yaroslavl",
+    "native": "Ярославль",
+    "zh": "雅罗斯拉夫尔",
+    "code": "YAR"
+  },
+  {
+    "countryCode": "RU",
+    "name": "Zabaykalsky",
+    "native": "Забайкальский",
+    "zh": "外贝加尔地区",
+    "code": "ZAB"
+  },
+  {
+    "countryCode": "SA",
+    "name": "Al Bahah",
+    "native": "الباحة",
+    "zh": "艾尔巴哈",
+    "code": "11"
+  },
+  {
+    "countryCode": "SA",
+    "name": "Al Jawf",
+    "native": "الجوف",
+    "zh": "焦夫",
+    "code": "12"
+  },
+  {
+    "countryCode": "SA",
+    "name": "Al Madinah",
+    "native": "المدينة المنورة",
+    "zh": "麦地那",
+    "code": "03"
+  },
+  {
+    "countryCode": "SA",
+    "name": "Al-Qassim",
+    "native": "القصيم",
+    "zh": "卡西姆",
+    "code": "05"
+  },
+  {
+    "countryCode": "SA",
+    "name": "Asir",
+    "native": "عسير",
+    "zh": "阿西尔",
+    "code": "14"
+  },
+  {
+    "countryCode": "SA",
+    "name": "Eastern Province",
+    "native": "المنطقة الشرقية",
+    "zh": "东部省",
+    "code": "04"
+  },
+  {
+    "countryCode": "SA",
+    "name": "Ha'il",
+    "native": "يشيد",
+    "zh": "冰雹",
+    "code": "06"
+  },
+  {
+    "countryCode": "SA",
+    "name": "Jizan",
+    "native": "جيزان",
+    "zh": "吉赞",
+    "code": "09"
+  },
+  {
+    "countryCode": "SA",
+    "name": "Makkah",
+    "native": "مكة المكرمة",
+    "zh": "麦加",
+    "code": "02"
+  },
+  {
+    "countryCode": "SA",
+    "name": "Najran",
+    "native": "نجران",
+    "zh": "纳季兰",
+    "code": "10"
+  },
+  {
+    "countryCode": "SA",
+    "name": "Northern Borders",
+    "native": "الحدود الشمالية",
+    "zh": "北部边界",
+    "code": "08"
+  },
+  {
+    "countryCode": "SA",
+    "name": "Riyadh",
+    "native": "الرياض",
+    "zh": "利雅得",
+    "code": "01"
+  },
+  {
+    "countryCode": "SA",
+    "name": "Tabuk",
+    "native": "تبوك",
+    "zh": "塔布克",
+    "code": "07"
+  },
+  {
+    "countryCode": "SG",
+    "name": "Central Singapore",
+    "native": "Central Singapore",
+    "zh": "新加坡中部",
+    "code": "01"
+  },
+  {
+    "countryCode": "SG",
+    "name": "North East",
+    "native": "North East",
+    "zh": "东北",
+    "code": "02"
+  },
+  {
+    "countryCode": "SG",
+    "name": "North West",
+    "native": "North West",
+    "zh": "西北",
+    "code": "03"
+  },
+  {
+    "countryCode": "SG",
+    "name": "South East",
+    "native": "South East",
+    "zh": "东南",
+    "code": "04"
+  },
+  {
+    "countryCode": "SG",
+    "name": "South West",
+    "native": "South West",
+    "zh": "西南",
+    "code": "05"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Amnat Charoen",
+    "native": "อำนาจเจริญ",
+    "zh": "安纳乍能",
+    "code": "37"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Ang Thong",
+    "native": "อ่างทอง",
+    "zh": "安通",
+    "code": "15"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Bangkok",
+    "native": "กรุงเทพฯ",
+    "zh": "曼谷",
+    "code": "10"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Bueng Kan",
+    "native": "บึงกาฬ",
+    "zh": "汶干",
+    "code": "38"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Buri Ram",
+    "native": "บุรีรัมย์",
+    "zh": "武里南",
+    "code": "31"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Chachoengsao",
+    "native": "ฉะเชิงเทรา",
+    "zh": "北柳府",
+    "code": "24"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Chai Nat",
+    "native": "ชัยนาท",
+    "zh": "猜纳",
+    "code": "18"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Chaiyaphum",
+    "native": "ชัยภูมิ",
+    "zh": "猜也奔府",
+    "code": "36"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Chanthaburi",
+    "native": "จันทบุรี",
+    "zh": "尖竹汶府",
+    "code": "22"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Chiang Mai",
+    "native": "เชียงใหม่",
+    "zh": "清迈",
+    "code": "50"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Chiang Rai",
+    "native": "เชียงราย",
+    "zh": "清莱",
+    "code": "57"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Chon Buri",
+    "native": "ชลบุรี",
+    "zh": "春武里府",
+    "code": "20"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Chumphon",
+    "native": "ชุมพร",
+    "zh": "春蓬",
+    "code": "86"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Kalasin",
+    "native": "กาฬสินธุ์",
+    "zh": "加拉信",
+    "code": "46"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Kamphaeng Phet",
+    "native": "กำแพงเพชร",
+    "zh": "甘烹碧府",
+    "code": "62"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Kanchanaburi",
+    "native": "กาญจนบุรี",
+    "zh": "北碧府",
+    "code": "71"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Khon Kaen",
+    "native": "ขอนแก่น",
+    "zh": "孔敬府",
+    "code": "40"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Krabi",
+    "native": "กระบี่",
+    "zh": "甲米",
+    "code": "81"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Lampang",
+    "native": "ลำปาง",
+    "zh": "南邦府",
+    "code": "52"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Lamphun",
+    "native": "ลำพูน",
+    "zh": "南奔",
+    "code": "51"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Loei",
+    "native": "เลย",
+    "zh": "黎府",
+    "code": "42"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Lop Buri",
+    "native": "ลพบุรี",
+    "zh": "华富里府",
+    "code": "16"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Mae Hong Son",
+    "native": "แม่ฮ่องสอน",
+    "zh": "湄宏顺",
+    "code": "58"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Maha Sarakham",
+    "native": "มหาสารคาม",
+    "zh": "玛哈沙拉堪",
+    "code": "44"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Mukdahan",
+    "native": "มุกดาหาร",
+    "zh": "穆达汉",
+    "code": "49"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Nakhon Nayok",
+    "native": "นครนายก",
+    "zh": "那空那育",
+    "code": "26"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Nakhon Pathom",
+    "native": "นครปฐม",
+    "zh": "佛统府",
+    "code": "73"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Nakhon Phanom",
+    "native": "นครพนม",
+    "zh": "那空帕侬",
+    "code": "48"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Nakhon Ratchasima",
+    "native": "นครราชสีมา",
+    "zh": "呵叻府",
+    "code": "30"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Nakhon Sawan",
+    "native": "นครสวรรค์",
+    "zh": "那空沙旺",
+    "code": "60"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Nakhon Si Thammarat",
+    "native": "นครศรีธรรมราช",
+    "zh": "洛坤府",
+    "code": "80"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Nan",
+    "native": "แนน",
+    "zh": "南",
+    "code": "55"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Narathiwat",
+    "native": "นราธิวาส",
+    "zh": "那拉提瓦",
+    "code": "96"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Nong Bua Lam Phu",
+    "native": "หนองบัวลำภู",
+    "zh": "廊布兰普",
+    "code": "39"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Nong Khai",
+    "native": "หนองคาย",
+    "zh": "廊开",
+    "code": "43"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Nonthaburi",
+    "native": "นนทบุรี",
+    "zh": "暖武里府",
+    "code": "12"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Pathum Thani",
+    "native": "ปทุมธานี",
+    "zh": "巴吞他尼府",
+    "code": "13"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Pattani",
+    "native": "ปัตตานี",
+    "zh": "北大年",
+    "code": "94"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Pattaya",
+    "native": "พัทยา",
+    "zh": "芭堤雅",
+    "code": "S"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Phangnga",
+    "native": "พังงา",
+    "zh": "攀牙府",
+    "code": "82"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Phatthalung",
+    "native": "พัทลุง",
+    "zh": "博他仑",
+    "code": "93"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Phayao",
+    "native": "พะเยา",
+    "zh": "帕尧",
+    "code": "56"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Phetchabun",
+    "native": "เพชรบูรณ์",
+    "zh": "碧差汶",
+    "code": "67"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Phetchaburi",
+    "native": "เพชรบุรี",
+    "zh": "碧武里",
+    "code": "76"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Phichit",
+    "native": "พิจิตร",
+    "zh": "披集府",
+    "code": "66"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Phitsanulok",
+    "native": "พิษณุโลก",
+    "zh": "彭世洛府",
+    "code": "65"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Phra Nakhon Si Ayutthaya",
+    "native": "พระนครศรีอยุธยา",
+    "zh": "大城府",
+    "code": "14"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Phrae",
+    "native": "แพร่",
+    "zh": "帕府",
+    "code": "54"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Phuket",
+    "native": "ภูเก็ต",
+    "zh": "普吉岛",
+    "code": "83"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Prachin Buri",
+    "native": "ปราจีนบุรี",
+    "zh": "巴真武里府",
+    "code": "25"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Prachuap Khiri Khan",
+    "native": "ประจวบคีรีขันธ์",
+    "zh": "巴蜀府",
+    "code": "77"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Ranong",
+    "native": "ระนอง",
+    "zh": "拉廊",
+    "code": "85"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Ratchaburi",
+    "native": "ราชบุรี",
+    "zh": "叻丕府",
+    "code": "70"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Rayong",
+    "native": "ระยอง",
+    "zh": "罗勇府",
+    "code": "21"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Roi Et",
+    "native": "ร้อยเอ็ด",
+    "zh": "黎逸府",
+    "code": "45"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Sa Kaeo",
+    "native": "สระแก้ว",
+    "zh": "沙缴",
+    "code": "27"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Sakon Nakhon",
+    "native": "สกลนคร",
+    "zh": "沙功那空",
+    "code": "47"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Samut Prakan",
+    "native": "สมุทรปราการ",
+    "zh": "北榄府",
+    "code": "11"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Samut Sakhon",
+    "native": "สมุทรสาคร",
+    "zh": "沙没沙空",
+    "code": "74"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Samut Songkhram",
+    "native": "สมุทรสงคราม",
+    "zh": "夜功府",
+    "code": "75"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Saraburi",
+    "native": "สระบุรี",
+    "zh": "沙拉武里府",
+    "code": "19"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Satun",
+    "native": "สตูล",
+    "zh": "沙敦",
+    "code": "91"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Si Sa Ket",
+    "native": "ศรีสะเกษ",
+    "zh": "西沙杰",
+    "code": "33"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Sing Buri",
+    "native": "สิงห์บุรี",
+    "zh": "信武里府",
+    "code": "17"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Songkhla",
+    "native": "สงขลา",
+    "zh": "宋卡",
+    "code": "90"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Sukhothai",
+    "native": "สุโขทัย",
+    "zh": "素可泰",
+    "code": "64"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Suphan Buri",
+    "native": "สุพรรณบุรี",
+    "zh": "素攀武里府",
+    "code": "72"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Surat Thani",
+    "native": "สุราษฎร์ธานี",
+    "zh": "素叻他尼",
+    "code": "84"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Surin",
+    "native": "สุรินทร์",
+    "zh": "素辇府",
+    "code": "32"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Tak",
+    "native": "ตาก",
+    "zh": "德",
+    "code": "63"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Trang",
+    "native": "ตรัง",
+    "zh": "董里",
+    "code": "92"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Trat",
+    "native": "ตราด",
+    "zh": "达叻府",
+    "code": "23"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Ubon Ratchathani",
+    "native": "อุบลราชธานี",
+    "zh": "乌汶叻差他尼",
+    "code": "34"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Udon Thani",
+    "native": "อุดรธานี",
+    "zh": "乌隆他尼",
+    "code": "41"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Uthai Thani",
+    "native": "อุทัยธานี",
+    "zh": "乌泰他尼府",
+    "code": "61"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Uttaradit",
+    "native": "อุตรดิตถ์",
+    "zh": "程逸府",
+    "code": "53"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Yala",
+    "native": "ยะลา",
+    "zh": "亚拉",
+    "code": "95"
+  },
+  {
+    "countryCode": "TH",
+    "name": "Yasothon",
+    "native": "ยโสธร",
+    "zh": "益梭通府",
+    "code": "35"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Adana",
+    "native": "Adana",
+    "zh": "阿达纳",
+    "code": "01"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Adıyaman",
+    "native": "Adıyaman",
+    "zh": "阿德亚曼",
+    "code": "02"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Afyonkarahisar",
+    "native": "Afyonkarahisar",
+    "zh": "阿菲永卡拉希萨尔",
+    "code": "03"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Ağrı",
+    "native": "Ağrı",
+    "zh": "阿勒",
+    "code": "04"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Aksaray",
+    "native": "Aksaray",
+    "zh": "阿克萨赖",
+    "code": "68"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Amasya",
+    "native": "Amasya",
+    "zh": "阿马西亚",
+    "code": "05"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Ankara",
+    "native": "Ankara",
+    "zh": "安卡拉",
+    "code": "06"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Antalya",
+    "native": "Antalya",
+    "zh": "安塔利亚",
+    "code": "07"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Ardahan",
+    "native": "Ardahan",
+    "zh": "阿尔达罕",
+    "code": "75"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Artvin",
+    "native": "Artvin",
+    "zh": "阿尔特温",
+    "code": "08"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Aydın",
+    "native": "Aydın",
+    "zh": "艾登",
+    "code": "09"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Balıkesir",
+    "native": "Balıkesir",
+    "zh": "巴勒克埃西尔",
+    "code": "10"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Bartın",
+    "native": "Bartın",
+    "zh": "巴尔滕",
+    "code": "74"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Batman",
+    "native": "Batman",
+    "zh": "蝙蝠侠",
+    "code": "72"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Bayburt",
+    "native": "Bayburt",
+    "zh": "巴伊布尔特",
+    "code": "69"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Bilecik",
+    "native": "Bilecik",
+    "zh": "比莱吉克",
+    "code": "11"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Bingöl",
+    "native": "Bingöl",
+    "zh": "宾格尔",
+    "code": "12"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Bitlis",
+    "native": "Bitlis",
+    "zh": "比特利斯",
+    "code": "13"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Bolu",
+    "native": "Bolu",
+    "zh": "博卢",
+    "code": "14"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Burdur",
+    "native": "Burdur",
+    "zh": "布尔杜尔",
+    "code": "15"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Bursa",
+    "native": "Bursa",
+    "zh": "囊",
+    "code": "16"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Çanakkale",
+    "native": "Çanakkale",
+    "zh": "恰纳卡莱",
+    "code": "17"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Çankırı",
+    "native": "Çankırı",
+    "zh": "Çankırı",
+    "code": "18"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Çorum",
+    "native": "Çorum",
+    "zh": "乔鲁姆",
+    "code": "19"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Denizli",
+    "native": "Denizli",
+    "zh": "代尼兹利",
+    "code": "20"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Diyarbakır",
+    "native": "Diyarbakır",
+    "zh": "迪亚巴克尔",
+    "code": "21"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Düzce",
+    "native": "Düzce",
+    "zh": "迪兹杰",
+    "code": "81"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Edirne",
+    "native": "Edirne",
+    "zh": "埃迪尔内",
+    "code": "22"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Elazığ",
+    "native": "Elazığ",
+    "zh": "埃拉泽",
+    "code": "23"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Erzincan",
+    "native": "Erzincan",
+    "zh": "埃尔津詹",
+    "code": "24"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Erzurum",
+    "native": "Erzurum",
+    "zh": "埃尔祖鲁姆",
+    "code": "25"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Eskişehir",
+    "native": "Eskişehir",
+    "zh": "埃斯基谢希尔",
+    "code": "26"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Gaziantep",
+    "native": "Gaziantep",
+    "zh": "加济安泰普",
+    "code": "27"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Giresun",
+    "native": "Giresun",
+    "zh": "吉雷松",
+    "code": "28"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Gümüşhane",
+    "native": "Gümüşhane",
+    "zh": "居米什哈内",
+    "code": "29"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Hakkâri",
+    "native": "Hakkâri",
+    "zh": "哈卡里",
+    "code": "30"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Hatay",
+    "native": "Hatay",
+    "zh": "哈塔伊",
+    "code": "31"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Iğdır",
+    "native": "Iğdır",
+    "zh": "厄德尔",
+    "code": "76"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Isparta",
+    "native": "Isparta",
+    "zh": "伊斯帕尔塔",
+    "code": "32"
+  },
+  {
+    "countryCode": "TR",
+    "name": "İstanbul",
+    "native": "İstanbul",
+    "zh": "伊斯坦布尔",
+    "code": "34"
+  },
+  {
+    "countryCode": "TR",
+    "name": "İzmir",
+    "native": "İzmir",
+    "zh": "伊兹密尔",
+    "code": "35"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Kahramanmaraş",
+    "native": "Kahramanmaraş",
+    "zh": "卡赫拉曼马拉什",
+    "code": "46"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Karabük",
+    "native": "Karabük",
+    "zh": "卡拉比克",
+    "code": "78"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Karaman",
+    "native": "Karaman",
+    "zh": "卡拉曼",
+    "code": "70"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Kars",
+    "native": "Karma",
+    "zh": "卡尔斯",
+    "code": "36"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Kastamonu",
+    "native": "Kastamonu",
+    "zh": "卡斯塔莫努",
+    "code": "37"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Kayseri",
+    "native": "Kayseri",
+    "zh": "开塞利",
+    "code": "38"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Kilis",
+    "native": "Kilis",
+    "zh": "基利斯",
+    "code": "79"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Kırıkkale",
+    "native": "Kırıkkale",
+    "zh": "克尔勒卡莱",
+    "code": "71"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Kırklareli",
+    "native": "Kırklareli",
+    "zh": "克尔克拉雷利",
+    "code": "39"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Kırşehir",
+    "native": "Kırşehir",
+    "zh": "克尔谢希尔",
+    "code": "40"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Kocaeli",
+    "native": "Kocaeli",
+    "zh": "科贾埃利",
+    "code": "41"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Konya",
+    "native": "Konya",
+    "zh": "科尼亚",
+    "code": "42"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Kütahya",
+    "native": "Kütahya",
+    "zh": "屈塔希亚",
+    "code": "43"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Malatya",
+    "native": "Malatya",
+    "zh": "马拉蒂亚",
+    "code": "44"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Manisa",
+    "native": "Manisa",
+    "zh": "马尼萨",
+    "code": "45"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Mardin",
+    "native": "Mardin",
+    "zh": "马尔丁",
+    "code": "47"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Mersin",
+    "native": "Mersin",
+    "zh": "梅尔辛",
+    "code": "33"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Muğla",
+    "native": "Muğla",
+    "zh": "穆拉",
+    "code": "48"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Muş",
+    "native": "Muş",
+    "zh": "穆什",
+    "code": "49"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Nevşehir",
+    "native": "Nevşehir",
+    "zh": "内夫谢希尔",
+    "code": "50"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Niğde",
+    "native": "Niğde",
+    "zh": "尼代",
+    "code": "51"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Ordu",
+    "native": "Saat",
+    "zh": "奥尔杜",
+    "code": "52"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Osmaniye",
+    "native": "Osmaniye",
+    "zh": "奥斯曼尼耶",
+    "code": "80"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Rize",
+    "native": "Rize",
+    "zh": "里泽",
+    "code": "53"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Sakarya",
+    "native": "Sakarya",
+    "zh": "萨卡里亚",
+    "code": "54"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Samsun",
+    "native": "Samsun",
+    "zh": "萨姆松",
+    "code": "55"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Şanlıurfa",
+    "native": "Şanlıurfa",
+    "zh": "尚勒乌尔法",
+    "code": "63"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Siirt",
+    "native": "Siirt",
+    "zh": "西尔特",
+    "code": "56"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Sinop",
+    "native": "Sinop",
+    "zh": "锡诺普",
+    "code": "57"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Sivas",
+    "native": "Sivas",
+    "zh": "锡瓦斯",
+    "code": "58"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Şırnak",
+    "native": "Şırnak",
+    "zh": "希纳克",
+    "code": "73"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Tekirdağ",
+    "native": "Tekirdağ",
+    "zh": "泰基尔达",
+    "code": "59"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Tokat",
+    "native": "Tokat",
+    "zh": "托卡特",
+    "code": "60"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Trabzon",
+    "native": "Trabzon",
+    "zh": "特拉布宗",
+    "code": "61"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Tunceli",
+    "native": "Tunceli",
+    "zh": "通杰利",
+    "code": "62"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Uşak",
+    "native": "Uşak",
+    "zh": "乌沙克",
+    "code": "64"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Van",
+    "native": "Van",
+    "zh": "范",
+    "code": "65"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Yalova",
+    "native": "Yalova",
+    "zh": "亚洛瓦",
+    "code": "77"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Yozgat",
+    "native": "Yozgat",
+    "zh": "约兹加特",
+    "code": "66"
+  },
+  {
+    "countryCode": "TR",
+    "name": "Zonguldak",
+    "native": "Zonguldak",
+    "zh": "宗古尔达克",
+    "code": "67"
+  },
+  {
+    "countryCode": "TW",
+    "name": "Changhua",
+    "native": "Changhua",
+    "zh": "彰化",
+    "code": "CHA"
+  },
+  {
+    "countryCode": "TW",
+    "name": "Chiayi",
+    "native": "Chiayi",
+    "zh": "嘉义",
+    "code": "CYI"
+  },
+  {
+    "countryCode": "TW",
+    "name": "Chiayi County",
+    "native": "嘉義縣",
+    "zh": "嘉义县",
+    "code": "CYQ"
+  },
+  {
+    "countryCode": "TW",
+    "name": "Hsinchu",
+    "native": "Hsinchu",
+    "zh": "新竹",
+    "code": "HSZ"
+  },
+  {
+    "countryCode": "TW",
+    "name": "Hsinchu County",
+    "native": "新竹縣",
+    "zh": "新竹县",
+    "code": "HSQ"
+  },
+  {
+    "countryCode": "TW",
+    "name": "Hualien",
+    "native": "Hualien",
+    "zh": "花莲",
+    "code": "HUA"
+  },
+  {
+    "countryCode": "TW",
+    "name": "Kaohsiung",
+    "native": "Kaohsiung",
+    "zh": "高雄",
+    "code": "KHH"
+  },
+  {
+    "countryCode": "TW",
+    "name": "Keelung",
+    "native": "Keelung",
+    "zh": "基隆",
+    "code": "KEE"
+  },
+  {
+    "countryCode": "TW",
+    "name": "Kinmen",
+    "native": "Kinmen",
+    "zh": "金门",
+    "code": "KIN"
+  },
+  {
+    "countryCode": "TW",
+    "name": "Lienchiang",
+    "native": "Lienchiang",
+    "zh": "连江",
+    "code": "LIE"
+  },
+  {
+    "countryCode": "TW",
+    "name": "Miaoli",
+    "native": "Miaoli",
+    "zh": "苗栗",
+    "code": "MIA"
+  },
+  {
+    "countryCode": "TW",
+    "name": "Nantou",
+    "native": "Nantou",
+    "zh": "南投",
+    "code": "NAN"
+  },
+  {
+    "countryCode": "TW",
+    "name": "New Taipei",
+    "native": "New Taipei",
+    "zh": "新北市",
+    "code": "NWT"
+  },
+  {
+    "countryCode": "TW",
+    "name": "Penghu",
+    "native": "Penghu",
+    "zh": "澎湖",
+    "code": "PEN"
+  },
+  {
+    "countryCode": "TW",
+    "name": "Pingtung",
+    "native": "Pingtung",
+    "zh": "屏东",
+    "code": "PIF"
+  },
+  {
+    "countryCode": "TW",
+    "name": "Taichung",
+    "native": "Taichung",
+    "zh": "台中",
+    "code": "TXG"
+  },
+  {
+    "countryCode": "TW",
+    "name": "Tainan",
+    "native": "Tainan",
+    "zh": "台南",
+    "code": "TNN"
+  },
+  {
+    "countryCode": "TW",
+    "name": "Taipei",
+    "native": "Taipei",
+    "zh": "台北",
+    "code": "TPE"
+  },
+  {
+    "countryCode": "TW",
+    "name": "Taitung",
+    "native": "Taitung",
+    "zh": "台东",
+    "code": "TTT"
+  },
+  {
+    "countryCode": "TW",
+    "name": "Taoyuan",
+    "native": "Taoyuan",
+    "zh": "桃园",
+    "code": "TAO"
+  },
+  {
+    "countryCode": "TW",
+    "name": "Yilan",
+    "native": "Yilan",
+    "zh": "宜兰",
+    "code": "ILA"
+  },
+  {
+    "countryCode": "TW",
+    "name": "Yunlin",
+    "native": "Yunlin",
+    "zh": "云林",
+    "code": "YUN"
+  },
+  {
+    "countryCode": "US",
+    "name": "Alabama",
+    "native": "Alabama",
+    "zh": "阿拉巴马州",
+    "code": "AL"
+  },
+  {
+    "countryCode": "US",
+    "name": "Alaska",
+    "native": "Down",
+    "zh": "阿拉斯加州",
+    "code": "AK"
+  },
+  {
+    "countryCode": "US",
+    "name": "American Samoa",
+    "native": "American Samoa",
+    "zh": "美属萨摩亚",
+    "code": "AS"
+  },
+  {
+    "countryCode": "US",
+    "name": "Arizona",
+    "native": "Arizona",
+    "zh": "亚利桑那",
+    "code": "AZ"
+  },
+  {
+    "countryCode": "US",
+    "name": "Arkansas",
+    "native": "Arkansa",
+    "zh": "阿肯色州",
+    "code": "AR"
+  },
+  {
+    "countryCode": "US",
+    "name": "Armed Forces Europe",
+    "native": "Armed Forces Europe",
+    "zh": "Armed Forces Europe",
+    "code": "AE"
+  },
+  {
+    "countryCode": "US",
+    "name": "Armed Forces of the Americas",
+    "native": "Armed Forces of the Americas",
+    "zh": "Armed Forces of the Americas",
+    "code": "AA"
+  },
+  {
+    "countryCode": "US",
+    "name": "Armed Forces Pacific",
+    "native": "Armed Forces Pacific",
+    "zh": "Armed Forces Pacific",
+    "code": "AP"
+  },
+  {
+    "countryCode": "US",
+    "name": "California",
+    "native": "California",
+    "zh": "加利福尼亚州",
+    "code": "CA"
+  },
+  {
+    "countryCode": "US",
+    "name": "Colorado",
+    "native": "Colorado",
+    "zh": "科罗拉多州",
+    "code": "CO"
+  },
+  {
+    "countryCode": "US",
+    "name": "Connecticut",
+    "native": "Connecticut",
+    "zh": "康涅狄格州",
+    "code": "CT"
+  },
+  {
+    "countryCode": "US",
+    "name": "Delaware",
+    "native": "Delaware",
+    "zh": "特拉华州",
+    "code": "DE"
+  },
+  {
+    "countryCode": "US",
+    "name": "District of Columbia",
+    "native": "District of Columbia",
+    "zh": "哥伦比亚特区",
+    "code": "DC"
+  },
+  {
+    "countryCode": "US",
+    "name": "Florida",
+    "native": "Florida",
+    "zh": "佛罗里达",
+    "code": "FL"
+  },
+  {
+    "countryCode": "US",
+    "name": "Georgia",
+    "native": "Georgia",
+    "zh": "乔治亚州",
+    "code": "GA"
+  },
+  {
+    "countryCode": "US",
+    "name": "Guam",
+    "native": "Guam",
+    "zh": "关岛",
+    "code": "GU"
+  },
+  {
+    "countryCode": "US",
+    "name": "Hawaii",
+    "native": "Hawaii",
+    "zh": "夏威夷",
+    "code": "HI"
+  },
+  {
+    "countryCode": "US",
+    "name": "Idaho",
+    "native": "Idaho",
+    "zh": "爱达荷州",
+    "code": "ID"
+  },
+  {
+    "countryCode": "US",
+    "name": "Illinois",
+    "native": "Illinois",
+    "zh": "伊利诺伊州",
+    "code": "IL"
+  },
+  {
+    "countryCode": "US",
+    "name": "Indiana",
+    "native": "Indiana",
+    "zh": "印第安纳州",
+    "code": "IN"
+  },
+  {
+    "countryCode": "US",
+    "name": "Iowa",
+    "native": "Iowa",
+    "zh": "爱荷华州",
+    "code": "IA"
+  },
+  {
+    "countryCode": "US",
+    "name": "Kansas",
+    "native": "Kansas",
+    "zh": "堪萨斯州",
+    "code": "KS"
+  },
+  {
+    "countryCode": "US",
+    "name": "Kentucky",
+    "native": "Kentucky",
+    "zh": "肯塔基州",
+    "code": "KY"
+  },
+  {
+    "countryCode": "US",
+    "name": "Louisiana",
+    "native": "Louisiana",
+    "zh": "路易斯安那州",
+    "code": "LA"
+  },
+  {
+    "countryCode": "US",
+    "name": "Maine",
+    "native": "Maine",
+    "zh": "缅因州",
+    "code": "ME"
+  },
+  {
+    "countryCode": "US",
+    "name": "Maryland",
+    "native": "Maryland",
+    "zh": "马里兰州",
+    "code": "MD"
+  },
+  {
+    "countryCode": "US",
+    "name": "Massachusetts",
+    "native": "Massachusetts",
+    "zh": "马萨诸塞州",
+    "code": "MA"
+  },
+  {
+    "countryCode": "US",
+    "name": "Michigan",
+    "native": "Michigan",
+    "zh": "密歇根州",
+    "code": "MI"
+  },
+  {
+    "countryCode": "US",
+    "name": "Minnesota",
+    "native": "Minnesota",
+    "zh": "明尼苏达州",
+    "code": "MN"
+  },
+  {
+    "countryCode": "US",
+    "name": "Mississippi",
+    "native": "Mississippi",
+    "zh": "密西西比州",
+    "code": "MS"
+  },
+  {
+    "countryCode": "US",
+    "name": "Missouri",
+    "native": "Missouri",
+    "zh": "密苏里州",
+    "code": "MO"
+  },
+  {
+    "countryCode": "US",
+    "name": "Montana",
+    "native": "Montana",
+    "zh": "蒙大拿",
+    "code": "MT"
+  },
+  {
+    "countryCode": "US",
+    "name": "Nebraska",
+    "native": "Nebraska",
+    "zh": "内布拉斯加州",
+    "code": "NE"
+  },
+  {
+    "countryCode": "US",
+    "name": "Nevada",
+    "native": "Nevada",
+    "zh": "内华达州",
+    "code": "NV"
+  },
+  {
+    "countryCode": "US",
+    "name": "New Hampshire",
+    "native": "New Hampshire",
+    "zh": "新罕布什尔",
+    "code": "NH"
+  },
+  {
+    "countryCode": "US",
+    "name": "New Jersey",
+    "native": "New Jersey",
+    "zh": "新泽西州",
+    "code": "NJ"
+  },
+  {
+    "countryCode": "US",
+    "name": "New Mexico",
+    "native": "New Mexico",
+    "zh": "新墨西哥州",
+    "code": "NM"
+  },
+  {
+    "countryCode": "US",
+    "name": "New York",
+    "native": "New York",
+    "zh": "纽约",
+    "code": "NY"
+  },
+  {
+    "countryCode": "US",
+    "name": "North Carolina",
+    "native": "North Carolina",
+    "zh": "北卡罗来纳州",
+    "code": "NC"
+  },
+  {
+    "countryCode": "US",
+    "name": "North Dakota",
+    "native": "North Dakota",
+    "zh": "北达科他州",
+    "code": "ND"
+  },
+  {
+    "countryCode": "US",
+    "name": "Northern Mariana Islands",
+    "native": "Northern Mariana Islands",
+    "zh": "北马里亚纳群岛",
+    "code": "MP"
+  },
+  {
+    "countryCode": "US",
+    "name": "Ohio",
+    "native": "Ohio",
+    "zh": "俄亥俄州",
+    "code": "OH"
+  },
+  {
+    "countryCode": "US",
+    "name": "Oklahoma",
+    "native": "Oklahola",
+    "zh": "俄克拉荷马州",
+    "code": "OK"
+  },
+  {
+    "countryCode": "US",
+    "name": "Oregon",
+    "native": "Oregon",
+    "zh": "俄勒冈州",
+    "code": "OR"
+  },
+  {
+    "countryCode": "US",
+    "name": "Pennsylvania",
+    "native": "Pennsylvania",
+    "zh": "宾夕法尼亚州",
+    "code": "PA"
+  },
+  {
+    "countryCode": "US",
+    "name": "Puerto Rico",
+    "native": "Puerto Rico",
+    "zh": "波多黎各",
+    "code": "PR"
+  },
+  {
+    "countryCode": "US",
+    "name": "Rhode Island",
+    "native": "Rhode Island",
+    "zh": "罗德岛",
+    "code": "RI"
+  },
+  {
+    "countryCode": "US",
+    "name": "South Carolina",
+    "native": "South Carolina",
+    "zh": "南卡罗来纳州",
+    "code": "SC"
+  },
+  {
+    "countryCode": "US",
+    "name": "South Dakota",
+    "native": "South Dakota",
+    "zh": "南达科他州",
+    "code": "SD"
+  },
+  {
+    "countryCode": "US",
+    "name": "Tennessee",
+    "native": "Tennessee",
+    "zh": "田纳西州",
+    "code": "TN"
+  },
+  {
+    "countryCode": "US",
+    "name": "Texas",
+    "native": "Texas",
+    "zh": "德克萨斯州",
+    "code": "TX"
+  },
+  {
+    "countryCode": "US",
+    "name": "United States Minor Outlying Islands",
+    "native": "United States Minor Outlying Islands",
+    "zh": "美国本土外小岛屿",
+    "code": "UM"
+  },
+  {
+    "countryCode": "US",
+    "name": "United States Virgin Islands",
+    "native": "United States Virgin Islands",
+    "zh": "美属维尔京群岛",
+    "code": "VI"
+  },
+  {
+    "countryCode": "US",
+    "name": "Utah",
+    "native": "Utah",
+    "zh": "犹他州",
+    "code": "UT"
+  },
+  {
+    "countryCode": "US",
+    "name": "Vermont",
+    "native": "Vermont",
+    "zh": "佛蒙特",
+    "code": "VT"
+  },
+  {
+    "countryCode": "US",
+    "name": "Virginia",
+    "native": "Virginia",
+    "zh": "弗吉尼亚州",
+    "code": "VA"
+  },
+  {
+    "countryCode": "US",
+    "name": "Washington",
+    "native": "Washington",
+    "zh": "华盛顿",
+    "code": "WA"
+  },
+  {
+    "countryCode": "US",
+    "name": "West Virginia",
+    "native": "West Virginia",
+    "zh": "西弗吉尼亚州",
+    "code": "WV"
+  },
+  {
+    "countryCode": "US",
+    "name": "Wisconsin",
+    "native": "Wisconsin",
+    "zh": "威斯康星州",
+    "code": "WI"
+  },
+  {
+    "countryCode": "US",
+    "name": "Wyoming",
+    "native": "Wyoming",
+    "zh": "怀俄明州",
+    "code": "WY"
+  },
+  {
+    "countryCode": "VN",
+    "name": "An Giang",
+    "native": "An Giang",
+    "zh": "安江",
+    "code": "44"
+  },
+  {
+    "countryCode": "VN",
+    "name": "Bắc Ninh",
+    "native": "Bắc Ninh",
+    "zh": "北宁省",
+    "code": "56"
+  },
+  {
+    "countryCode": "VN",
+    "name": "Cà Mau",
+    "native": "Cà Mau",
+    "zh": "金瓯",
+    "code": "59"
+  },
+  {
+    "countryCode": "VN",
+    "name": "Cần Thơ",
+    "native": "Cần Thơ",
+    "zh": "芹苴市",
+    "code": "CT"
+  },
+  {
+    "countryCode": "VN",
+    "name": "Cao Bằng",
+    "native": "Cao Bằng",
+    "zh": "高平",
+    "code": "04"
+  },
+  {
+    "countryCode": "VN",
+    "name": "Đà Nẵng",
+    "native": "Đà Nẵng",
+    "zh": "Đà Nẵng",
+    "code": "DN"
+  },
+  {
+    "countryCode": "VN",
+    "name": "Đắk Lắk",
+    "native": "Đắk Lắk",
+    "zh": "Đắk Lắk",
+    "code": "33"
+  },
+  {
+    "countryCode": "VN",
+    "name": "Điện Biên",
+    "native": "Điện Biên",
+    "zh": "Điện Biên",
+    "code": "71"
+  },
+  {
+    "countryCode": "VN",
+    "name": "Đồng Nai",
+    "native": "Đồng Nai",
+    "zh": "同奈",
+    "code": "39"
+  },
+  {
+    "countryCode": "VN",
+    "name": "Đồng Tháp",
+    "native": "Đồng Tháp",
+    "zh": "同塔",
+    "code": "45"
+  },
+  {
+    "countryCode": "VN",
+    "name": "Gia Lai",
+    "native": "Gia Lai",
+    "zh": "嘉莱",
+    "code": "30"
+  },
+  {
+    "countryCode": "VN",
+    "name": "Hà Nội",
+    "native": "Hà Nội",
+    "zh": "河内",
+    "code": "HN"
+  },
+  {
+    "countryCode": "VN",
+    "name": "Hà Tĩnh",
+    "native": "Hà Tĩnh",
+    "zh": "河静省",
+    "code": "23"
+  },
+  {
+    "countryCode": "VN",
+    "name": "Hải Phòng",
+    "native": "Hải Phòng",
+    "zh": "海防市",
+    "code": "HP"
+  },
+  {
+    "countryCode": "VN",
+    "name": "Hồ Chí Minh",
+    "native": "Hồ Chí Minh",
+    "zh": "胡志明",
+    "code": "SG"
+  },
+  {
+    "countryCode": "VN",
+    "name": "Hưng Yên",
+    "native": "Hưng Yên",
+    "zh": "兴安省",
+    "code": "66"
+  },
+  {
+    "countryCode": "VN",
+    "name": "Khánh Hòa",
+    "native": "Khánh Hòa",
+    "zh": "庆和省",
+    "code": "34"
+  },
+  {
+    "countryCode": "VN",
+    "name": "Lai Châu",
+    "native": "Lai Châu",
+    "zh": "莱州",
+    "code": "01"
+  },
+  {
+    "countryCode": "VN",
+    "name": "Lâm Đồng",
+    "native": "Lâm Đồng",
+    "zh": "林同",
+    "code": "35"
+  },
+  {
+    "countryCode": "VN",
+    "name": "Lạng Sơn",
+    "native": "Lạng Sơn",
+    "zh": "谅山",
+    "code": "09"
+  },
+  {
+    "countryCode": "VN",
+    "name": "Lào Cai",
+    "native": "Lào Cai",
+    "zh": "老街",
+    "code": "02"
+  },
+  {
+    "countryCode": "VN",
+    "name": "Nghệ An",
+    "native": "Nghệ An",
+    "zh": "乂安省",
+    "code": "22"
+  },
+  {
+    "countryCode": "VN",
+    "name": "Ninh Bình",
+    "native": "Ninh Bình",
+    "zh": "宁平",
+    "code": "18"
+  },
+  {
+    "countryCode": "VN",
+    "name": "Phú Thọ",
+    "native": "Phú Thọ",
+    "zh": "富寿",
+    "code": "68"
+  },
+  {
+    "countryCode": "VN",
+    "name": "Quảng Ngãi",
+    "native": "Quảng Ngãi",
+    "zh": "广义省",
+    "code": "29"
+  },
+  {
+    "countryCode": "VN",
+    "name": "Quảng Ninh",
+    "native": "Quảng Ninh",
+    "zh": "广宁省",
+    "code": "13"
+  },
+  {
+    "countryCode": "VN",
+    "name": "Quảng Trị",
+    "native": "Quảng Trị",
+    "zh": "广治",
+    "code": "25"
+  },
+  {
+    "countryCode": "VN",
+    "name": "Sơn La",
+    "native": "Sơn La",
+    "zh": "山罗",
+    "code": "05"
+  },
+  {
+    "countryCode": "VN",
+    "name": "Tây Ninh",
+    "native": "Tây Ninh",
+    "zh": "西宁省",
+    "code": "37"
+  },
+  {
+    "countryCode": "VN",
+    "name": "Thái Nguyên",
+    "native": "Thái Nguyên",
+    "zh": "太原省",
+    "code": "69"
+  },
+  {
+    "countryCode": "VN",
+    "name": "Thanh Hóa",
+    "native": "Thanh Hóa",
+    "zh": "清化",
+    "code": "21"
+  },
+  {
+    "countryCode": "VN",
+    "name": "Thừa Thiên-Huế",
+    "native": "Thừa Thiên-Huế",
+    "zh": "承天顺化市",
+    "code": "26"
+  },
+  {
+    "countryCode": "VN",
+    "name": "Tuyên Quang",
+    "native": "Tuyên Quang",
+    "zh": "宣光",
+    "code": "07"
+  },
+  {
+    "countryCode": "VN",
+    "name": "Vĩnh Long",
+    "native": "Vĩnh Long",
+    "zh": "永隆",
+    "code": "49"
+  },
+  {
+    "countryCode": "ZA",
+    "name": "Eastern Cape",
+    "native": "Eastern Cape",
+    "zh": "东开普省",
+    "code": "EC"
+  },
+  {
+    "countryCode": "ZA",
+    "name": "Free State",
+    "native": "Free State",
+    "zh": "自由州",
+    "code": "FS"
+  },
+  {
+    "countryCode": "ZA",
+    "name": "Gauteng",
+    "native": "Gauteng",
+    "zh": "豪登省",
+    "code": "GP"
+  },
+  {
+    "countryCode": "ZA",
+    "name": "KwaZulu-Natal",
+    "native": "KwaZulu-Natal",
+    "zh": "夸祖鲁-纳塔尔省",
+    "code": "KZN"
+  },
+  {
+    "countryCode": "ZA",
+    "name": "Limpopo",
+    "native": "Limpopo",
+    "zh": "林波波省",
+    "code": "LP"
+  },
+  {
+    "countryCode": "ZA",
+    "name": "Mpumalanga",
+    "native": "East",
+    "zh": "姆普马兰加省",
+    "code": "MP"
+  },
+  {
+    "countryCode": "ZA",
+    "name": "North West",
+    "native": "North West",
+    "zh": "西北",
+    "code": "NW"
+  },
+  {
+    "countryCode": "ZA",
+    "name": "Northern Cape",
+    "native": "Northern Cape",
+    "zh": "北开普省",
+    "code": "NC"
+  },
+  {
+    "countryCode": "ZA",
+    "name": "Western Cape",
+    "native": "Western Cape",
+    "zh": "西开普省",
+    "code": "WC"
+  }
+]

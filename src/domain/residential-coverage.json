@@ -1,0 +1,227 @@
+[
+  {
+    "countryCode": "AU",
+    "region": "New South Wales",
+    "city": "Sydney",
+    "addressCount": 8,
+    "verifiedAt": "2026-07-15T15:16:56.534Z",
+    "regionId": 3909,
+    "cityId": 4712
+  },
+  {
+    "countryCode": "BR",
+    "region": "São Paulo",
+    "city": "São Paulo",
+    "addressCount": 8,
+    "verifiedAt": "2026-07-15T15:16:56.434Z",
+    "regionId": 2021,
+    "cityId": 15101
+  },
+  {
+    "countryCode": "CA",
+    "region": "Ontario",
+    "city": "Toronto",
+    "addressCount": 8,
+    "verifiedAt": "2026-07-15T15:16:49.139Z",
+    "regionId": 866,
+    "cityId": 17121
+  },
+  {
+    "countryCode": "CN",
+    "region": "北京市",
+    "city": "北京市",
+    "addressCount": 9,
+    "verifiedAt": "2026-07-15T15:16:52.937Z",
+    "regionId": 2257,
+    "cityId": 19332
+  },
+  {
+    "countryCode": "DE",
+    "region": "Berlin",
+    "city": "Berlin",
+    "addressCount": 4,
+    "verifiedAt": "2026-07-15T15:16:44.808Z",
+    "regionId": 3010,
+    "cityId": 24053
+  },
+  {
+    "countryCode": "ES",
+    "region": "Comunidad de Madrid",
+    "city": "Madrid",
+    "addressCount": 8,
+    "verifiedAt": "2026-07-15T15:16:44.884Z",
+    "regionId": 1158,
+    "cityId": 35186
+  },
+  {
+    "countryCode": "FR",
+    "region": "Île-De-France",
+    "city": "Paris",
+    "addressCount": 5,
+    "verifiedAt": "2026-07-15T15:16:44.834Z",
+    "regionId": 4816,
+    "cityId": 44856
+  },
+  {
+    "countryCode": "GB",
+    "region": "England",
+    "city": "City of Westminster",
+    "addressCount": 8,
+    "verifiedAt": "2026-07-15T15:16:49.318Z",
+    "regionId": 2357,
+    "cityId": 49012
+  },
+  {
+    "countryCode": "HK",
+    "region": "九龍",
+    "city": "香港",
+    "addressCount": 8,
+    "verifiedAt": "2026-07-15T15:16:52.395Z",
+    "regionId": 4893,
+    "cityId": 153488
+  },
+  {
+    "countryCode": "IN",
+    "region": "Karnataka",
+    "city": "Bengaluru",
+    "addressCount": 8,
+    "verifiedAt": "2026-07-15T15:16:52.509Z",
+    "regionId": 4026,
+    "cityId": 57933
+  },
+  {
+    "countryCode": "IT",
+    "region": "Lazio",
+    "city": "Roma",
+    "addressCount": 4,
+    "verifiedAt": "2026-07-15T15:16:44.862Z",
+    "regionId": 5636,
+    "cityId": 59582
+  },
+  {
+    "countryCode": "JP",
+    "region": "東京",
+    "city": "東京",
+    "addressCount": 9,
+    "verifiedAt": "2026-07-15T15:16:52.141Z",
+    "regionId": 823,
+    "cityId": 64500
+  },
+  {
+    "countryCode": "KR",
+    "region": "",
+    "city": "Seoul",
+    "addressCount": 1,
+    "verifiedAt": "2026-07-15T15:16:55.563Z",
+    "regionId": 3849,
+    "cityId": 65498
+  },
+  {
+    "countryCode": "MX",
+    "region": "Ciudad de México",
+    "city": "Ciudad de México",
+    "addressCount": 3,
+    "verifiedAt": "2026-07-15T15:16:49.328Z",
+    "regionId": 3473,
+    "cityId": 72102
+  },
+  {
+    "countryCode": "NG",
+    "region": "Lagos State",
+    "city": "Ikeja",
+    "addressCount": 8,
+    "verifiedAt": "2026-07-15T15:16:54.795Z",
+    "regionId": 306,
+    "cityId": 76932
+  },
+  {
+    "countryCode": "NL",
+    "region": "Noord-Holland",
+    "city": "Amsterdam",
+    "addressCount": 8,
+    "verifiedAt": "2026-07-15T15:16:50.579Z",
+    "regionId": 2612,
+    "cityId": 77340
+  },
+  {
+    "countryCode": "PH",
+    "region": "Metro Manila",
+    "city": "Manila",
+    "addressCount": 8,
+    "verifiedAt": "2026-07-15T15:16:52.438Z",
+    "regionId": 5324,
+    "cityId": 161633
+  },
+  {
+    "countryCode": "RU",
+    "region": "Москва",
+    "city": "Москва",
+    "addressCount": 8,
+    "verifiedAt": "2026-07-15T15:16:51.715Z",
+    "regionId": 1901,
+    "cityId": 99972
+  },
+  {
+    "countryCode": "SG",
+    "region": "",
+    "city": "Singapore",
+    "addressCount": 8,
+    "verifiedAt": "2026-07-15T15:16:52.474Z",
+    "regionId": 4651,
+    "cityId": 104057
+  },
+  {
+    "countryCode": "TH",
+    "region": "",
+    "city": "กรุงเทพมหานคร",
+    "addressCount": 8,
+    "verifiedAt": "2026-07-15T15:16:52.411Z",
+    "regionId": 3554,
+    "cityId": 106448
+  },
+  {
+    "countryCode": "TR",
+    "region": "Marmara Bölgesi",
+    "city": "İstanbul",
+    "addressCount": 4,
+    "verifiedAt": "2026-07-15T15:16:55.973Z",
+    "regionId": 2170,
+    "cityId": 153786
+  },
+  {
+    "countryCode": "TW",
+    "region": "臺北市",
+    "city": "臺北市",
+    "addressCount": 4,
+    "verifiedAt": "2026-07-15T15:16:54.781Z",
+    "regionId": 3422,
+    "cityId": 109031
+  },
+  {
+    "countryCode": "US",
+    "region": "New York",
+    "city": "New York",
+    "addressCount": 13,
+    "verifiedAt": "2026-07-15T15:16:49.458Z",
+    "regionId": 1452,
+    "cityId": 122795
+  },
+  {
+    "countryCode": "VN",
+    "region": "",
+    "city": "Thuận An",
+    "addressCount": 8,
+    "verifiedAt": "2026-07-15T15:16:52.486Z",
+    "regionId": 3811,
+    "cityId": 130202
+  },
+  {
+    "countryCode": "ZA",
+    "region": "Western Cape",
+    "city": "Cape Town",
+    "addressCount": 8,
+    "verifiedAt": "2026-07-15T15:16:57.939Z",
+    "regionId": 939,
+    "cityId": 131059
+  }
+]

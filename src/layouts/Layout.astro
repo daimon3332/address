@@ -1,0 +1,30 @@
+---
+import '../styles/global.css';
+import type { Locale } from '../domain/types';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const title = locale === 'en' ? 'Real Address Generator' : '真实地址生成器';
+const description = locale === 'en'
+  ? 'Generate source-backed addresses resolved by Google Maps in country-standard formats.'
+  : '生成带数据来源、经Google地图解析并符合各国标准格式的真实地址。';
+---
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#f7f9ff" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate" hreflang="en" href="/en/" />
+    <link rel="alternate" hreflang="zh-Hans" href="/zh-CN/" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

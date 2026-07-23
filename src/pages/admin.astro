@@ -1,0 +1,18 @@
+---
+import SyncAdmin from '../components/SyncAdmin';
+import '../styles/admin.css';
+
+const apiBase = import.meta.env.PUBLIC_SYNC_API_URL || '/sync-control';
+---
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>地址热池同步</title>
+  </head>
+  <body>
+    <SyncAdmin apiBase={apiBase} client:load />
+  </body>
+</html>
