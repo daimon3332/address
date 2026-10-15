@@ -1,6 +1,6 @@
 # Python 3.10+ required (3.12 tested). Install into a virtualenv and point PYTHON_BIN at it.
 duckdb==1.5.4
 osmium==4.3.1
-pypdf==6.1.1
+pypdf==6.19.0
 pyproj==3.7.1
 shapely==2.1.2
