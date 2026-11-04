@@ -183,6 +183,14 @@ SQL
 docker compose up -d
 ```
 
+**A first start fails with `service "migrate" didn't complete successfully: exit 1`.**
+Releases up to v2.4.0 could not import the location catalog into an empty database (`Use database.transaction() for PostgreSQL transactions`, or later `Location catalog bootstrap incomplete: postcodes`). Upgrade to v2.4.1 or later, then start again; the catalog import resumes on its own:
+
+```bash
+docker compose pull
+docker compose up -d
+```
+
 **`sync` stays in `starting`.**
 `sync` loads the administrative catalog and verifies published data on start; larger databases take longer, sometimes several minutes. Follow `docker compose logs -f sync`; steady log output means it is working. The web UI and API are unaffected.
 

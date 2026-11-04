@@ -6,9 +6,9 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: Release version, for example v2.4.0
+        description: Release version, for example v2.4.1
         required: true
-        default: v2.4.0
+        default: v2.4.1
 
 permissions:
   contents: read
@@ -114,31 +114,25 @@ jobs:
         run: |
           version='${{ steps.version.outputs.value }}'
           cat > release/RELEASE_NOTES.md <<'NOTES'
-          ### Postcodes
-          - Every published address outside China and Hong Kong carries a postcode in its country's format. Imports store postcode-less rows unpublished; post-import inference publishes them once a postcode is found, so an interrupted sync never publishes an address without one.
-          - Missing postcodes are filled from official sources when the match is unique: Chunghwa Post township codes (TW), Statistics Canada NAR (CA), IBGE CNEFE 2022 (BR), BANO (FR), PDOK BAG (NL) and OpenStreetMap postcode areas (DE). Register matches need the same house number within 60 m.
-          - An inferred postcode re-checks the address's administrative names, correcting departments it disproves (for example Coinches, 88100, Vosges).
-          - Rows retired for good (missing postcode, structure or administrative-name repairs) are deleted with their evidence once their country's sources have run. Rows imported in the last 24 hours and Korean rows waiting for postcode areas are kept.
+          ### Fresh installs
+          - Fixed `service "migrate" didn't complete successfully: exit 1` on an empty database (#16, #17). The location catalog seed's `BEGIN`/`COMMIT` block now runs through one database transaction instead of being sent as single statements, which the database adapter rejects.
+          - A catalog built from the upstream files current at install time counts as complete when the import loaded its whole seed. It no longer has to match the totals shipped with the release; the upstream postcode files had shrunk 13% since then. A catalog below 80% of the shipped totals still fails.
 
-          ### Sync
-          - Storage-limit failures are a resource wait, not a source fault: no job starts above the soft limit or below the free-disk reserve, and sources suspended only by storage resume once there is room.
-          - Overture address files are mirrored locally once per release and exported from disk. DuckDB threads, memory and the storage budget are configurable.
-          - Popular metro areas fill first, then popular regions, then the balanced remainder. Popular-city exports run before regional shards.
-          - Country counts and coverage after an import read the generation index; the full projection reconciliation runs at most once a day.
+          ### IP-region generation
+          - Cold IP-region picks went from 3.6-6 s to 0.2-1 s of server time, and China IP picks from 0.6-2 s to under 0.2 s. The coordinate index now covers the columns the box search reads (schema migration 37, built concurrently), the box starts at 0.5 km, and only the nearest rows are checked and read.
+          - Repeated picks for one IP no longer cycle through the same few addresses. They draw at random among at least 32 nearby publishable addresses (16 communities in China), and the page redraws a pick shown in the last five draws.
 
-          ### Translation
-          - English-first publication: an address publishes once its English variant is valid, and Chinese fields are translated later.
-          - Phrase-like renderings are rejected (sentences, replies, times, missing street types), and Chinese street types are normalized.
-          - Translation recovery queries walk their indexes per status, ending statement timeouts under load.
-          - Index-Translate runs through OpenAI-compatible credentials, so self-hosted or proxied Index models work beside the official route.
+          ### Dependencies
+          - pypdf 6.21.4 (#15), which fixes 18 published advisories. The Vietnam postcode PDF parses identically.
 
           ### Upgrade notes
-          - The first start rescans each country once for postcodes and administrative names, then purges permanently retired rows. Allow several hours on a large pool.
-          - New optional settings: `ADDRESS_STORAGE_SOFT_LIMIT_BYTES`, `ADDRESS_STORAGE_HARD_LIMIT_BYTES` and `POSTGRES_SHM_SIZE`.
+          - Migration 37 builds the covering coordinate index concurrently and swaps it in. Allow a few minutes on a large pool; the site stays available.
+          - Installs stuck at `migrate`: `docker compose pull && docker compose up -d`.
 
           ### Verification
-          - 1,720 JavaScript/TypeScript tests, Python tests, type checks, build and the public-release audit.
-          - Live API validation, 500 live address-contract samples for each of 27 countries, and a full-pool quality audit with every blocking rule at zero.
+          - 1,727 JavaScript/TypeScript tests, Python tests, type checks, build and the public-release audit.
+          - Live API validation in production.
+          - A fresh README install on an empty ARM64 host: migrate completed, api, sync and credential-broker were healthy, first sign-in and token creation worked, and the first country synced (150,000 Canadian addresses).
           NOTES
       - name: Publish stable GitHub release
         shell: bash

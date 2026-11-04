@@ -70,12 +70,33 @@ export function* splitSqlStatements(source) {
   if (tail) yield tail;
 }
 
+const beginStatement = /^(BEGIN(\s+(WORK|TRANSACTION))?|START\s+TRANSACTION)$/iu;
+const commitStatement = /^(COMMIT|END)(\s+(WORK|TRANSACTION))?$/iu;
+
+// The catalog seed wraps its writes in BEGIN ... COMMIT. The database runs transactions only through transaction(),
+// which holds one connection for the block and rolls it back on failure, so the markers open and close that call.
 export const executeSqlStatements = async (database, source, onProgress = () => {}) => {
   let completed = 0;
-  for (const statement of splitSqlStatements(source)) {
-    await database.exec(statement);
+  let block;
+  const run = async (target, statement) => {
+    await target.exec(statement);
     completed += 1;
     onProgress(completed);
+  };
+  for (const statement of splitSqlStatements(source)) {
+    if (beginStatement.test(statement)) {
+      if (block) throw new Error('Nested BEGIN in SQL source');
+      block = [];
+    } else if (commitStatement.test(statement)) {
+      if (!block) throw new Error('COMMIT without BEGIN in SQL source');
+      const statements = block;
+      block = undefined;
+      await database.transaction(async (transaction) => {
+        for (const queued of statements) await run(transaction, queued);
+      });
+    } else if (block) block.push(statement);
+    else await run(database, statement);
   }
+  if (block) throw new Error('SQL source ends inside a transaction block');
   return completed;
 };

@@ -34,6 +34,33 @@ describe('database bootstrap', () => {
     ]);
   });
 
+  it('accepts an upstream catalog that shrank since release when the import loaded its whole seed', async () => {
+    const runScript = vi.fn(async () => undefined);
+    const shrunk = { regions: 10, cities: 20, postcodes: 26 };
+    await expect(ensureLocationCatalog(
+      databaseWithCounts({ regions: 0, cities: 0, postcodes: 0 }, shrunk),
+      {},
+      { expected, runScript, seeded: async () => shrunk }
+    )).resolves.toEqual(shrunk);
+    // Present on the next start: no second download.
+    await expect(ensureLocationCatalog(databaseWithCounts(shrunk), {}, { expected, runScript })).resolves.toEqual(shrunk);
+    expect(runScript).toHaveBeenCalledTimes(2);
+  });
+
+  it('fails an import that loaded less than its seed or far less than the shipped catalog', async () => {
+    const runScript = vi.fn(async () => undefined);
+    await expect(ensureLocationCatalog(
+      databaseWithCounts({ regions: 0, cities: 0, postcodes: 0 }, { regions: 10, cities: 20, postcodes: 25 }),
+      {},
+      { expected, runScript, seeded: async () => ({ regions: 10, cities: 20, postcodes: 27 }) }
+    )).rejects.toThrow('Location catalog bootstrap incomplete: postcodes');
+    await expect(ensureLocationCatalog(
+      databaseWithCounts({ regions: 0, cities: 0, postcodes: 0 }, { regions: 10, cities: 20, postcodes: 5 }),
+      {},
+      { expected, runScript, seeded: async () => ({ regions: 10, cities: 20, postcodes: 5 }) }
+    )).rejects.toThrow('Location catalog bootstrap incomplete: postcodes');
+  });
+
   it('indexes staging identifiers before anti-join catalog reconciliation', () => {
     const source = readFileSync(resolve('scripts/sync-location-catalog.mjs'), 'utf8');
     expect(source).toContain('CREATE UNIQUE INDEX catalog_postcodes_staging_id_idx');

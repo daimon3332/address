@@ -183,6 +183,14 @@ SQL
 docker compose up -d
 ```
 
+**首次啟動報 `service "migrate" didn't complete successfully: exit 1`？**
+v2.4.0 及更早版本在空資料庫上無法匯入位置目錄（報 `Use database.transaction() for PostgreSQL transactions`，或之後的 `Location catalog bootstrap incomplete: postcodes`）。升級到 v2.4.1 或更新版本後重新啟動，目錄匯入會自動繼續：
+
+```bash
+docker compose pull
+docker compose up -d
+```
+
 **`sync` 一直顯示 starting？**
 `sync` 啟動時要載入行政目錄並校驗已釋出資料，資料量越大耗時越長，可能需要幾分鐘。用 `docker compose logs -f sync` 檢視進度，日誌持續輸出即為正常；網頁和 API 不受影響。
 
