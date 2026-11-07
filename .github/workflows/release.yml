@@ -87,7 +87,7 @@ jobs:
           version='${{ steps.version.outputs.value }}'
           name="address-$version"
           mkdir -p "release/$name"
-          for path in .dockerignore .env.example Dockerfile docker-compose.yml LICENSE README.md README.zh-CN.md README.zh-TW.md astro.config.mjs package.json package-lock.json tsconfig.json config docs image ops public scripts server src; do
+          for path in .dockerignore .env.example Dockerfile docker-compose.yml LICENSE README.md README.zh-CN.md README.zh-TW.md README.ja.md astro.config.mjs package.json package-lock.json tsconfig.json config docs image ops public scripts server src; do
             cp -a "$path" "release/$name/"
           done
           cp -a dist "release/$name/dist"
