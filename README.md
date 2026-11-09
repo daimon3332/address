@@ -6,7 +6,7 @@
 
 **Self-hosted real-address generator backed by official registries and open map data for 27 countries and regions**
 
-English · [简体中文](README.zh-CN.md) · [繁體中文](README.zh-TW.md)
+English · [简体中文](README.zh-CN.md) · [繁體中文](README.zh-TW.md) · [日本語](README.ja.md)
 
 [![CI](https://github.com/daimon3332/address/actions/workflows/ci.yml/badge.svg)](https://github.com/daimon3332/address/actions/workflows/ci.yml)
 [![Docker](https://img.shields.io/badge/Docker-daimon23%2Faddress-2496ED?logo=docker&logoColor=white)](https://hub.docker.com/r/daimon23/address)

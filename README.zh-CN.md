@@ -6,7 +6,7 @@
 
 **自托管的真实地址生成服务：数据来自官方登记与开放地图，覆盖 27 个国家和地区**
 
-[English](README.md) · 简体中文 · [繁體中文](README.zh-TW.md)
+[English](README.md) · 简体中文 · [繁體中文](README.zh-TW.md) · [日本語](README.ja.md)
 
 [![CI](https://github.com/daimon3332/address/actions/workflows/ci.yml/badge.svg)](https://github.com/daimon3332/address/actions/workflows/ci.yml)
 [![Docker](https://img.shields.io/badge/Docker-daimon23%2Faddress-2496ED?logo=docker&logoColor=white)](https://hub.docker.com/r/daimon23/address)
