@@ -7,7 +7,7 @@ import type { ChinaDataService } from '../china/service';
 import { providerFetcher, ProviderRequestError } from '../china/providers';
 import { safeEqual } from './security';
 import {
-  credentialProviderNames, parseYoudaoSecret,
+  ADMIN_SESSION_MS, credentialProviderNames, parseYoudaoSecret,
   type BrowserMapCredentialInput, type BrowserMapCredentialUpdate, type ControlStore, type CredentialInput,
   type CredentialProviderName, type MapDisplayConfig, type ProviderName, type ProviderQuotaObservation, type ServiceProviderName
 } from './store';
@@ -33,6 +33,7 @@ const adminCsrfCookie = 'address_admin_csrf';
 const frontCookie = 'address_front_session';
 const secureCookie = { httpOnly: true, secure: process.env.COOKIE_SECURE !== 'false', sameSite: 'Strict' as const, path: '/' };
 const csrfCookie = { ...secureCookie, httpOnly: false };
+const adminCookieMaxAge = ADMIN_SESSION_MS / 1000;
 const bearer = (value: string | undefined): string => value?.startsWith('Bearer ') ? value.slice(7).trim() : '';
 type RequestBindings = { remoteAddress?: string };
 
@@ -480,6 +481,11 @@ export const createAdminApi = ({
       const token = getCookie(context, adminCookie) || '';
       const csrf = context.req.method === 'GET' ? undefined : context.req.header('x-csrf-token') || '';
       if (!await control.session(token, 'admin', csrf)) return context.json({ error: 'UNAUTHORIZED' }, 401);
+      if (await control.renewAdminSession(token)) {
+        setCookie(context, adminCookie, token, { ...secureCookie, maxAge: adminCookieMaxAge });
+        const csrfToken = getCookie(context, adminCsrfCookie);
+        if (csrfToken) setCookie(context, adminCsrfCookie, csrfToken, { ...csrfCookie, maxAge: adminCookieMaxAge });
+      }
       const passwordRoute = ['/admin/api/logout', '/admin/api/settings/access'].includes(context.req.path);
       if (!passwordRoute && await control.setting('admin_password_change_required', false)) {
         return context.json({ error: 'ADMIN_PASSWORD_CHANGE_REQUIRED' }, 403);
@@ -500,8 +506,8 @@ export const createAdminApi = ({
     await control.clearLoginFailures(ip);
     const session = await control.createSession('admin', ip);
     const status = await control.status();
-    setCookie(context, adminCookie, session.token, { ...secureCookie, maxAge: 12 * 60 * 60 });
-    setCookie(context, adminCsrfCookie, session.csrf, { ...csrfCookie, maxAge: 12 * 60 * 60 });
+    setCookie(context, adminCookie, session.token, { ...secureCookie, maxAge: adminCookieMaxAge });
+    setCookie(context, adminCsrfCookie, session.csrf, { ...csrfCookie, maxAge: adminCookieMaxAge });
     await control.audit('admin', 'session.login', 'admin');
     return context.json({ data: {
       csrfToken: session.csrf,
@@ -520,7 +526,8 @@ export const createAdminApi = ({
     let csrf = getCookie(context, adminCsrfCookie) || '';
     if (!csrf || !await control.session(token, 'admin', csrf)) csrf = await control.refreshSessionCsrf(token, 'admin') || '';
     if (!csrf) return context.json({ data: { authenticated: false } });
-    setCookie(context, adminCsrfCookie, csrf, { ...csrfCookie, maxAge: 12 * 60 * 60 });
+    if (await control.renewAdminSession(token)) setCookie(context, adminCookie, token, { ...secureCookie, maxAge: adminCookieMaxAge });
+    setCookie(context, adminCsrfCookie, csrf, { ...csrfCookie, maxAge: adminCookieMaxAge });
     return context.json({ data: {
       authenticated: true,
       passwordChangeRequired: await control.setting('admin_password_change_required', false)

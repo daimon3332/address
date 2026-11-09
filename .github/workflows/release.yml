@@ -6,9 +6,9 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: Release version, for example v2.4.1
+        description: Release version, for example v2.4.2
         required: true
-        default: v2.4.1
+        default: v2.4.2
 
 permissions:
   contents: read
@@ -114,25 +114,16 @@ jobs:
         run: |
           version='${{ steps.version.outputs.value }}'
           cat > release/RELEASE_NOTES.md <<'NOTES'
-          ### Fresh installs
-          - Fixed `service "migrate" didn't complete successfully: exit 1` on an empty database (#16, #17). The location catalog seed's `BEGIN`/`COMMIT` block now runs through one database transaction instead of being sent as single statements, which the database adapter rejects.
-          - A catalog built from the upstream files current at install time counts as complete when the import loaded its whole seed. It no longer has to match the totals shipped with the release; the upstream postcode files had shrunk 13% since then. A catalog below 80% of the shipped totals still fails.
+          ### Admin sign-in
+          - The admin console now stays signed in for 30 days after you last used it. Using the console renews the session, at most once an hour. Before, a session expired 12 hours after login even while you were working.
+          - The session stays in an HttpOnly cookie that page scripts cannot read. Signing out and changing the administrator password still end sessions as before.
 
-          ### IP-region generation
-          - Cold IP-region picks went from 3.6-6 s to 0.2-1 s of server time, and China IP picks from 0.6-2 s to under 0.2 s. The coordinate index now covers the columns the box search reads (schema migration 37, built concurrently), the box starts at 0.5 km, and only the nearest rows are checked and read.
-          - Repeated picks for one IP no longer cycle through the same few addresses. They draw at random among at least 32 nearby publishable addresses (16 communities in China), and the page redraws a pick shown in the last five draws.
-
-          ### Dependencies
-          - pypdf 6.21.4 (#15), which fixes 18 published advisories. The Vietnam postcode PDF parses identically.
-
-          ### Upgrade notes
-          - Migration 37 builds the covering coordinate index concurrently and swaps it in. Allow a few minutes on a large pool; the site stays available.
-          - Installs stuck at `migrate`: `docker compose pull && docker compose up -d`.
+          ### Sync
+          - Fixed Hong Kong (and GB, JP, SG and CN) syncs failing in the postcode phase with `Cannot read properties of undefined (reading 'length')` after importing their addresses (#20). Postcode inference now reports an empty list of filled rows for countries it skips.
 
           ### Verification
-          - 1,727 JavaScript/TypeScript tests, Python tests, type checks, build and the public-release audit.
-          - Live API validation in production.
-          - A fresh README install on an empty ARM64 host: migrate completed, api, sync and credential-broker were healthy, first sign-in and token creation worked, and the first country synced (150,000 Canadian addresses).
+          - JavaScript/TypeScript tests, Python tests, type checks, build and the public-release audit.
+          - Live API validation in production, and a fresh README install of the published image on an empty ARM64 host.
           NOTES
       - name: Publish stable GitHub release
         shell: bash

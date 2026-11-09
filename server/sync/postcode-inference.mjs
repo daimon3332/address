@@ -282,6 +282,10 @@ export const runPostcodeInference = async ({
 }) => {
   const country = String(countryCode || '').toUpperCase();
   const summary = { countryCode: country, checked: 0, boundary: 0, catalog: 0, township: 0, neighbor: 0, official: 0, register: 0, restored: 0 };
+  // Not logged: callers re-check the administrative names of the rows a filled postcode may contradict. Set before the
+  // early returns, which skipped it and failed every Hong Kong import (#20).
+  const filled = [];
+  Object.defineProperty(summary, 'filledIds', { value: filled });
   const revision = inferenceRevision(country);
   if (POSTCODE_INFERENCE_EXCLUDED.has(country)) return summary;
   const markerKey = `postcode-inference:${country}`;
@@ -297,7 +301,6 @@ export const runPostcodeInference = async ({
   const eligible = recovery || scoped ? `(pool.active=1 OR pool.retired_at LIKE '${RETIRED_FOR_POSTCODE}')` : 'pool.active=1';
   let places;
   let townships;
-  const filled = [];
   let cursor = '';
   // A recovery scan lists its candidates once: the retired rows it reads have no index to page through, and a register
   // lookup reads the indexes of the whole area its rows span, so all candidates are matched in one pass and the pages
@@ -409,7 +412,5 @@ export const runPostcodeInference = async ({
       ON CONFLICT(key) DO UPDATE SET value_json=excluded.value_json,updated_at=excluded.updated_at`)
       .bind(markerKey, JSON.stringify({ revision }), now().toISOString()).run();
   }
-  // Not logged: callers re-check the administrative names of the rows a filled postcode may contradict.
-  Object.defineProperty(summary, 'filledIds', { value: filled });
   return summary;
 };

@@ -118,4 +118,12 @@ describe('postcode inference', () => {
     expect(await runPostcodeInference({ database, countryCode: 'GB' })).toMatchObject({ checked: 0 });
     expect(await database.prepare('SELECT postcode FROM address_pool WHERE id=?').bind('gb').first('postcode')).toBe('');
   });
+
+  it('reports no filled rows for countries it skips, which imports read after every run (#20)', async () => {
+    for (const countryCode of ['HK', 'GB', 'JP', 'SG', 'CN']) {
+      expect((await runPostcodeInference({ database, countryCode, addressIds: ['any'] })).filledIds).toEqual([]);
+    }
+    await runPostcodeInference({ database, countryCode: 'US' });
+    expect((await runPostcodeInference({ database, countryCode: 'US' })).filledIds).toEqual([]);
+  });
 });

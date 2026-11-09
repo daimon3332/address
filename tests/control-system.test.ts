@@ -192,6 +192,47 @@ describe('control database security', () => {
     expect(await store.listApiTokens()).toEqual([]);
   });
 
+  it('keeps an admin session for 30 days after its last use and renews it at most hourly', async () => {
+    const day = 24 * 60 * 60 * 1000;
+    const session = await store.createSession('admin');
+    const frontend = await store.createSession('frontend');
+    expect(Date.parse(session.expiresAt) - Date.now()).toBeGreaterThan(29.9 * day);
+    expect(Date.parse(frontend.expiresAt) - Date.now()).toBeLessThan(1.01 * day);
+
+    expect(await store.renewAdminSession(session.token)).toBeNull();
+    const later = new Date(Date.now() + 2 * 60 * 60 * 1000);
+    const renewed = await store.renewAdminSession(session.token, later);
+    expect(Date.parse(renewed || '')).toBe(later.getTime() + 30 * day);
+    expect(await store.renewAdminSession(frontend.token, later)).toBeNull();
+    // Past its expiry a session is gone for good.
+    expect(await store.renewAdminSession(session.token, new Date(later.getTime() + 31 * day))).toBeNull();
+  });
+
+  it('sends 30-day admin cookies on login and renews them when an idle session is used again', async () => {
+    const admin = createAdminApi({ control: store, china: {} as never, addressDb: database });
+    const login = await admin.request('/admin/api/login', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ password: 'correct horse battery staple' })
+    });
+    expect(login.status).toBe(200);
+    const cookies = login.headers.getSetCookie();
+    expect(cookies.filter((cookie) => /^address_admin_(session|csrf)=/u.test(cookie) && cookie.includes('Max-Age=2592000'))).toHaveLength(2);
+    const token = cookies.find((cookie) => cookie.startsWith('address_admin_session='))!.split(';')[0].split('=')[1];
+    const csrf = cookies.find((cookie) => cookie.startsWith('address_admin_csrf='))!.split(';')[0].split('=')[1];
+    const cookie = `address_admin_session=${token}; address_admin_csrf=${csrf}`;
+
+    const fresh = await admin.request('/admin/api/tokens', { headers: { Cookie: cookie } });
+    expect(fresh.status).toBe(200);
+    expect(fresh.headers.getSetCookie()).toEqual([]);
+
+    await database.prepare("UPDATE auth_sessions SET expires_at=? WHERE role='admin'")
+      .bind(new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString()).run();
+    const resumed = await admin.request('/admin/api/tokens', { headers: { Cookie: cookie } });
+    expect(resumed.status).toBe(200);
+    expect(resumed.headers.getSetCookie().filter((value) => value.includes('Max-Age=2592000'))).toHaveLength(2);
+    const expiresAt = await database.prepare("SELECT expires_at FROM auth_sessions WHERE role='admin'").first<string>('expires_at');
+    expect(Date.parse(expiresAt || '') - Date.now()).toBeGreaterThan(29.9 * 24 * 60 * 60 * 1000);
+  });
+
   it('does not project a parent run error onto a child that has no source error', async () => {
     await database.prepare(`INSERT INTO sync_runs(
       id,kind,target_json,status,progress_json,error_code,error_message,created_at,completed_at,updated_at

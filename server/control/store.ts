@@ -194,6 +194,10 @@ export type ApiAuthorization = { status: 'authorized'; id: string; name: string 
 export const API_TOKEN_SCOPES = ['read', 'generate'] as const;
 
 const nowIso = (): string => new Date().toISOString();
+// Admin sessions slide: one in use is extended to the full lifetime, at most once per renewal interval.
+export const ADMIN_SESSION_MS = 30 * 24 * 60 * 60 * 1000;
+const ADMIN_SESSION_RENEWAL_MS = 60 * 60 * 1000;
+const FRONTEND_SESSION_MS = 24 * 60 * 60 * 1000;
 export const AMAP_PERSONAL_MONTHLY_LIMIT = 5_000;
 export const GOOGLE_GEOCODING_FREE_MONTHLY_LIMIT = 10_000;
 export const GOOGLE_GEOCODING_SYNC_MONTHLY_BUDGET = GOOGLE_GEOCODING_FREE_MONTHLY_LIMIT;
@@ -805,7 +809,7 @@ export class ControlStore {
     const token = opaqueToken();
     const csrf = opaqueToken(24);
     const createdAt = new Date();
-    const expiresAt = new Date(createdAt.getTime() + (role === 'admin' ? 12 : 24) * 60 * 60 * 1000).toISOString();
+    const expiresAt = new Date(createdAt.getTime() + (role === 'admin' ? ADMIN_SESSION_MS : FRONTEND_SESSION_MS)).toISOString();
     await this.database.prepare(`INSERT INTO auth_sessions(id_hash,role,csrf_hash,created_at,expires_at,last_seen_at,ip_hash)
       VALUES (?,?,?,?,?,?,?)`).bind(tokenHash(token), role, tokenHash(csrf), createdAt.toISOString(), expiresAt, createdAt.toISOString(), ip ? tokenHash(ip) : '').run();
     return { token, csrf, expiresAt };
@@ -819,6 +823,15 @@ export class ControlStore {
     if (csrf !== undefined && !safeEqual(tokenHash(csrf), row.csrf_hash)) return false;
     await this.database.prepare('UPDATE auth_sessions SET last_seen_at=? WHERE id_hash=?').bind(nowIso(), tokenHash(token)).run();
     return true;
+  }
+
+  async renewAdminSession(token: string, now = new Date()): Promise<string | null> {
+    if (!token) return null;
+    const expiresAt = new Date(now.getTime() + ADMIN_SESSION_MS).toISOString();
+    const result = await this.database.prepare(`UPDATE auth_sessions SET expires_at=?
+      WHERE id_hash=? AND role='admin' AND expires_at>? AND expires_at<?`).bind(expiresAt, tokenHash(token), now.toISOString(),
+      new Date(now.getTime() + ADMIN_SESSION_MS - ADMIN_SESSION_RENEWAL_MS).toISOString()).run();
+    return result.meta.changes ? expiresAt : null;
   }
 
   async refreshSessionCsrf(token: string, role: SessionRole): Promise<string | null> {
