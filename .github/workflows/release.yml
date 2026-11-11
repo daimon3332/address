@@ -6,9 +6,9 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: Release version, for example v2.4.2
+        description: Release version, for example v2.5.0
         required: true
-        default: v2.4.2
+        default: v2.5.0
 
 permissions:
   contents: read
@@ -114,16 +114,30 @@ jobs:
         run: |
           version='${{ steps.version.outputs.value }}'
           cat > release/RELEASE_NOTES.md <<'NOTES'
-          ### Admin sign-in
-          - The admin console now stays signed in for 30 days after you last used it. Using the console renews the session, at most once an hour. Before, a session expired 12 hours after login even while you were working.
-          - The session stays in an HttpOnly cookie that page scripts cannot read. Signing out and changing the administrator password still end sessions as before.
+          ### Speed
+          - Nationwide address generation no longer slows down in countries where many rows were retired; a pick reads a few index entries instead of falling back to a wide scan.
+          - Pages load their scripts in one parallel batch and start their first requests before the stylesheet arrives. The pinyin dictionary and each admin view load only when used, which cuts the home page's largest script from 306 KB to 19 KB.
+          - `/`, `/admin/` and `/access/` answer with a redirect to the visitor's language instead of a page that redirects in script.
+          - The coverage listing behind the dashboard and the public monitor is served from a cached value while it refreshes.
+
+          ### Map
+          - Selecting a country on the coverage map and zooming in shows county-level boundaries with their names on hover, for the 24 countries where Overture Maps publishes them.
 
           ### Sync
-          - Fixed Hong Kong (and GB, JP, SG and CN) syncs failing in the postcode phase with `Cannot read properties of undefined (reading 'length')` after importing their addresses (#20). Postcode inference now reports an empty list of filled rows for countries it skips.
+          - A source that imported only its per-run growth step now continues on the same source version until it reaches its limit. Before, it waited for the next upstream release.
+          - Australia imports per state, and the England and Northern Ireland limits are higher.
+          - Sync startup no longer runs a whole-pool scan that timed out on large databases.
+          - The Japan ABR import source is removed: it never completed, and no open replacement carries postcodes. Published Japanese addresses stay available.
+
+          ### Storage
+          - Completed translation bookkeeping rows and an index that duplicated the evidence primary key are removed at sync startup, freeing several gigabytes on large installs.
+
+          ### Fixes
+          - Chinese communities whose names contain a character the pinyin dictionary cannot romanize are no longer served with that character left in the English address.
 
           ### Verification
           - JavaScript/TypeScript tests, Python tests, type checks, build and the public-release audit.
-          - Live API validation in production, and a fresh README install of the published image on an empty ARM64 host.
+          - Live API and browser validation in production, a 500-sample contract audit per country, and full-pool quality audits for the countries whose data changed.
           NOTES
       - name: Publish stable GitHub release
         shell: bash
