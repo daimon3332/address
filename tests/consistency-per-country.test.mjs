@@ -10,6 +10,7 @@ const fakeDatabase = (rows) => {
     all: async () => ({ results: /FROM sync_country_policies/u.test(sql) ? [{ country_code: 'AA' }, { country_code: 'BB' }]
       : /DISTINCT country_code FROM address_pool/u.test(sql) ? [{ country_code: 'AA' }, { country_code: 'BB' }] : [] }),
     first: async () => {
+      if (/country_code>\?/u.test(sql)) return { '': 'AA', AA: 'BB' }[values[0]];
       checked.push(values[0]);
       if (values[0] === 'AA' && /address_pool_runtime/u.test(sql)) throw Object.assign(new Error('canceled'), { code: '57014' });
       return rows(sql);

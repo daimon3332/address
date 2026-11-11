@@ -12,7 +12,7 @@ const apiBaseUrl = import.meta.env.PROD ? '/web-api' : import.meta.env.PUBLIC_AP
 ---
 <Layout locale={locale}>
   {/* Start the first address and availability before the app bundle arrives; App adopts these responses. */}
-  <script is:inline define:vars={{ apiBaseUrl }}>
+  <script slot="head" is:inline define:vars={{ apiBaseUrl }}>
     (() => {
       try {
         const raw = new URLSearchParams(location.search).get('country') || 'us';

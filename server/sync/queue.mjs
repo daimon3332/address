@@ -17,6 +17,8 @@ export const BACKOFF_REASON = 'retry_backoff';
 export const SHARED_FAILURE_REASON = 'shared_failure_circuit';
 export const PARTIAL_REASON = 'source_partial_checkpoint';
 export const PARTIAL_STALLED_REASON = 'source_partial_stalled';
+// A run that imported its per-run growth step while the source still holds more: the same version runs again.
+export const GROWTH_REASON = 'source_growth_step';
 const DEFAULT_SOURCE_PROBE_MS = 24 * 60 * 60_000;
 const STALE_CREDENTIAL_CHECKPOINT_MS = 24 * 60 * 60_000;
 // Failure codes that deterministically repeat for identical inputs; the ETL
@@ -332,7 +334,7 @@ export const evaluateAttempt = ({
     // A run stopped only by its per-run growth step continues shortly instead of waiting a full interval.
     return {
       action: 'checked',
-      reason: CHECKED_REASON,
+      reason: growthCapped ? GROWTH_REASON : CHECKED_REASON,
       fingerprint: fingerprintAfter,
       consecutiveFailures: 0,
       nextAttemptAt: new Date(timestamp(completedAt) + (growthCapped ? 60_000 : Math.max(60_000, probeIntervalMs))).toISOString()
@@ -1042,10 +1044,11 @@ export const computeQueueSnapshot = async ({
         && ['quota', 'credential'].includes(String(saved.waitReason || ''))
         && Boolean(provider)
         || staleCredentialCheckpoint;
+      const growthStep = savedState === 'checked' && saved.reason === GROWTH_REASON;
       const paused = matches && ['latched', 'checked', 'suspended'].includes(savedState)
         && (['latched', 'suspended'].includes(savedState)
           ? !probeDue
-          : !resumableCheckpoint || (!credentialManagedWait && (!nextAttempt || nextAttempt > now.getTime())));
+          : !(resumableCheckpoint || growthStep) || (!credentialManagedWait && (!nextAttempt || nextAttempt > now.getTime())));
       return {
         shard,
         stored,

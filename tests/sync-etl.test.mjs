@@ -133,15 +133,20 @@ const source = {
 describe('address source shard catalog', () => {
   it('expands independently supported country shards with explicit refresh intervals', async () => {
     const catalog = await loadSourceCatalog();
-    expect(catalog.shards).toHaveLength(229);
+    expect(catalog.shards).toHaveLength(237);
     expect(catalog.shards.filter((shard) => shard.id !== 'korea-kapt-residential')
       .every((shard) => shard.intervalDays === 30)).toBe(true);
     expect(catalog.shards.some((shard) => shard.countryCode === 'CN')).toBe(false);
     expect(catalog.shards.filter((shard) => shard.countryCode === 'NG').map((shard) => shard.source.adapter).sort())
       .toEqual(['geofabrik', 'google-residential-enrichment']);
-    for (const countryCode of ['AU', 'IT']) {
-      expect(catalog.shards.filter((shard) => shard.countryCode === countryCode)).toHaveLength(2);
-    }
+    expect(catalog.shards.filter((shard) => shard.countryCode === 'IT')).toHaveLength(2);
+    // Australia adds one Overture shard per state so no single import holds the whole country in memory.
+    const australia = catalog.shards.filter((shard) => shard.countryCode === 'AU');
+    expect(australia).toHaveLength(10);
+    expect(australia.filter((shard) => shard.admin1).map((shard) => shard.admin1).sort())
+      .toEqual(['ACT', 'NSW', 'NT', 'QLD', 'SA', 'TAS', 'VIC', 'WA']);
+    expect(australia.reduce((total, shard) => total + (shard.maxRecords || 0), 0)).toBe(1_980_000);
+    expect(catalog.shards.find((shard) => shard.id === 'geofabrik-osm-gb-england').maxRecords).toBe(600_000);
     expect(catalog.shards.filter((shard) => shard.source.adapter === 'overture' && ['BR', 'SG'].includes(shard.countryCode))).toHaveLength(2);
     expect(catalog.shards.filter((shard) => shard.countryCode === 'ES')).toHaveLength(5);
     expect(catalog.shards.filter((shard) => shard.countryCode === 'CA')).toHaveLength(15);
@@ -580,7 +585,6 @@ describe('address source shard catalog', () => {
     expect(schema).toContain('address_variants_json TEXT NOT NULL');
     expect(schema).toContain('idx_address_pool_coordinates');
     expect(schema).toContain('CREATE TABLE IF NOT EXISTS address_pool_evidence');
-    expect(schema).toContain('dataset_id, address_id, source_record_id, evidence_type');
     expect(schema).toContain('CREATE TABLE IF NOT EXISTS pool_coverage');
     expect(schema).toContain('idx_address_pool_coverage ON address_pool(coverage, active, property_type)');
   });

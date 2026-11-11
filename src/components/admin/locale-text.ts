@@ -32,7 +32,7 @@ const en = {
     keyUnavailable: 'API key unavailable; review it under Map Keys: {name}', keyExpired: 'API key expired; update it under Map Keys: {name}',
     importingKey: 'Importing API key from the environment: {name}', missingSource: 'Missing source configuration: {name}',
     source_limited_cache: 'Every source has been imported at its current version; no new extractable data.',
-    source_version_checked: 'Source version checked; no update available.', retry_suspended: 'Automatic retries paused after repeated failures.',
+    source_version_checked: 'Source version checked; no update available.', source_growth_step: 'Importing in steps; the next step starts shortly.', retry_suspended: 'Automatic retries paused after repeated failures.',
     retry_backoff: 'Backing off after a failure before retrying.', shared_failure_circuit: 'Paused because related sources hit the same failure.',
     source_partial_checkpoint: 'Processing the source in batches; waiting for the next batch.', source_partial_stalled: 'Batch processing stalled; paused.',
     no_source_shard: 'No usable source is configured.', cooldown: "Credentials are cooling down", coverage_sources_exhausted: "Target count met; available sources cannot improve coverage further", validated_sources_exhausted: "Every validated source has been used; no new qualifying data", credential_broker_unavailable: "Credential service unavailable", unconfigured: "No map API key configured", china_worker: 'Handled by the China sync worker.', quota: 'Waiting for quota reset'
@@ -106,7 +106,7 @@ export const localeText: Record<AdminLocale, LocaleText> = {
       missingKey: '缺少 API Key：{name}', missingChinaKeys: '至少配置一个中国地图 API Key：{name}',
       keyUnavailable: 'API Key 不可用，请在地图密钥中检查：{name}', keyExpired: 'API Key 已过期，请在地图密钥中更新：{name}',
       importingKey: '正在导入环境变量中的 API Key：{name}', missingSource: '缺少数据源配置：{name}',
-      source_limited_cache: '所有来源的当前版本均已导入，没有新的可提取数据。', source_version_checked: '已检查来源版本，暂无更新。',
+      source_limited_cache: '所有来源的当前版本均已导入，没有新的可提取数据。', source_version_checked: '已检查来源版本，暂无更新。', source_growth_step: '正在分步导入，下一步即将开始。',
       retry_suspended: '连续失败，已暂停自动重试。', retry_backoff: '失败后退避，等待重试。', shared_failure_circuit: '同类来源出现相同故障，已暂停。',
       source_partial_checkpoint: '来源正在分批处理，等待下一批。', source_partial_stalled: '分批处理没有进展，已暂停。',
       no_source_shard: '没有配置可用来源。', cooldown: "密钥冷却中", coverage_sources_exhausted: "总量已达标，现有来源无法继续提升覆盖", validated_sources_exhausted: "已验证来源均已使用，没有新的合格数据", credential_broker_unavailable: "凭据服务不可用", unconfigured: "尚未配置地图 API Key", china_worker: '由中国同步任务处理。', quota: '等待额度重置'
@@ -175,7 +175,7 @@ export const localeText: Record<AdminLocale, LocaleText> = {
       missingKey: '缺少 API Key：{name}', missingChinaKeys: '至少設定一個中國地圖 API Key：{name}',
       keyUnavailable: 'API Key 無法使用，請在地圖金鑰中檢查：{name}', keyExpired: 'API Key 已過期，請在地圖金鑰中更新：{name}',
       importingKey: '正在匯入環境變數中的 API Key：{name}', missingSource: '缺少資料來源設定：{name}',
-      source_limited_cache: '所有來源的目前版本均已匯入，沒有新的可擷取資料。', source_version_checked: '已檢查來源版本，暫無更新。',
+      source_limited_cache: '所有來源的目前版本均已匯入，沒有新的可擷取資料。', source_version_checked: '已檢查來源版本，暫無更新。', source_growth_step: '正在分步匯入，下一步即將開始。',
       retry_suspended: '連續失敗，已暫停自動重試。', retry_backoff: '失敗後退避，等待重試。', shared_failure_circuit: '同類來源出現相同故障，已暫停。',
       source_partial_checkpoint: '來源正在分批處理，等待下一批。', source_partial_stalled: '分批處理沒有進展，已暫停。',
       no_source_shard: '沒有設定可用來源。', cooldown: "金鑰冷卻中", coverage_sources_exhausted: "總量已達標，現有來源無法繼續提升覆蓋", validated_sources_exhausted: "已驗證來源均已使用，沒有新的合格資料", credential_broker_unavailable: "憑據服務無法使用", unconfigured: "尚未設定地圖 API Key", china_worker: '由中國同步工作處理。', quota: '等待額度重設'
@@ -244,7 +244,7 @@ export const localeText: Record<AdminLocale, LocaleText> = {
       missingKey: 'API キーがありません: {name}', missingChinaKeys: '中国の地図 API キーを少なくとも 1 つ設定してください: {name}',
       keyUnavailable: 'API キーを利用できません。地図キーで確認してください: {name}', keyExpired: 'API キーの有効期限が切れています。地図キーで更新してください: {name}',
       importingKey: '環境変数から API キーを取り込み中: {name}', missingSource: 'データソースの設定がありません: {name}',
-      source_limited_cache: 'すべてのソースの現行バージョンを取り込み済みで、新たに抽出できるデータはありません。', source_version_checked: 'ソースのバージョンを確認しました。更新はありません。',
+      source_limited_cache: 'すべてのソースの現行バージョンを取り込み済みで、新たに抽出できるデータはありません。', source_version_checked: 'ソースのバージョンを確認しました。更新はありません。', source_growth_step: '段階的に取り込み中です。次の段階はまもなく始まります。',
       retry_suspended: '失敗が続いたため自動再試行を停止しました。', retry_backoff: '失敗後の待機中です。', shared_failure_circuit: '関連ソースで同じ障害が発生したため停止しました。',
       source_partial_checkpoint: 'ソースを分割処理中です。次のバッチを待っています。', source_partial_stalled: '分割処理が進まないため停止しました。',
       no_source_shard: '利用可能なソースが設定されていません。', cooldown: "認証情報のクールダウン中", coverage_sources_exhausted: "件数は達成済みですが、既存のソースでは網羅率をこれ以上上げられません", validated_sources_exhausted: "検証済みソースをすべて使用し、新しい対象データはありません", credential_broker_unavailable: "認証情報サービスを利用できません", unconfigured: "地図 API キーが未設定です", china_worker: '中国同期ワーカーが処理します。', quota: 'クォータのリセット待ち'
@@ -313,7 +313,7 @@ export const localeText: Record<AdminLocale, LocaleText> = {
       missingKey: 'API 키가 없습니다: {name}', missingChinaKeys: '중국 지도 API 키를 하나 이상 설정하세요: {name}',
       keyUnavailable: 'API 키를 사용할 수 없습니다. 지도 키에서 확인하세요: {name}', keyExpired: 'API 키가 만료되었습니다. 지도 키에서 업데이트하세요: {name}',
       importingKey: '환경 변수에서 API 키를 가져오는 중: {name}', missingSource: '데이터 원본 설정이 없습니다: {name}',
-      source_limited_cache: '모든 원본의 현재 버전을 가져왔으며 새로 추출할 데이터가 없습니다.', source_version_checked: '원본 버전을 확인했으며 업데이트가 없습니다.',
+      source_limited_cache: '모든 원본의 현재 버전을 가져왔으며 새로 추출할 데이터가 없습니다.', source_version_checked: '원본 버전을 확인했으며 업데이트가 없습니다.', source_growth_step: '단계별로 가져오는 중이며 다음 단계가 곧 시작됩니다.',
       retry_suspended: '연속 실패로 자동 재시도를 중지했습니다.', retry_backoff: '실패 후 재시도를 기다리는 중입니다.', shared_failure_circuit: '관련 원본에서 같은 오류가 발생해 중지했습니다.',
       source_partial_checkpoint: '원본을 나누어 처리 중이며 다음 배치를 기다립니다.', source_partial_stalled: '분할 처리가 진행되지 않아 중지했습니다.',
       no_source_shard: '사용 가능한 원본이 설정되어 있지 않습니다.', cooldown: "자격 증명 대기 시간 중", coverage_sources_exhausted: "목표 수는 달성했지만 기존 원본으로는 커버리지를 더 높일 수 없습니다", validated_sources_exhausted: "검증된 원본을 모두 사용했으며 새 적격 데이터가 없습니다", credential_broker_unavailable: "자격 증명 서비스를 사용할 수 없습니다", unconfigured: "지도 API 키가 설정되지 않았습니다", china_worker: '중국 동기화 작업에서 처리합니다.', quota: '할당량 초기화 대기'
@@ -382,7 +382,7 @@ export const localeText: Record<AdminLocale, LocaleText> = {
       missingKey: 'API-Schlüssel fehlt: {name}', missingChinaKeys: 'Konfigurieren Sie mindestens einen China-Karten-API-Schlüssel: {name}',
       keyUnavailable: 'API-Schlüssel nicht verfügbar; prüfen Sie ihn unter Kartenschlüssel: {name}', keyExpired: 'API-Schlüssel abgelaufen; aktualisieren Sie ihn unter Kartenschlüssel: {name}',
       importingKey: 'API-Schlüssel wird aus der Umgebung importiert: {name}', missingSource: 'Quellkonfiguration fehlt: {name}',
-      source_limited_cache: 'Alle Quellen wurden in ihrer aktuellen Version importiert; keine neuen extrahierbaren Daten.', source_version_checked: 'Quellversion geprüft; kein Update verfügbar.',
+      source_limited_cache: 'Alle Quellen wurden in ihrer aktuellen Version importiert; keine neuen extrahierbaren Daten.', source_version_checked: 'Quellversion geprüft; kein Update verfügbar.', source_growth_step: 'Import in Schritten; der nächste Schritt startet in Kürze.',
       retry_suspended: 'Automatische Wiederholungen nach wiederholten Fehlern pausiert.', retry_backoff: 'Wartezeit nach einem Fehler vor dem nächsten Versuch.', shared_failure_circuit: 'Pausiert, weil verwandte Quellen denselben Fehler zeigen.',
       source_partial_checkpoint: 'Quelle wird in Teilen verarbeitet; wartet auf den nächsten Teil.', source_partial_stalled: 'Teilverarbeitung stockt; pausiert.',
       no_source_shard: 'Keine nutzbare Quelle konfiguriert.', cooldown: "Zugangsdaten in Abkühlzeit", coverage_sources_exhausted: "Zielanzahl erreicht; vorhandene Quellen verbessern die Abdeckung nicht weiter", validated_sources_exhausted: "Alle geprüften Quellen sind ausgeschöpft; keine neuen geeigneten Daten", credential_broker_unavailable: "Zugangsdatendienst nicht verfügbar", unconfigured: "Kein Karten-API-Schlüssel konfiguriert", china_worker: 'Wird vom China-Sync-Worker verarbeitet.', quota: 'Warten auf Kontingent-Reset'
@@ -451,7 +451,7 @@ export const localeText: Record<AdminLocale, LocaleText> = {
       missingKey: 'Clé API manquante : {name}', missingChinaKeys: 'Configurez au moins une clé API de carte pour la Chine : {name}',
       keyUnavailable: 'Clé API indisponible ; vérifiez-la dans Clés de carte : {name}', keyExpired: 'Clé API expirée ; mettez-la à jour dans Clés de carte : {name}',
       importingKey: 'Import de la clé API depuis l’environnement : {name}', missingSource: 'Configuration de source manquante : {name}',
-      source_limited_cache: 'Toutes les sources ont été importées dans leur version actuelle ; aucune nouvelle donnée exploitable.', source_version_checked: 'Version de la source vérifiée ; aucune mise à jour.',
+      source_limited_cache: 'Toutes les sources ont été importées dans leur version actuelle ; aucune nouvelle donnée exploitable.', source_version_checked: 'Version de la source vérifiée ; aucune mise à jour.', source_growth_step: 'Import par étapes ; la prochaine étape démarre bientôt.',
       retry_suspended: 'Nouveaux essais automatiques suspendus après des échecs répétés.', retry_backoff: 'Attente après un échec avant un nouvel essai.', shared_failure_circuit: 'Suspendu : des sources liées rencontrent la même panne.',
       source_partial_checkpoint: 'Traitement de la source par lots ; en attente du lot suivant.', source_partial_stalled: 'Le traitement par lots n’avance plus ; suspendu.',
       no_source_shard: 'Aucune source utilisable n’est configurée.', cooldown: "Identifiants en temporisation", coverage_sources_exhausted: "Objectif de volume atteint ; les sources disponibles ne peuvent plus améliorer la couverture", validated_sources_exhausted: "Toutes les sources validées ont été utilisées ; aucune nouvelle donnée éligible", credential_broker_unavailable: "Service d’identifiants indisponible", unconfigured: "Aucune clé API cartographique configurée", china_worker: 'Traité par le processus de synchronisation Chine.', quota: 'En attente de la réinitialisation du quota'
@@ -520,7 +520,7 @@ export const localeText: Record<AdminLocale, LocaleText> = {
       missingKey: 'Falta la clave API: {name}', missingChinaKeys: 'Configure al menos una clave API de mapas de China: {name}',
       keyUnavailable: 'Clave API no disponible; revísela en Claves de mapas: {name}', keyExpired: 'Clave API caducada; actualícela en Claves de mapas: {name}',
       importingKey: 'Importando la clave API desde el entorno: {name}', missingSource: 'Falta la configuración de la fuente: {name}',
-      source_limited_cache: 'Todas las fuentes se importaron en su versión actual; no hay datos nuevos que extraer.', source_version_checked: 'Versión de la fuente comprobada; sin actualizaciones.',
+      source_limited_cache: 'Todas las fuentes se importaron en su versión actual; no hay datos nuevos que extraer.', source_version_checked: 'Versión de la fuente comprobada; sin actualizaciones.', source_growth_step: 'Importación por pasos; el siguiente paso empieza en breve.',
       retry_suspended: 'Reintentos automáticos suspendidos tras fallos repetidos.', retry_backoff: 'Esperando tras un fallo antes de reintentar.', shared_failure_circuit: 'En pausa porque fuentes relacionadas presentan el mismo fallo.',
       source_partial_checkpoint: 'Procesando la fuente por lotes; esperando el siguiente lote.', source_partial_stalled: 'El procesamiento por lotes no avanza; en pausa.',
       no_source_shard: 'No hay ninguna fuente utilizable configurada.', cooldown: "Credenciales en espera", coverage_sources_exhausted: "Objetivo de cantidad cumplido; las fuentes disponibles no pueden mejorar más la cobertura", validated_sources_exhausted: "Se usaron todas las fuentes validadas; no hay datos nuevos que cumplan", credential_broker_unavailable: "Servicio de credenciales no disponible", unconfigured: "No hay ninguna clave API de mapas configurada", china_worker: 'Lo gestiona el proceso de sincronización de China.', quota: 'Esperando el restablecimiento de la cuota'
@@ -589,7 +589,7 @@ export const localeText: Record<AdminLocale, LocaleText> = {
       missingKey: 'Chave de API ausente: {name}', missingChinaKeys: 'Configure ao menos uma chave de API de mapas da China: {name}',
       keyUnavailable: 'Chave de API indisponível; verifique em Chaves de mapa: {name}', keyExpired: 'Chave de API expirada; atualize em Chaves de mapa: {name}',
       importingKey: 'Importando a chave de API do ambiente: {name}', missingSource: 'Configuração de fonte ausente: {name}',
-      source_limited_cache: 'Todas as fontes foram importadas na versão atual; não há novos dados extraíveis.', source_version_checked: 'Versão da fonte verificada; sem atualizações.',
+      source_limited_cache: 'Todas as fontes foram importadas na versão atual; não há novos dados extraíveis.', source_version_checked: 'Versão da fonte verificada; sem atualizações.', source_growth_step: 'Importação por passos; o próximo passo começa em breve.',
       retry_suspended: 'Novas tentativas automáticas suspensas após falhas repetidas.', retry_backoff: 'Aguardando após uma falha antes de tentar novamente.', shared_failure_circuit: 'Pausado porque fontes relacionadas apresentaram a mesma falha.',
       source_partial_checkpoint: 'Processando a fonte em lotes; aguardando o próximo lote.', source_partial_stalled: 'O processamento em lotes não avança; pausado.',
       no_source_shard: 'Nenhuma fonte utilizável configurada.', cooldown: "Credenciais em espera", coverage_sources_exhausted: "Meta de quantidade atingida; as fontes disponíveis não melhoram mais a cobertura", validated_sources_exhausted: "Todas as fontes validadas foram usadas; não há novos dados elegíveis", credential_broker_unavailable: "Serviço de credenciais indisponível", unconfigured: "Nenhuma chave de API de mapas configurada", china_worker: 'Tratado pelo processo de sincronização da China.', quota: 'Aguardando a redefinição da cota'

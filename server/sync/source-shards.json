@@ -98,6 +98,36 @@
       ]
     },
     {
+      "id": "overture-au-states",
+      "adapter": "overture",
+      "name": "Overture Maps addresses, Australian states",
+      "homepageUrl": "https://overturemaps.org/",
+      "dataUrl": "https://stac.overturemaps.org/catalog.json",
+      "licenseCode": "mixed-open",
+      "licenseName": "Country-specific permissive open licences",
+      "licenseUrl": "https://docs.overturemaps.org/attribution/#addresses",
+      "attributionText": "Overture Maps Foundation and the source named in each record",
+      "attributionUrl": "https://docs.overturemaps.org/attribution/#addresses",
+      "termsUrl": "https://docs.overturemaps.org/attribution/#addresses",
+      "shareAlike": false,
+      "redistributionAllowed": true,
+      "updateCadence": "monthly",
+      "capabilityInputs": { "selection": "state-partition-popular-city-weighted-v1" },
+      "partitionDefaults": {
+        "qualityGate": { "minimumRecords": 10, "minimumAdmin1": 1, "minimumCountRatio": 0, "minimumAdmin1Ratio": 0 }
+      },
+      "partitions": [
+        { "countryCode": "AU", "shardId": "nsw", "admin1": "NSW", "name": "New South Wales", "bounds": [140.9, -37.6, 159.2, -28.1], "priority": 1, "maxRecords": 600000 },
+        { "countryCode": "AU", "shardId": "vic", "admin1": "VIC", "name": "Victoria", "bounds": [140.9, -39.2, 150.1, -33.9], "priority": 2, "maxRecords": 500000 },
+        { "countryCode": "AU", "shardId": "qld", "admin1": "QLD", "name": "Queensland", "bounds": [137.9, -29.3, 153.7, -9.1], "priority": 3, "maxRecords": 420000 },
+        { "countryCode": "AU", "shardId": "wa", "admin1": "WA", "name": "Western Australia", "bounds": [112.9, -35.3, 129.1, -13.6], "priority": 4, "maxRecords": 200000 },
+        { "countryCode": "AU", "shardId": "sa", "admin1": "SA", "name": "South Australia", "bounds": [128.9, -38.2, 141.1, -25.9], "priority": 5, "maxRecords": 150000 },
+        { "countryCode": "AU", "shardId": "tas", "admin1": "TAS", "name": "Tasmania", "bounds": [143.7, -43.8, 148.6, -39.4], "priority": 6, "maxRecords": 50000 },
+        { "countryCode": "AU", "shardId": "act", "admin1": "ACT", "name": "Australian Capital Territory", "bounds": [148.7, -35.95, 149.45, -35.1], "priority": 7, "maxRecords": 40000 },
+        { "countryCode": "AU", "shardId": "nt", "admin1": "NT", "name": "Northern Territory", "bounds": [128.9, -26.1, 138.1, -10.9], "priority": 8, "maxRecords": 20000 }
+      ]
+    },
+    {
       "id": "france-bdnb-creuse-residential",
       "adapter": "france-bdnb-residential",
       "countryCode": "FR",
@@ -967,10 +997,10 @@
         "qualityGate": { "minimumRecords": 10, "minimumAdmin1": 1, "minimumCountRatio": 0, "minimumAdmin1Ratio": 0 }
       },
       "extracts": [
-        { "countryCode": "GB", "shardId": "england", "name": "England", "extractId": "england", "priority": 1, "maxRecords": 250000 },
+        { "countryCode": "GB", "shardId": "england", "name": "England", "extractId": "england", "priority": 1, "maxRecords": 600000 },
         { "countryCode": "GB", "shardId": "scotland", "name": "Scotland", "extractId": "scotland", "priority": 2, "maxRecords": 80000 },
         { "countryCode": "GB", "shardId": "wales", "name": "Wales", "extractId": "wales", "priority": 3, "maxRecords": 40000 },
-        { "countryCode": "GB", "shardId": "northern-ireland", "name": "Northern Ireland", "extractId": "ireland-and-northern-ireland", "boundaryIso3": "GBR", "priority": 4, "maxRecords": 25000 }
+        { "countryCode": "GB", "shardId": "northern-ireland", "name": "Northern Ireland", "extractId": "ireland-and-northern-ireland", "boundaryIso3": "GBR", "priority": 4, "maxRecords": 60000 }
       ]
     },
     {

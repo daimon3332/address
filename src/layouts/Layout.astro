@@ -30,6 +30,8 @@ const localizedPath = (target: Locale) => `/${target}/${pagePath ? `${pagePath.r
 <html lang={locale}>
   <head>
     <meta charset="UTF-8" />
+    {/* Scripts here run before the stylesheets load; in the body they would wait for them. */}
+    <slot name="head" />
     <meta name="viewport" content="width=device-width" />
     <meta name="description" content={description} />
     <meta name="theme-color" content="#f7f9ff" />

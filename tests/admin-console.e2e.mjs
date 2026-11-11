@@ -403,7 +403,7 @@ try {
       const addOpenAI = settings.locator('.openai-provider .translation-provider-header button');
       await addOpenAI.click();
       const openAIDialog = page.getByRole('dialog');
-      await openAIDialog.getByText(/OpenAI.*Chat Completions/u).waitFor();
+      await openAIDialog.getByText(/OpenAI.*Chat Completions/u).first().waitFor();
       assert.equal(await openAIDialog.locator('input[name=apiKey]').getAttribute('type'), 'password');
       assert.equal(await openAIDialog.locator('input[name=baseUrl]').inputValue(), '');
       assert.equal(await openAIDialog.locator('input[name=model]').inputValue(), '');

@@ -7,7 +7,7 @@ import { openRuntimeDatabases } from '../database/runtime';
 import { masterKeyFrom } from '../control/security';
 import { ControlStore, createServiceCredentialResolver, credentialsFromEnvironment, parseYoudaoSecret } from '../control/store';
 import {
-  apiAuthorization, authorizeWebRequest, createAccessApi, createAdminApi,
+  apiAuthorization, authorizeWebRequest, coverageNodes, createAccessApi, createAdminApi,
   createAmapProxyRateLimiter, proxyAmapServiceRequest, requestClientAddress
 } from '../control/admin-api';
 import { ChinaDataService } from '../china/service';
@@ -18,7 +18,8 @@ import { parseAllowedOrigins } from '../lib/origin-policy';
 import { TranslationRouteScheduler } from '../translation/routing.mjs';
 import { translateGoogleBatch } from './services/google-translator.ts';
 import { indexTranslate, INDEX_TRANSLATE_SETTINGS_KEY, normalizeIndexTranslateSettings } from '../translation/index-translate.mjs';
-import { prewarmLocationCatalog } from './repositories/location-catalog';
+import { prewarmLocationCatalog, resolveCountryShortcuts } from './repositories/location-catalog';
+import { matchLocale } from '../../src/domain/locales';
 import { countries } from '../../src/domain/countries';
 
 const integer = (value: string | undefined, fallback: number): number => {
@@ -254,6 +255,14 @@ const server = serve({
         async () => app.fetch(request, { ...await requestEnvironment(), ...node, API_TOKEN_AUTHENTICATED: true })
       ));
     }
+    // The bare entry pages only pick a language; answering with the redirect saves loading a page that does it in script.
+    const entryPage = url.pathname.match(/^\/(admin|access)?\/?$/u);
+    if (entryPage && (request.method === 'GET' || request.method === 'HEAD')) {
+      const locale = matchLocale([request.headers.get('accept-language') || '']);
+      return securityHeaders(new Response(null, { status: 302, headers: {
+        Location: `/${locale}/${entryPage[1] ? `${entryPage[1]}/` : ''}${url.search}`, 'Cache-Control': 'no-store', Vary: 'Accept-Language'
+      } }));
+    }
     const localizedPublicPage = /^\/(?:en|zh-CN|zh-TW|ja|ko|de|fr|es|pt)\/(?:admin|access)(?:\/|$)/u.test(url.pathname);
     const publicStatic = url.pathname.startsWith('/admin') || url.pathname.startsWith('/access') || localizedPublicPage
       || url.pathname.startsWith('/_astro/') || /\.(?:css|js|svg|png|jpg|jpeg|webp|ico|woff2?|geojson)$/iu.test(url.pathname);
@@ -278,9 +287,12 @@ const server = serve({
   port
 }, ({ address, port: listeningPort }) => {
   console.log(`Address service listening on http://${address}:${listeningPort}`);
+  // The first visitor after a start would otherwise wait on each of these read models.
+  void coverageNodes(database).catch(() => undefined);
+  void Promise.resolve(app.fetch(new Request('http://127.0.0.1/api/v1/coverage'), environment)).catch(() => undefined);
   void prewarmLocationCatalog(database, countries.map((country) => ({
     country: country.code, postcode: country.addressSchema.filters.includes('postcode')
-  })));
+  }))).then(async () => resolveCountryShortcuts(database, await control.countryShortcuts())).catch(() => undefined);
 });
 
 void china.wake(0).catch((error) => console.error('[china-sync] automatic scheduling failed', error));

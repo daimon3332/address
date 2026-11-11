@@ -198,9 +198,13 @@ export const pickChinaCommunityAddress = async (
   }
   if (filters.postcode) { clauses.push('community.postcode=?'); bindings.push(filters.postcode.replace(/\s/gu, '')); }
   if (filters.q) { clauses.push('(community.canonical_name LIKE ? OR community.provider_address LIKE ?)'); bindings.push(`%${filters.q}%`, `%${filters.q}%`); }
+  // A rare character the pinyin dictionary lacks would stay Chinese in the English address, so such a community is
+  // passed over rather than served half-romanized.
+  const romanizable = (value: string | null | undefined): boolean =>
+    !value || !/\p{Script=Han}/u.test(chinaEnglishComponent('buildingName', value));
   const allowed = (row: CommunityCandidateRow): boolean => !matchesCustomBlacklist([
     row.canonical_name, row.provider_address, row.province, row.city, row.district
-  ]);
+  ]) && [row.canonical_name, row.provider_address, row.township, row.district].every(romanizable);
   let rows: CommunityCandidateRow[] = [];
   if (coordinates) {
     // The box widens until it holds enough communities for repeated picks to vary and is read nearest first; a fixed ±1°

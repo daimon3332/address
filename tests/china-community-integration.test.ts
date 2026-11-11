@@ -332,6 +332,23 @@ describe('China community storage integration', () => {
     expect([...picks].every((id) => id?.startsWith('cn-community-near-'))).toBe(true);
   });
 
+  it('passes over a community whose name the pinyin dictionary cannot romanize', async () => {
+    const community = (id: string, name: string) => ({
+      id, canonical_name: name, provider_address: '文化路1号', province: '江苏省', city: '南京市',
+      district: '玄武区', township: '', postcode: '210000', latitude: 32.06, longitude: 118.79,
+      source_count: 1, verification_level: 'single-source', last_seen_at: '2026-10-01T00:00:00Z'
+    });
+    const prepare = vi.fn((sql: string) => ({
+      bind: () => ({ all: async () => ({ results: sql.includes('SELECT DISTINCT provider') ? [{ provider: 'amap' }]
+        : [community('rare', '㙟头小区'), community('plain', '阳光花园')] }) })
+    }));
+    for (let index = 0; index < 8; index += 1) {
+      const address = await pickChinaCommunityAddress({ prepare } as never, {}, `rare-${index}`, { latitude: 32.06, longitude: 118.79 });
+      expect(address?.id).toBe('cn-community-plain');
+      expect(address?.componentVariants.en.buildingName).toBe('Yangguang Garden');
+    }
+  });
+
   it('keeps coordinate matching separate from alias random windows', async () => {
     const bind = vi.fn((..._values: unknown[]) => ({ all: async () => ({ results: [] }) }));
     const prepare = vi.fn((_sql: string) => ({ bind }));

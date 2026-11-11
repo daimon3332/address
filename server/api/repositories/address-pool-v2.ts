@@ -1003,19 +1003,31 @@ export const pickAddressPoolV2Address = async (
       if (nationwide) {
         const rank = residential ? 'residential_rank' : 'country_rank';
         const readiness = residential ? ' AND residential_ready=1' : '';
-        const ranked = await loadIdentifiers(`WITH selected AS (
-            SELECT (CAST(? AS bigint) % MAX(${rank}))+1 AS target
+        // Ranks keep gaps where rows were retired, so several seeded ranks are probed in one indexed read and the
+        // first one that exists wins; the pick stays uniform over active rows.
+        const probes = Array.from({ length: 16 }, (_, index) => rankSeed(`${country}:${seed}:address-pool-v2:rank${index ? `:${index}` : ''}`));
+        const hits = (await db.prepare(`WITH selected AS (
+            SELECT MAX(${rank}) AS maximum
             FROM address_generation_index
             WHERE country_code=? AND active=1${readiness}
           )
-          SELECT address_id AS id FROM address_generation_index,selected
-          WHERE country_code=? AND active=1${readiness} AND ${rank}=selected.target
-          LIMIT 1`, [rankSeed(`${country}:${seed}:address-pool-v2:rank`), country, country]);
+          SELECT address_id AS id,${rank} AS rank,selected.maximum AS maximum FROM address_generation_index,selected
+          WHERE country_code=? AND active=1${readiness}
+            AND ${rank} IN (${probes.map(() => '(CAST(? AS bigint) % selected.maximum)+1').join(',')})`)
+          .bind(country, country, ...probes).all<{ id: string; rank: number | string; maximum: number | string }>()).results || [];
+        const byRank = new Map(hits.map((hit) => [String(hit.rank), hit.id]));
+        const maximum = hits.length ? BigInt(hits[0]!.maximum) : 0n;
+        const first = maximum ? probes.map((probe) => byRank.get(String(BigInt(probe) % maximum + 1n))).find(Boolean) : undefined;
+        const ranked = first ? [{ id: first }] : [];
         const exact = await pickEligible(ranked);
         if (exact) return exact;
       }
       const indexed = await pickEligible(await loadWindow(generationSelect, generationBindings, 'address_id'));
       if (indexed) return indexed;
+      // A built index lists every publishable address of its country, so a miss there is final; the pool itself is
+      // read only until the country's first index build.
+      if (await db.prepare('SELECT 1 AS built FROM address_generation_index WHERE country_code=? AND active=1 LIMIT 1')
+        .bind(country).first()) return undefined;
     }
     return await pickEligible(await loadWindow(select, bindings, 'id'));
   } catch (error) {

@@ -546,8 +546,6 @@ CREATE INDEX IF NOT EXISTS idx_address_pool_evidence_address ON address_pool_evi
 CREATE INDEX IF NOT EXISTS idx_address_pool_evidence_dataset ON address_pool_evidence(dataset_id, evidence_type);
 CREATE INDEX IF NOT EXISTS idx_address_pool_evidence_current_dataset
   ON address_pool_evidence(address_id, dataset_id) WHERE is_current = 1;
-CREATE UNIQUE INDEX IF NOT EXISTS idx_address_pool_evidence_source_record
-  ON address_pool_evidence(dataset_id, address_id, source_record_id, evidence_type) WHERE source_record_id <> '';
 CREATE UNIQUE INDEX IF NOT EXISTS idx_address_pool_primary_current
   ON address_pool_evidence(address_id) WHERE is_primary = 1 AND is_current = 1;
 CREATE INDEX IF NOT EXISTS idx_pool_coverage_country ON pool_coverage(country_code, refresh_status, active_count);

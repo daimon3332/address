@@ -198,7 +198,7 @@ describe('source-backed translation recovery', () => {
     expect(result).toMatchObject({ updated: 1, requests: 0, done: true });
     expect(fetchImpl).not.toHaveBeenCalled();
     expect(await database.prepare('SELECT status,attempts FROM translation_recovery').first())
-      .toEqual({ status: 'complete', attempts: 0 });
+      .toBeFalsy();
     expect(await database.prepare('SELECT COUNT(*) AS total FROM address_generation_index WHERE active=1').first('total')).toBe(1);
   });
 
@@ -291,7 +291,7 @@ describe('source-backed translation recovery', () => {
     expect(recovered).toMatchObject({ active: 1, retired_at: null });
     expect(JSON.parse(recovered.component_variants_json)).toEqual({ native: source, en: source,
       'zh-CN': { ...chinese, houseNumber: '1', postcode: '62701' } });
-    expect(await database.prepare('SELECT status,attempts FROM translation_recovery').first()).toEqual({ status: 'complete', attempts: 1 });
+    expect(await database.prepare('SELECT status,attempts FROM translation_recovery').first()).toBeFalsy();
   });
 
   it('reevaluates a legacy base rejection once while preserving unchanged genuine source failures', async () => {
@@ -382,7 +382,7 @@ describe('source-backed translation recovery', () => {
     translate.mockClear();
     expect((await runTranslationBackfillBatch({ database, environment: {}, fetchImpl: translate, now })).updated).toBe(1);
     expect(translate).not.toHaveBeenCalled();
-    expect(await database.prepare('SELECT status,attempts FROM translation_recovery').first()).toEqual({ status: 'complete', attempts: 3 });
+    expect(await database.prepare('SELECT status,attempts FROM translation_recovery').first()).toBeFalsy();
   });
 
   it('publishes cached translations when the translation soft deadline stops provider calls', async () => {
@@ -437,7 +437,7 @@ describe('source-backed translation recovery', () => {
       now: () => new Date(now().getTime() + 600_000) })).updated).toBe(1);
     expect(translate).not.toHaveBeenCalled();
     expect(await database.prepare('SELECT status,attempts FROM translation_recovery').first())
-      .toEqual({ status: 'complete', attempts: 3 });
+      .toBeFalsy();
   });
 
   it('uses unique localized administrative identities before requesting translations', async () => {
@@ -498,7 +498,7 @@ describe('source-backed translation recovery', () => {
       UPDATE translation_backfill_progress SET value_json='{"phase":"all","cursor":"zzzz"}' WHERE key='scan'`);
     expect((await runTranslationBackfillBatch({ database, environment: {}, fetchImpl: translate,
       now: () => new Date(now().getTime() + 3_600_000) })).updated).toBe(1);
-    expect(await database.prepare('SELECT status FROM translation_recovery').first('status')).toBe('complete');
+    expect(await database.prepare('SELECT status FROM translation_recovery').first('status')).toBeFalsy();
   });
 
   it.each([false, true])('reconciles a stale failed state for an already published record without another supplier request (changed config %s)', async (changed) => {
@@ -509,7 +509,7 @@ describe('source-backed translation recovery', () => {
     translate.mockClear();
     await runTranslationBackfillBatch({ database, environment: {}, fetchImpl: translate, now });
     expect(await database.prepare('SELECT status,attempts FROM translation_recovery').first())
-      .toEqual({ status: 'complete', attempts: 3 });
+      .toBeFalsy();
     expect(translate).not.toHaveBeenCalled();
   });
 
@@ -620,7 +620,7 @@ describe('source-backed translation recovery', () => {
     await writeBackfillProgress(database, 'providers', { googleFailures: 0, googleRetryAt: null }, now());
     expect((await runTranslationBackfillBatch({ database, environment: {}, fetchImpl: translate,
       now: () => new Date(now().getTime() + 600_000) })).updated).toBe(1);
-    expect(await database.prepare('SELECT status FROM translation_recovery').first('status')).toBe('complete');
+    expect(await database.prepare('SELECT status FROM translation_recovery').first('status')).toBeFalsy();
   });
 
   it('bounds repeated publication statement timeouts without spending cached provider requests', async () => {
@@ -683,7 +683,7 @@ describe('source-backed translation recovery', () => {
       now: () => new Date(now().getTime() + 120_000) })).updated).toBe(cancel ? 1 : 0);
     expect(fetchImpl).toHaveBeenCalledTimes(1);
     expect((await database.prepare('SELECT status FROM translation_recovery').all()).results)
-      .toEqual([{ status: 'complete' }, { status: 'complete' }]);
+      .toEqual([]);
     expect(await database.prepare('SELECT COUNT(*) AS total FROM address_generation_index WHERE active=1').first('total')).toBe(2);
   });
 
@@ -743,7 +743,7 @@ describe('source-backed translation recovery', () => {
     });
     expect((await runTranslationBackfillBatch({ database, environment: {}, fetchImpl, now })).updated).toBe(2);
     expect((await database.prepare('SELECT status FROM translation_recovery ORDER BY address_id').all()).results)
-      .toEqual([{ status: 'complete' }, { status: 'complete' }]);
+      .toEqual([]);
   });
 
   it('publishes countries still below their target before countries that already met it', async () => {

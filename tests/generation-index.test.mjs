@@ -154,6 +154,18 @@ describe('address generation index', () => {
       await database.prepare('UPDATE address_generation_index SET residential_rank=NULL').run();
       expect(await refreshStaleAddressGenerationIndexes(database)).toEqual(['US']);
       expect(await database.prepare('SELECT residential_rank FROM address_generation_index WHERE active=1').first('residential_rank')).toBe(1);
+      // A retired neighbour leaves a rank gap; the nationwide pick probes on instead of reading a random-key window.
+      await database.prepare('UPDATE address_generation_index SET country_rank=3,residential_rank=3').run();
+      const prepare = database.prepare.bind(database);
+      const statements = [];
+      database.prepare = (sql) => { statements.push(sql); return prepare(sql); };
+      await expect(pickAddressPoolV2Address(database, 'US', false, {}, undefined, 'gapped-rank'))
+        .resolves.toMatchObject({ id: 'pool-v2-fixture-address' });
+      database.prepare = prepare;
+      expect(statements.some((sql) => sql.includes('random_key >='))).toBe(false);
+      await database.prepare('UPDATE address_generation_index SET country_rank=5000').run();
+      expect(await refreshStaleAddressGenerationIndexes(database)).toEqual(['US']);
+      expect(await database.prepare('SELECT country_rank FROM address_generation_index WHERE active=1').first('country_rank')).toBe(1);
       await database.prepare("UPDATE address_pool SET expires_at='2000-01-01T00:00:00Z'").run();
       expect(await refreshAddressGenerationIndex(database, 'US')).toBe(0);
       await database.prepare('UPDATE address_pool SET component_variants_json=?').bind(JSON.stringify({

@@ -12,7 +12,8 @@ import {
   type CredentialProviderName, type MapDisplayConfig, type ProviderName, type ProviderQuotaObservation, type ServiceProviderName
 } from './store';
 import { translateYoudaoBatch } from '../api/services/youdao-translator.ts';
-import { listAddressCoverage } from './coverage';
+import { listAddressCoverage, type CoverageNode } from './coverage';
+import { createStaleCache } from './stale-cache';
 import { listAddressData } from './address-data';
 import { nonResidentialRules } from '../../src/domain/non-residential-rules.mjs';
 import { isCountryCode } from '../../src/domain/countries.ts';
@@ -248,6 +249,15 @@ export const proxyAmapServiceRequest = async (
   }
 };
 
+// Listing the country level reads the whole administrative catalog (about a second on production), so the
+// dashboard and the public monitor share one cached listing per parent node.
+const coverageCaches = new WeakMap<object, ReturnType<typeof createStaleCache<CoverageNode[]>>>();
+export const coverageNodes = (database: Database, parent = '', force = false): Promise<CoverageNode[]> => {
+  let cache = coverageCaches.get(database as object);
+  if (!cache) coverageCaches.set(database as object, cache = createStaleCache<CoverageNode[]>(60_000, 15 * 60_000));
+  return cache(parent, () => listAddressCoverage(database, parent), { force });
+};
+
 export const createAdminApi = ({
   control, china, addressDb, trustProxy = false, triggerCountrySync, warmReadModels = false, credentialBroker
 }: {
@@ -474,6 +484,11 @@ export const createAdminApi = ({
         : ['API_TOKEN_SECRET_UNAVAILABLE'].includes(code) ? 409 : clientError ? 400 : 500;
     return context.json({ error: status < 500 ? code : 'INTERNAL_ERROR' }, status);
   });
+  // An admin change (a catalog import, a policy edit) must show on the next dashboard read.
+  app.use('/admin/api/*', async (context, next) => {
+    await next();
+    if (context.req.method !== 'GET') coverageCaches.delete(addressDb as object);
+  });
   app.use('/admin/api/*', async (context, next) => {
     context.header('Cache-Control', 'no-store');
     const publicRoute = ['/admin/api/status', '/admin/api/login', '/admin/api/session'].includes(context.req.path);
@@ -570,12 +585,14 @@ export const createAdminApi = ({
   app.get('/admin/api/dashboard/overview', async (context) => {
     const parent = String(context.req.query('parent') || '');
     if (parent.length > 512) return context.json({ error: 'INVALID_COVERAGE_PARENT' }, 400);
-    await ensureCoverage(context.req.query('refresh') === 'true');
-    const [nodes, status] = await Promise.all([
-      listAddressCoverage(addressDb, parent),
+    const refresh = context.req.query('refresh') === 'true';
+    await ensureCoverage(refresh);
+    const [nodes, rootNodes, status] = await Promise.all([
+      coverageNodes(addressDb, parent, refresh),
+      parent ? coverageNodes(addressDb, '', refresh) : undefined,
       systemStatus(dayStart(context.req.query('since')))
     ]);
-    const countryNodes = parent ? await listAddressCoverage(addressDb) : nodes.filter((node) => node.level === 0);
+    const countryNodes = (rootNodes || nodes).filter((node) => node.level === 0);
     const lowestLevels = countryNodes.map((node) => node.coverageLevels?.at(-1)).filter(Boolean);
     const coveredLowest = lowestLevels.reduce((total, level) => total + Number(level?.covered || 0), 0);
     const totalLowest = lowestLevels.reduce((total, level) => total + Number(level?.total || 0), 0);
@@ -1055,7 +1072,7 @@ export const createAccessApi = (control: ControlStore, {
   const app = new Hono<{ Bindings: RequestBindings }>();
   const attempts = new Map<string, { count: number; resetAt: number }>();
   const monitorRequests = new Map<string, { count: number; resetAt: number }>();
-  const monitorCache = new Map<string, { expiresAt: number; data: unknown }>();
+  const monitorData = createStaleCache<unknown>(60_000, 15 * 60_000);
   app.get('/web-api/v1/config/country-shortcuts', async (context) => {
     if (!await authorizeWebRequest(control, context.req.raw)) {
       return context.json({ error: 'FRONTEND_AUTH_REQUIRED' }, 401, { 'Cache-Control': 'no-store' });
@@ -1081,35 +1098,31 @@ export const createAccessApi = (control: ControlStore, {
     if (monitorRequests.size > 5000) monitorRequests.clear();
     const parent = String(context.req.query('parent') || '');
     if (parent.length > 512) return context.json({ error: 'INVALID_COVERAGE_PARENT' }, 400);
-    const cached = monitorCache.get(parent);
-    if (cached && cached.expiresAt > Date.now()) {
-      context.header('Cache-Control', 'private, max-age=60');
-      return context.json({ data: cached.data });
-    }
-    const [nodes, rootNodes, lastUpdatedAt] = await Promise.all([
-      listAddressCoverage(addressDb, parent),
-      parent ? listAddressCoverage(addressDb) : Promise.resolve(undefined),
-      addressDb.prepare('SELECT MAX(updated_at) AS updated_at FROM admin_coverage_stats').first<string>('updated_at')
-    ]);
-    const countries = (rootNodes || nodes).filter((node) => node.level === 0);
-    const lowestLevels = countries.map((node) => node.coverageLevels?.at(-1)).filter(Boolean);
-    const coveredLowest = lowestLevels.reduce((total, level) => total + Number(level?.covered || 0), 0);
-    const totalLowest = lowestLevels.reduce((total, level) => total + Number(level?.total || 0), 0);
-    const data = {
-      nodes,
-      countries,
-      metrics: {
-        countryCount: countries.length,
-        addressTotal: countries.reduce((total, node) => total + node.totalCount, 0),
-        residentialTotal: countries.reduce((total, node) => total + node.residentialCount, 0),
-        coveredLowest,
-        totalLowest,
-        coverageRate: totalLowest ? coveredLowest / totalLowest : 0,
-        lastUpdatedAt: lastUpdatedAt || null
-      }
-    };
-    monitorCache.set(parent, { expiresAt: Date.now() + 60_000, data });
-    if (monitorCache.size > 500) monitorCache.clear();
+    // The newest-update lookup alone scans the coverage table, so the whole payload is cached, not just its nodes.
+    const data = await monitorData(parent, async () => {
+      const [nodes, rootNodes, lastUpdatedAt] = await Promise.all([
+        coverageNodes(addressDb, parent),
+        parent ? coverageNodes(addressDb, '') : Promise.resolve(undefined),
+        addressDb.prepare('SELECT MAX(updated_at) AS updated_at FROM admin_coverage_stats').first<string>('updated_at')
+      ]);
+      const countries = (rootNodes || nodes).filter((node) => node.level === 0);
+      const lowestLevels = countries.map((node) => node.coverageLevels?.at(-1)).filter(Boolean);
+      const coveredLowest = lowestLevels.reduce((total, level) => total + Number(level?.covered || 0), 0);
+      const totalLowest = lowestLevels.reduce((total, level) => total + Number(level?.total || 0), 0);
+      return {
+        nodes,
+        countries,
+        metrics: {
+          countryCount: countries.length,
+          addressTotal: countries.reduce((total, node) => total + node.totalCount, 0),
+          residentialTotal: countries.reduce((total, node) => total + node.residentialCount, 0),
+          coveredLowest,
+          totalLowest,
+          coverageRate: totalLowest ? coveredLowest / totalLowest : 0,
+          lastUpdatedAt: lastUpdatedAt || null
+        }
+      };
+    });
     context.header('Cache-Control', 'private, max-age=60');
     return context.json({ data });
   });

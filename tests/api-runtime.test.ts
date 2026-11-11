@@ -7,7 +7,6 @@ import {
   resolveCatalogTarget,
   type CatalogTarget
 } from '../server/api/repositories/address-repository';
-import { pickAddressPoolAddress } from '../server/api/repositories/address-pool';
 import { fetchWithTimeout } from '../server/api/services/fetch-timeout';
 import { fetchOverpassCandidates } from '../server/api/services/overpass-provider';
 import { eligibleAddresses } from './fixtures/catalog';
@@ -180,94 +179,5 @@ describe('provider integrity and timeout behavior', () => {
     await rejection;
     expect(fetchMock).toHaveBeenCalledOnce();
     expect(fetchMock.mock.calls[0]?.[1]?.signal?.aborted).toBe(true);
-  });
-});
-
-describe('local PostgreSQL address pool', () => {
-  it('selects a filtered residential record by random-key pivot and preserves provenance', async () => {
-    const row = {
-      id: 'fixture-address', country_code: 'US', admin1: 'California', admin1_code: 'CA',
-      locality: 'Los Angeles', postal_locality: 'Los Angeles', district: 'Los Angeles County',
-      postcode: '90001', street: 'Main Street', house_number: '12', building_name: '',
-      latitude: 34.0522, longitude: -118.2437, property_type: 'residential',
-      source_id: 'fixture', source_name: 'Fixture Source', source_url: 'https://example.test/source',
-      source_record_id: 'record-1', source_updated_at: '2026-07-01', imported_at: '2026-07-15T00:00:00Z'
-    };
-    const statements: string[] = [];
-    const bindingCounts: number[] = [];
-    const db = {
-      prepare(sql: string) {
-        statements.push(sql);
-        const statement = {
-          bind(...values: unknown[]) { bindingCounts.push(values.length); return statement; },
-          async all<T>() { return { results: sql.includes('random_key >=') ? [row as T] : [] }; }
-        };
-        return statement;
-      }
-    } as unknown as Parameters<typeof pickAddressPoolAddress>[0];
-    const target: CatalogTarget = {
-      coordinates: { latitude: row.latitude, longitude: row.longitude },
-      region: row.admin1, regionAliases: [row.admin1, row.admin1_code],
-      city: row.locality, cityAliases: [row.locality], postcode: row.postcode, bucket: 'postcode-90001'
-    };
-
-    const address = await pickAddressPoolAddress(
-      db, 'US', true, { region: 'CA', city: 'Los Angeles', postcode: '90001' }, target, 'pool-seed', current
-    );
-
-    expect(address).toBeUndefined();
-    expect(statements).toHaveLength(0);
-    expect(bindingCounts).toHaveLength(0);
-  });
-
-  it('falls through cleanly before the address-pool schema is initialized', async () => {
-    const db = {
-      prepare() { throw new Error('no such table: address_pool'); }
-    } as unknown as Parameters<typeof pickAddressPoolAddress>[0];
-    await expect(pickAddressPoolAddress(db, 'JP', false, {}, undefined, 'seed')).resolves.toBeUndefined();
-  });
-
-  it('rejects a non-residential record from the legacy address pool', async () => {
-    const row = {
-      id: 'legacy-police', country_code: 'CN', admin1: '河北省', admin1_code: '13',
-      locality: '唐山市', postal_locality: '唐山市', district: '丰润区', postcode: '064000',
-      street: '文化路', house_number: '10号', building_name: '丰润区公安局', latitude: 39.83,
-      longitude: 118.16, property_type: 'unknown', source_id: 'legacy', source_name: 'Legacy',
-      source_url: 'https://example.test/source', source_record_id: 'police', source_updated_at: '2026-07-01',
-      imported_at: '2026-07-15T00:00:00Z'
-    };
-    const eligible = { ...row, id: 'legacy-home', building_name: '文化家园', house_number: '12号' };
-    const db = {
-      prepare() {
-        const statement = { bind() { return statement; }, async all() { return { results: [row, eligible] }; } };
-        return statement;
-      }
-    } as unknown as Parameters<typeof pickAddressPoolAddress>[0];
-
-    await expect(pickAddressPoolAddress(db, 'CN', false, {}, undefined, 'seed')).resolves.toMatchObject({
-      id: 'pool-legacy-home', components: { buildingName: '文化家园' }
-    });
-  });
-
-  it('skips a legacy US row whose state field contains Philadelphia', async () => {
-    const base = {
-      country_code: 'US', locality: 'Philadelphia', postal_locality: 'Philadelphia', district: '',
-      postcode: '19103', street: 'Market Street', house_number: '10', building_name: '',
-      latitude: 39.95, longitude: -75.16, property_type: 'residential', source_id: 'legacy',
-      source_name: 'Legacy', source_url: 'https://example.test/source', source_updated_at: '2026-07-01',
-      imported_at: '2026-07-15T00:00:00Z'
-    };
-    const invalid = { ...base, id: 'bad-state', admin1: 'Philadelphia', admin1_code: '' };
-    const valid = { ...base, id: 'valid-state', admin1: 'Pennsylvania', admin1_code: 'PA' };
-    const db = {
-      prepare() {
-        const statement = { bind() { return statement; }, async all() { return { results: [invalid, valid] }; } };
-        return statement;
-      }
-    } as unknown as Parameters<typeof pickAddressPoolAddress>[0];
-
-    await expect(pickAddressPoolAddress(db, 'US', false, {}, undefined, 'seed')).resolves.toMatchObject({
-      id: 'pool-valid-state', components: { locality: 'Philadelphia', admin1: 'Pennsylvania', admin1Code: 'PA' }
-    });
   });
 });

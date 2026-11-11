@@ -267,7 +267,7 @@ const publish = async (database, candidates, revision, now, signal, outcome, cou
         if (chinesePending(row, variants)) {
           await saveState(transaction, current, revision, 'waiting', attempts, new Date(now().getTime() + CHINESE_FALLBACK_RETRY_MS).toISOString(),
             'chinese_fallback', now());
-        } else await saveState(transaction, current, revision, 'complete', attempts, null, null, now());
+        } else await transaction.prepare('DELETE FROM translation_recovery WHERE address_id=?').bind(current.id).run();
       }
       lap('state');
       signal.throwIfAborted();
@@ -402,7 +402,7 @@ const runTranslationBatch = async ({ database, environment = process.env, fetchI
       }
       const previous = recoveryStates.get(row.id);
       if (row.active === 1 && storedAddressPoolV2RowIsFullyTranslated(row, now())) {
-        if (previous && previous.status !== 'complete') await saveState(database, row, services.revision, 'complete', previous.attempts, null, null, now());
+        if (previous) await database.prepare('DELETE FROM translation_recovery WHERE address_id=?').bind(row.id).run();
         continue;
       }
       const unchanged = previous?.input_hash === fingerprint(row)
@@ -414,7 +414,6 @@ const runTranslationBatch = async ({ database, environment = process.env, fetchI
         || previous.status === 'waiting' && previous.attempts >= 3
           && ['publication_busy', 'publication_deferred', 'cancelled', 'batch_timeout'].includes(previous.reason));
       if (unchanged && !onlyCached && (previous.status === 'rejected'
-        || previous.status === 'complete' && storedAddressPoolV2RowIsFullyTranslated(row, now())
         || previous.status === 'failed' && !cacheOnly && !transientFailure
         || previous.next_attempt_at && previous.next_attempt_at > now().toISOString())) continue;
       if (!storedAddressPoolV2RowCanRecoverTranslations(row, now())) {

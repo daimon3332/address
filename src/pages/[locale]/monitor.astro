@@ -14,5 +14,14 @@ const titles: Record<Locale, string> = {
 };
 ---
 <Layout locale={locale} pagePath="monitor" title={titles[locale]}>
+  {/* Start the figures and the world map before the bundle arrives; the components adopt these responses. */}
+  <script slot="head" is:inline>
+    try {
+      // The body is read here, inside the timeout; a response adopted later must not depend on the expired signal.
+      const start = (url) => { const request = fetch(url, { headers: { Accept: 'application/json' }, signal: AbortSignal.timeout(15000) })
+        .then(async (response) => new Response([204, 304].includes(response.status) ? null : await response.arrayBuffer(), { status: response.status, headers: response.headers })); request.catch(() => {}); return request; };
+      window.__monitorBoot = { data: start('/web-api/v1/public-monitor'), map: start('/maps/world-map-units.geojson') };
+    } catch { /* The components fall back to their own requests. */ }
+  </script>
   <PublicMonitor client:load locale={locale} />
 </Layout>

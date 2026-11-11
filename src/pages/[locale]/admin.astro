@@ -15,6 +15,27 @@ const titles: Record<Locale, string> = {
 <html lang={locale}>
   <head>
     <meta charset="UTF-8" />
+    {/* Start the session check and the opening view's data before the stylesheet and bundle arrive; SyncAdmin adopts these responses. */}
+    <script is:inline>
+      try {
+        const csrf = (document.cookie.split('; ').find((value) => value.startsWith('address_admin_csrf=')) || '').slice(19);
+        const start = (path) => { const request = fetch('/admin/api' + path, { cache: 'no-store', credentials: 'same-origin', headers: csrf ? { 'X-CSRF-Token': csrf } : {}, signal: AbortSignal.timeout(15000) })
+          // The body is read here, inside the timeout; a response adopted later must not depend on the expired signal.
+          .then(async (response) => new Response([204, 304].includes(response.status) ? null : await response.arrayBuffer(), { status: response.status, headers: response.headers })); request.catch(() => {}); return request; };
+        const boot = { '/status': start('/status'), '/session': start('/session') };
+        if (csrf) {
+          const day = new Date(); day.setHours(0, 0, 0, 0);
+          const since = new URLSearchParams({ since: day.toISOString() });
+          const views = { dashboard: ['/dashboard/overview?' + since], blacklist: ['/settings/blacklist'], access: ['/settings/access'],
+            providers: ['/providers', '/settings/maps', '/settings/translation'], addressData: ['/address-data', '/sync/queue'],
+            syncHistory: ['/sync/history'], shortcuts: ['/settings/country-shortcuts'], tokens: ['/tokens'] };
+          const view = new URLSearchParams(location.search).get('view') || 'dashboard';
+          for (const path of ['/system/status?' + since, ...(Object.hasOwn(views, view) ? views[view] : [])]) boot[path] = start(path);
+        }
+        window.__adminBoot = boot;
+        setTimeout(() => { window.__adminBoot = undefined; }, 20000);
+      } catch { /* SyncAdmin falls back to its own requests. */ }
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex,nofollow" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />

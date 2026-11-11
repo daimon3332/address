@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from 'react';
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore, type KeyboardEvent } from 'react';
 import { DndContext, KeyboardSensor, PointerSensor, TouchSensor, closestCenter, useSensor, useSensors, type DragEndEvent } from '@dnd-kit/core';
 import { SortableContext, sortableKeyboardCoordinates, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
@@ -8,6 +8,7 @@ import { countries, countryByCode } from '../domain/countries';
 import { safeExternalUrl, type FavoriteAddress } from '../domain/favorites';
 import { favoritesCopy, type FavoritesCopy } from '../domain/favorites-i18n';
 import { messages } from '../domain/i18n';
+import { pinyinStore } from '../domain/pinyin-runtime';
 import { localeDefinitions, localizedCountryName, pathForLocale } from '../domain/locales';
 import type { CountryCode, CountryGroup, Locale } from '../domain/types';
 import { listFavorites, removeFavorite, reorderFavorite, restoreFavorite, subscribeToFavorites } from '../services/favorite-store';
@@ -191,6 +192,7 @@ function FavoriteRow({ favorite, total, locale, text, copied, remove, copy, move
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: favorite.id, disabled: busy });
   const [position, setPosition] = useState(String(favorite.position));
   useEffect(() => setPosition(String(favorite.position)), [favorite.position]);
+  useSyncExternalStore(...pinyinStore);
   const presentation = addressDisplayPresentation(favorite.snapshot, storedAddressLanguage(), locale);
   const google = safeExternalUrl(favorite.snapshot.googleMaps.openUrl);
   const amap = safeExternalUrl(favorite.snapshot.googleMaps.amapUrl);

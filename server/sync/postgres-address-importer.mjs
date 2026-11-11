@@ -2,7 +2,7 @@ import { applyHierarchicalQuota } from './address-policy.mjs';
 import { addressCanonicalKey, localityIssue, splitConcatenatedLocality, validateAddressQuality, streetAddressKey } from '../../src/domain/address-quality.mjs';
 import { canonicalUsSubdivisionCode, validateAdministrativeHierarchy } from '../../src/domain/administrative-integrity.mjs';
 import { requiresAdminCode, validateAddressContract } from '../../src/domain/address-contracts.mjs';
-import { refreshAddressGenerationIndex } from '../database/generation-index.mjs';
+import { ranksNeedRenumbering, refreshAddressGenerationIndex } from '../database/generation-index.mjs';
 import { POSTCODE_REQUIRED_REVISION, postcodeRequired } from './postcode-requirement.mjs';
 import { correctedRegion, regionCorrectionCountries } from './region-boundaries.mjs';
 import { administrativeNameCountries, createAdministrativeNames, mixedLevelCountries, singaporeRegion } from './administrative-names.mjs';
@@ -974,8 +974,7 @@ export class PostgresAddressImporter {
   async refreshDerivedCountryState(countryCode, coverageTarget, datasetId, observedAt) {
     const ranks = await this.database.prepare(`SELECT COUNT(*) AS total,MAX(country_rank) AS maximum
       FROM address_generation_index WHERE country_code=? AND active=1`).bind(countryCode).first();
-    // Targeted index refreshes append ranks; once retirements leave too many gaps the country is renumbered.
-    if (Number(ranks?.maximum || 0) > Number(ranks?.total || 0) * 1.25 + 1_000) {
+    if (ranksNeedRenumbering(ranks?.maximum, ranks?.total)) {
       await refreshAddressGenerationIndex(this.database, countryCode);
     }
     await this.database.batch([

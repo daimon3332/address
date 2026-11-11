@@ -5,7 +5,7 @@ import { countryByCode, isCountryCode } from '../domain/countries';
 import { localeDefinitions, localizedCountryName, pathForLocale } from '../domain/locales';
 import type { Locale } from '../domain/types';
 import { messages } from '../domain/i18n';
-import { useMapDialogFocus, WorldCoverageMap } from './WorldCoverageMap';
+import { preloadWorldMap, takeBootResponse, useMapDialogFocus, WorldCoverageMap } from './WorldCoverageMap';
 
 interface CoverageLevel { key: string; labelEn: string; labelZh: string; covered: number; qualified: number; total: number }
 export interface CoverageNode {
@@ -91,9 +91,10 @@ export default function PublicMonitor({ locale }: { locale: Locale }) {
     const controller = new AbortController(); request.current = controller;
     setLoading(true); setError(false);
     try {
-      const response = await fetch(`/web-api/v1/public-monitor${parent ? `?parent=${encodeURIComponent(parent)}` : ''}`, {
-        headers: { Accept: 'application/json' }, signal: AbortSignal.any([controller.signal, AbortSignal.timeout(15_000)])
-      });
+      const response = !parent && await takeBootResponse('__monitorBoot', 'data')
+        || await fetch(`/web-api/v1/public-monitor${parent ? `?parent=${encodeURIComponent(parent)}` : ''}`, {
+          headers: { Accept: 'application/json' }, signal: AbortSignal.any([controller.signal, AbortSignal.timeout(15_000)])
+        });
       if (id !== loadId.current) return;
       if (response.status === 401) {
         window.location.assign(`/${locale}/access/?next=${encodeURIComponent(window.location.pathname)}`);
@@ -106,7 +107,7 @@ export default function PublicMonitor({ locale }: { locale: Locale }) {
     finally { if (id === loadId.current) setLoading(false); }
   };
 
-  useEffect(() => { void load(); return () => { loadId.current += 1; request.current?.abort(); }; }, []);
+  useEffect(() => { preloadWorldMap(); void load(); return () => { loadId.current += 1; request.current?.abort(); }; }, []);
   const open = (node: CoverageNode) => {
     if (!node.childCount) return;
     if (parentRef.current === node.key) return;

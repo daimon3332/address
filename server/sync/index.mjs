@@ -145,6 +145,13 @@ export const createSyncRuntime = async ({
       const client = await postgresPool.connect();
       try { await ensureEvidenceDatasetIndex(client); } finally { client.release(); }
     });
+    if (postgresPool) void startupStep('storage compaction', async () => {
+      const { dropRedundantEvidenceIndex, purgeCompletedRecovery } = await import('./storage-compaction.mjs');
+      const client = await postgresPool.connect();
+      try { await dropRedundantEvidenceIndex(client); } finally { client.release(); }
+      const deleted = await purgeCompletedRecovery({ database });
+      if (deleted) console.log(`[address-sync] removed ${deleted} completed translation recovery rows`);
+    });
     await startupStep('postcode inference', async () => {
       const countries = (await database.prepare("SELECT country_code FROM sync_country_policies WHERE enabled=1 AND country_code<>'CN' ORDER BY country_code").all()).results;
       for (const { country_code: countryCode } of countries) {

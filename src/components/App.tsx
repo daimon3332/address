@@ -1,4 +1,4 @@
-import { useEffect, useId, useLayoutEffect, useMemo, useRef, useState, type KeyboardEvent, type ReactNode, type SyntheticEvent } from 'react';
+import { useEffect, useId, useLayoutEffect, useMemo, useRef, useState, useSyncExternalStore, type KeyboardEvent, type ReactNode, type SyntheticEvent } from 'react';
 import { Activity, Bookmark, ChevronDown, X } from 'lucide-react';
 import AmapPreview from './AmapPreview';
 import {
@@ -14,6 +14,7 @@ import { favoriteIdFor } from '../domain/favorites';
 import { favoritesCopy } from '../domain/favorites-i18n';
 import { countryCodeFrom, type ClientContext, type GenerationMode } from '../domain/client-context';
 import { messages } from '../domain/i18n';
+import { pinyinStore } from '../domain/pinyin-runtime';
 import { localeDefinitions, localizedCountryName, pathForLocale, uiTextLocale } from '../domain/locales';
 import { locationOptionLabel } from '../domain/location-options';
 import { localizedProfileValue, profileLanguageControlText, profileLanguageNames, resolvedProfileLocale } from '../domain/profile-localization';
@@ -396,6 +397,7 @@ export default function App({ locale, apiBaseUrl }: AppProps) {
   const [locationMeta, setLocationMeta] = useState<Record<LocationField, LocationMeta>>(emptyLocationMeta);
   const [locationLoadState, setLocationLoadState] = useState<Record<LocationField, LocationLoadState>>(emptyLocationLoadState);
   const [result, setResult] = useState<GeneratedBundle | null>(null);
+  useSyncExternalStore(...pinyinStore);
   const [addressLanguage, setAddressLanguage] = useState<AddressDisplayLanguage>(() => readStoredDisplayLanguage<AddressDisplayLanguage>(addressLanguageStorageKey, locale));
   const [addressTranslations, setAddressTranslations] = useState<Record<string, AddressTranslation>>({});
   const [translationRetry, setTranslationRetry] = useState(0);

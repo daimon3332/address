@@ -123,8 +123,8 @@ describe('attempt evaluation and latching', () => {
   it('reruns a growing source soon only when its per-run growth step capped the import', () => {
     const capped = evaluateAttempt({ ...base, jobSucceeded: true, netGrowth: 50_000, growthCapped: true, probeIntervalMs: 30 * 86_400_000 });
     const finished = evaluateAttempt({ ...base, jobSucceeded: true, netGrowth: 50_000, probeIntervalMs: 30 * 86_400_000 });
-    expect(capped).toMatchObject({ action: 'checked', nextAttemptAt: '2026-08-02T10:01:00.000Z' });
-    expect(finished).toMatchObject({ action: 'checked', nextAttemptAt: '2026-09-01T10:00:00.000Z' });
+    expect(capped).toMatchObject({ action: 'checked', reason: 'source_growth_step', nextAttemptAt: '2026-08-02T10:01:00.000Z' });
+    expect(finished).toMatchObject({ action: 'checked', reason: 'source_version_checked', nextAttemptAt: '2026-09-01T10:00:00.000Z' });
   });
 
   it('continues a successful checkpointed source until its full scan is complete', () => {
@@ -1176,6 +1176,16 @@ describe('queue snapshot', () => {
     expect(due.entries.find((entry) => entry.countryCode === 'US')).toMatchObject({
       state: 'queued', runnableShardId: 'oa-us'
     });
+
+    // A growth step runs the same source version again once its short wait is over.
+    queueState.countries.US.shards['oa-us'] = { state: 'checked', reason: 'source_growth_step', fingerprint, nextAttemptAt: '2026-08-02T09:59:00Z' };
+    expect((await computeQueueSnapshot({
+      sources: stubSources(facts, {}), catalogShards: stubCatalogShards, queueState, now, enableSourceProbes: false
+    })).entries.find((entry) => entry.countryCode === 'US')).toMatchObject({ state: 'queued', runnableShardId: 'oa-us' });
+    queueState.countries.US.shards['oa-us'].nextAttemptAt = '2026-08-02T10:30:00Z';
+    expect((await computeQueueSnapshot({
+      sources: stubSources(facts, {}), catalogShards: stubCatalogShards, queueState, now, enableSourceProbes: false
+    })).entries.find((entry) => entry.countryCode === 'US')).toMatchObject({ runnableShardId: null });
 
     queueState.countries.US.shards['oa-us'].reason = 'source_version_checked';
     const terminal = await computeQueueSnapshot({

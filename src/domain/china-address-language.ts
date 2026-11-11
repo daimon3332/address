@@ -1,4 +1,4 @@
-import { pinyin } from 'pinyin-pro';
+import { pinyin } from './pinyin-runtime';
 
 type ChinaField = 'admin1' | 'locality' | 'district' | 'township' | 'street' | 'buildingName';
 type Suffix = readonly [string, string];

@@ -1,17 +1,56 @@
-import { useCallback, useEffect, useRef, useState, type SyntheticEvent } from 'react';
+import { createElement, lazy, Suspense, useCallback, useEffect, useRef, useState, type ComponentType, type SyntheticEvent } from 'react';
 import { LogOut, MapPin, Menu, PanelLeftClose, PanelLeftOpen, RefreshCw, SquareArrowOutUpRight } from 'lucide-react';
 import { pathForLocale } from '../domain/locales';
 import type { Locale } from '../domain/types';
 import { Dashboard, DashboardLoading, SidebarStatus } from './admin/dashboard';
-import { AmapBrowserDialog, AmapBrowserSummary, MapDisplayPanel, OpenAICompatibleCredentialDialog, ProviderCredentialDialog, ProviderCredentialsPanel, TranslationSettingsPanel, YoudaoCredentialDialog } from './admin/providers';
-import { AccessSettingsForm, BlacklistSettings, TokenEditorDialog, TokenSecretDialog, TokenTable } from './admin/security';
-import { CountryShortcutSettings } from './admin/shortcuts';
-import { CountryWorkspace, SyncHistoryPanel } from './admin/sync';
 import { adminText, errorMessage, labelsFor, navGroups, shellText, sidebarStorageKey, viewIcons } from './admin/text';
 import { adminViews } from './admin/types';
 import type { AddressDataCountry, AddressDataWorkspace, AdminCountryShortcutConfig, AdminLocale, ApiTokenView, BlacklistViewData, CoverageNode, Credential, DashboardData, Mutate, ProviderViewData, RequestData, Reveal, SyncHistoryData, SyncQueueData, SystemStatus, View } from './admin/types';
 import { localeText } from './admin/locale-text';
 import { ConfirmProvider, LocaleMenu, Panel, useConfirm, usePolling } from './admin/ui';
+import { preloadWorldMap, takeBootResponse } from './WorldCoverageMap';
+
+// Each view's code loads with the view, so opening the dashboard does not download the other screens. A component
+// first shown after its module arrived (a dialog of the open view) renders directly instead of suspending the view.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type AnyComponent = ComponentType<any>;
+const loadedModules = new Map<unknown, Record<string, AnyComponent>>();
+const lazyNamed = <M extends Record<K, AnyComponent>, K extends keyof M & string>(load: () => Promise<M>, name: K): M[K] => {
+  const Lazy = lazy(async () => {
+    const module = await load();
+    loadedModules.set(load, module);
+    return { default: module[name] };
+  });
+  let suspends: boolean | undefined;
+  return ((props: object) => {
+    suspends ??= !loadedModules.has(load);
+    return createElement(suspends ? Lazy : loadedModules.get(load)![name], props);
+  }) as unknown as M[K];
+};
+const providersModule = () => import('./admin/providers');
+const securityModule = () => import('./admin/security');
+const shortcutsModule = () => import('./admin/shortcuts');
+const syncModule = () => import('./admin/sync');
+const viewModules: Partial<Record<View, () => Promise<unknown>>> = {
+  providers: providersModule, access: securityModule, blacklist: securityModule, tokens: securityModule,
+  shortcuts: shortcutsModule, addressData: syncModule, syncHistory: syncModule
+};
+const AmapBrowserDialog = lazyNamed(providersModule, 'AmapBrowserDialog');
+const AmapBrowserSummary = lazyNamed(providersModule, 'AmapBrowserSummary');
+const MapDisplayPanel = lazyNamed(providersModule, 'MapDisplayPanel');
+const OpenAICompatibleCredentialDialog = lazyNamed(providersModule, 'OpenAICompatibleCredentialDialog');
+const ProviderCredentialDialog = lazyNamed(providersModule, 'ProviderCredentialDialog');
+const ProviderCredentialsPanel = lazyNamed(providersModule, 'ProviderCredentialsPanel');
+const TranslationSettingsPanel = lazyNamed(providersModule, 'TranslationSettingsPanel');
+const YoudaoCredentialDialog = lazyNamed(providersModule, 'YoudaoCredentialDialog');
+const AccessSettingsForm = lazyNamed(securityModule, 'AccessSettingsForm');
+const BlacklistSettings = lazyNamed(securityModule, 'BlacklistSettings');
+const TokenEditorDialog = lazyNamed(securityModule, 'TokenEditorDialog');
+const TokenSecretDialog = lazyNamed(securityModule, 'TokenSecretDialog');
+const TokenTable = lazyNamed(securityModule, 'TokenTable');
+const CountryShortcutSettings = lazyNamed(shortcutsModule, 'CountryShortcutSettings');
+const CountryWorkspace = lazyNamed(syncModule, 'CountryWorkspace');
+const SyncHistoryPanel = lazyNamed(syncModule, 'SyncHistoryPanel');
 export type { AdminLocale } from './admin/types';
 export type { AdminDictionary } from './admin/text';
 export { adminErrorText, adminText, baseAdminErrorText, errorMessage, syncHistoryGoalChange, syncHistoryResultDetail } from './admin/text';
@@ -84,13 +123,14 @@ export default function SyncAdmin({ locale: pageLocale }: SyncAdminProps) {
   const request = useCallback(async <T,>(path: string, options: RequestInit = {}): Promise<T> => {
     const csrf = cookie('address_admin_csrf');
     const signal = options.signal ? AbortSignal.any([options.signal, AbortSignal.timeout(15000)]) : AbortSignal.timeout(15000);
-    const response = await fetch(`/admin/api${path}`, {
-      ...options,
-      signal,
-      cache: 'no-store',
-      headers: { ...(options.body ? { 'Content-Type': 'application/json' } : {}), ...(csrf ? { 'X-CSRF-Token': csrf } : {}), ...options.headers },
-      credentials: 'same-origin'
-    });
+    const response = (!options.method || options.method === 'GET') && await takeBootResponse('__adminBoot', path)
+      || await fetch(`/admin/api${path}`, {
+        ...options,
+        signal,
+        cache: 'no-store',
+        headers: { ...(options.body ? { 'Content-Type': 'application/json' } : {}), ...(csrf ? { 'X-CSRF-Token': csrf } : {}), ...options.headers },
+        credentials: 'same-origin'
+      });
     const body = await response.json().catch(() => ({ error: `HTTP ${response.status}` })) as { data?: T; error?: string; detail?: string };
     if (response.status === 401) setAuthenticated(false);
     if (!response.ok) throw new Error(errorMessage(body.detail || body.error || `HTTP ${response.status}`, locale));
@@ -108,6 +148,8 @@ export default function SyncAdmin({ locale: pageLocale }: SyncAdminProps) {
     loadControllers.current[selected] = controller;
     if (!background) { setLoadingView(selected); setError(''); }
     if (clearMessages) setNotice('');
+    if (selected === 'dashboard') preloadWorldMap();
+    else void viewModules[selected]?.().catch(() => undefined);
     try {
       const paths: Record<View, string> = {
         dashboard: `/dashboard/overview?${new URLSearchParams({ since: localDayStart(), ...(coverageParent.current ? { parent: coverageParent.current } : {}) })}`,
@@ -163,6 +205,7 @@ export default function SyncAdmin({ locale: pageLocale }: SyncAdminProps) {
       setAuthenticated(active);
       setPasswordChangeRequired(active && forceChange);
       if (active) void load(selected);
+      else (globalThis as { __adminBoot?: unknown }).__adminBoot = undefined;
     }).catch((value) => { if (!controller.signal.aborted) setError(errorMessage(value, locale)); })
       .finally(() => { if (!controller.signal.aborted) setSessionReady(true); });
     return () => controller.abort();
@@ -342,8 +385,8 @@ export default function SyncAdmin({ locale: pageLocale }: SyncAdminProps) {
           {error && <div className="admin-error admin-error-action" role="alert"><span>{error}</span><button disabled={mutating || loadingView === view} onClick={() => void load(view)}>{t.retry}</button></div>}
           {notice && <div className="admin-notice" role="status">{notice}</div>}
         </div>}
-        {data === undefined ? (view === 'dashboard' ? <DashboardLoading label={t.loading} /> : <div className="admin-loading" role="status"><span className="loading-dot" />{t.loading}</div>) : <AdminView locale={locale} view={view} data={data} busy={mutating} mutate={mutate} reveal={reveal} request={request}
-          coverageTrail={coverageTrail} openCoverage={openCoverage} returnCoverage={returnCoverage} />}
+        {data === undefined ? (view === 'dashboard' ? <DashboardLoading label={t.loading} /> : <div className="admin-loading" role="status"><span className="loading-dot" />{t.loading}</div>) : <Suspense fallback={<div className="admin-loading" role="status"><span className="loading-dot" />{t.loading}</div>}><AdminView locale={locale} view={view} data={data} busy={mutating} mutate={mutate} reveal={reveal} request={request}
+          coverageTrail={coverageTrail} openCoverage={openCoverage} returnCoverage={returnCoverage} /></Suspense>}
       </div>
     </main>
   </div></ConfirmProvider>;

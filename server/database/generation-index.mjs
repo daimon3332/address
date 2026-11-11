@@ -35,6 +35,9 @@ export const generationIndexRowCount = async (database) => Number(
   await database.prepare('SELECT COUNT(*) AS total FROM address_generation_index WHERE active=1').first('total') || 0
 );
 
+// Targeted refreshes append ranks and retirements leave gaps; past this point the country is renumbered.
+export const ranksNeedRenumbering = (maximum, total) => Number(maximum || 0) > Number(total || 0) * 1.25 + 1_000;
+
 export const refreshAddressGenerationIndex = async (database, countryCode, { addressIds } = {}) => {
   const scope = String(countryCode || '').trim().toUpperCase();
   if (!scope) return 0;
@@ -118,8 +121,17 @@ export const refreshAddressGenerationIndex = async (database, countryCode, { add
   return generationIndexRowCountForCountry(database, scope);
 };
 
-export const activePoolCountries = async (database) => new Set((await database.prepare(
-  'SELECT DISTINCT country_code FROM address_pool WHERE active=1').all()).results.map((row) => row.country_code));
+// DISTINCT over the whole pool reads every row (over ten minutes on production); stepping from one country to the
+// next reads one index entry per country.
+export const activePoolCountries = async (database) => {
+  const countries = new Set();
+  for (let previous = ''; ;) {
+    const next = await database.prepare(`SELECT country_code FROM address_pool
+      WHERE active=1 AND country_code>? ORDER BY country_code LIMIT 1`).bind(previous).first('country_code');
+    if (!next) return countries;
+    countries.add(previous = next);
+  }
+};
 
 // Each country is checked on its own so one large country cannot push a whole-pool scan past the statement timeout.
 export const refreshStaleAddressGenerationIndexes = async (database) => {
@@ -138,12 +150,14 @@ export const refreshStaleAddressGenerationIndexes = async (database) => {
           AND generation.country_code=runtime.country_code AND generation.active=1
         WHERE runtime.country_code=? AND runtime.active=1 AND ${eligible}`).bind(countryCode).first();
       const index = await database.prepare(`SELECT COUNT(*) FILTER (WHERE active=1) AS index_count,
+          MAX(country_rank) FILTER (WHERE active=1) AS maximum_rank,
           COUNT(*) FILTER (WHERE active=1 AND country_rank IS NULL) AS missing_ranks,
           COUNT(*) FILTER (WHERE active=1 AND residential_ready=1 AND residential_rank IS NULL) AS missing_residential_ranks
         FROM address_generation_index WHERE country_code=?`).bind(countryCode).first();
       const sourceCount = Number(source?.source_count || 0);
       if (sourceCount === Number(index?.index_count || 0) && sourceCount === Number(source?.matched_index_count || 0)
-        && !Number(index?.missing_ranks || 0) && !Number(index?.missing_residential_ranks || 0)) continue;
+        && !Number(index?.missing_ranks || 0) && !Number(index?.missing_residential_ranks || 0)
+        && !ranksNeedRenumbering(index?.maximum_rank, index?.index_count)) continue;
       await refreshAddressGenerationIndex(database, countryCode);
       refreshed.push(countryCode);
     } catch (error) {

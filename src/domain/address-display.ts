@@ -1,6 +1,7 @@
 import { countryByCode } from './countries';
 import { chinaPinyinComponents, formatAddressPresentation, formatChinaPinyinPresentation } from './address-format';
 import { localizedCountryName } from './locales';
+import { loadPinyin, pinyinReady } from './pinyin-runtime';
 import type {
   AddressComponents,
   AddressLanguage,
@@ -26,6 +27,13 @@ export const matchesNativeLanguage = (language: string, nativeLanguage: string):
   primaryLanguage(language) === primaryLanguage(nativeLanguage)
   && (primaryLanguage(language) !== 'zh' || chineseScript(language) === chineseScript(nativeLanguage));
 
+// Until the pinyin dictionary has arrived the native form is shown; usePinyinReady re-renders once it is there.
+const pinyinRequested = (bundle: FavoriteAddressPresentationSource, language: AddressDisplayLanguage): boolean => {
+  if (language !== 'pinyin' || bundle.address.countryCode !== 'CN') return false;
+  if (!pinyinReady()) void loadPinyin().catch(() => undefined);
+  return pinyinReady();
+};
+
 const trustedLanguage = (language: AddressDisplayLanguage, nativeLanguage: string): AddressLanguage | undefined => {
   if (language === 'native' || language === 'en' || language === 'zh-CN') return language;
   return matchesNativeLanguage(language, nativeLanguage) ? 'native' : undefined;
@@ -35,7 +43,7 @@ export const addressDisplayComponents = (
   bundle: FavoriteAddressPresentationSource,
   language: AddressDisplayLanguage
 ): AddressComponents => {
-  if (language === 'pinyin' && bundle.address.countryCode === 'CN') return chinaPinyinComponents(bundle.address.componentVariants.native);
+  if (pinyinRequested(bundle, language)) return chinaPinyinComponents(bundle.address.componentVariants.native);
   return bundle.address.componentVariants[trustedLanguage(language, bundle.address.nativeLanguage) || 'en']
     || bundle.address.componentVariants.native;
 };
@@ -60,7 +68,7 @@ export const addressDisplayPresentation = (
   fallbackLocale: Locale,
   generatedUnit?: GeneratedUnit
 ): AddressPresentation => {
-  if (language === 'pinyin' && bundle.address.countryCode === 'CN') {
+  if (pinyinRequested(bundle, language)) {
     return formatChinaPinyinPresentation(bundle.address.componentVariants.native, '', generatedUnit);
   }
   const trusted = trustedLanguage(language, bundle.address.nativeLanguage);

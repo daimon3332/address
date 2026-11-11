@@ -96,12 +96,28 @@ const fallbackLabelCoordinates: Record<string, [number, number]> = { HK: [114.17
 let sourcePromise: Promise<GeoJsonCollection> | undefined;
 const admin1Promises = new Map<string, Promise<GeoJsonCollection | undefined>>();
 
+// A page's inline script may already have started a request, with the same timeout as the request it replaces;
+// each is adopted once and fails like that request would.
+export const takeBootResponse = (store: string, key: string): Promise<Response> | undefined => {
+  const boot = (globalThis as Record<string, unknown>)[store] as Record<string, Promise<Response> | undefined> | undefined;
+  const value = boot?.[key];
+  if (boot) delete boot[key];
+  return value;
+};
+
 const loadWorldSource = (): Promise<GeoJsonCollection> => {
-  sourcePromise ||= fetch(sourceUrl, { signal: AbortSignal.timeout(15_000) }).then(async (response) => {
+  sourcePromise ||= (async () => await takeBootResponse('__monitorBoot', 'map')
+    || fetch(sourceUrl, { signal: AbortSignal.timeout(15_000) }))().then(async (response) => {
     if (!response.ok) throw new Error(`WORLD_MAP_${response.status}`);
     return await response.json() as GeoJsonCollection;
   }).catch((error) => { sourcePromise = undefined; throw error; });
   return sourcePromise;
+};
+
+// The map library and the world outline do not depend on the figures, so callers start them alongside their data.
+export const preloadWorldMap = (): void => {
+  void loadMapLibre().catch(() => undefined);
+  void loadWorldSource().catch(() => undefined);
 };
 
 const loadAdmin1Source = (code: string): Promise<GeoJsonCollection | undefined> => {
