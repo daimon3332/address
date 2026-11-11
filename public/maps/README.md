@@ -14,3 +14,11 @@
 - License: public domain
 - Retrieved: 2026-07-31
 - Processing: filtered by ISO alpha-2 code, reduced to display fields, topology-preserving simplification at 0.015 degrees
+
+`admin-2/{ISO}.geojson` contains simplified second-order boundaries (counties, districts, municipalities) for the 24 supported countries where Overture publishes them; Taiwan, Hong Kong and Vietnam have none. A file is loaded after its country is selected and drawn once the map is zoomed in.
+
+- Source: Overture Maps divisions, `division_area` (`subtype=county`, `class=land`; Brazil uses `subtype=locality` for its municipalities)
+- Dataset: Overture Maps release 2026-10-21.0
+- License: ODbL 1.0 (OpenStreetMap-derived); credit shown on the map as "© OpenStreetMap contributors, Overture Maps Foundation"
+- Retrieved: 2026-11-11
+- Processing: `python scripts/build-admin2-boundaries.py 2026-10-21.0 public/maps/admin-2` (DuckDB with httpfs and spatial) keeps the name, English name and ISO 3166-2 region code, simplifies with topology preserved at 0.008–0.04 degrees depending on country size, and rounds coordinates to three decimals

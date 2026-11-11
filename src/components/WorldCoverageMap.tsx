@@ -91,6 +91,12 @@ const loadMapLibre = (): Promise<MapLibre> => {
 
 const sourceUrl = '/maps/world-map-units.geojson';
 const admin1Url = (code: string) => `/maps/admin-1/${code}.geojson`;
+const admin2Url = (code: string) => `/maps/admin-2/${code}.geojson`;
+// County-level outlines and their hover names appear once a selected country is zoomed this far.
+const ADMIN2_MIN_ZOOM = 3.2;
+// Countries with a file in public/maps/admin-2; Overture has no second-order units for the others.
+const admin2Countries = new Set(['AU', 'BR', 'CA', 'CN', 'DE', 'ES', 'FR', 'GB', 'IN', 'IT', 'JP', 'KR', 'MX', 'MY', 'NG', 'NL',
+  'PH', 'RU', 'SA', 'SG', 'TH', 'TR', 'US', 'ZA']);
 const worldBounds: LngLatBoundsLike = [[-179.999999, -85], [179.999999, 85]];
 const fallbackLabelCoordinates: Record<string, [number, number]> = { HK: [114.17, 22.32], SG: [103.82, 1.35] };
 let sourcePromise: Promise<GeoJsonCollection> | undefined;
@@ -120,11 +126,11 @@ export const preloadWorldMap = (): void => {
   void loadWorldSource().catch(() => undefined);
 };
 
-const loadAdmin1Source = (code: string): Promise<GeoJsonCollection | undefined> => {
-  const normalized = code.toUpperCase();
+const loadAdmin1Source = (code: string, url = admin1Url): Promise<GeoJsonCollection | undefined> => {
+  const normalized = `${url === admin1Url ? '' : '2:'}${code.toUpperCase()}`;
   let request = admin1Promises.get(normalized);
   if (!request) {
-    request = fetch(admin1Url(normalized), { signal: AbortSignal.timeout(15_000) }).then(async (response) => {
+    request = fetch(url(code.toUpperCase()), { signal: AbortSignal.timeout(15_000) }).then(async (response) => {
       if (response.status === 404) return undefined;
       if (!response.ok) throw new Error(`ADMIN1_MAP_${response.status}`);
       const value = await response.json() as GeoJsonCollection;
@@ -391,7 +397,7 @@ export function WorldCoverageMap<T extends WorldCoverageCountry>({
           if (map.getLayer(border)) {
             map.setPaintProperty(border, 'line-opacity', selectedCode === code ? .82 : selectedCode ? 0 : ambientAdmin1Opacity);
           }
-          for (const layer of [`admin-1-fill-${code}`, `admin-1-label-${code}`]) {
+          for (const layer of [`admin-1-fill-${code}`, `admin-1-label-${code}`, `admin-2-fill-${code}`, `admin-2-border-${code}`]) {
             if (map.getLayer(layer)) map.setLayoutProperty(layer, 'visibility', selectedCode === code ? 'visible' : 'none');
           }
         }
@@ -457,6 +463,8 @@ export function WorldCoverageMap<T extends WorldCoverageCountry>({
         };
         map.on('mousemove', `admin-1-fill-${normalized}`, (event: MapLayerMouseEvent) => {
           if (selectedRef.current?.countryCode.toUpperCase() !== normalized) return;
+          // Zoomed in, the county under the pointer is named instead.
+          if (map.getLayer(`admin-2-fill-${normalized}`) && map.getZoom() >= ADMIN2_MIN_ZOOM) { clearHover(); return; }
           const feature = event.features?.[0];
           if (!feature) return;
           if (feature.id !== undefined && feature.id !== hovered) {
@@ -474,12 +482,57 @@ export function WorldCoverageMap<T extends WorldCoverageCountry>({
         admin1CodesRef.current.add(normalized);
         syncAdmin1();
       };
-      loadAdmin1Ref.current = ensureAdmin1;
+      // Second-order outlines load for the selected country only, after its first-order layers.
+      const ensureAdmin2 = async (code: string) => {
+        const normalized = code.toUpperCase();
+        const sourceId = `admin-2-${normalized}`;
+        if (!active || !admin2Countries.has(normalized) || map.getSource(sourceId)) return;
+        const data = await loadAdmin1Source(normalized, admin2Url);
+        if (!active || !data || map.getSource(sourceId)) return;
+        map.addSource(sourceId, { type: 'geojson', data, generateId: true });
+        const before = map.getLayer(`admin-1-border-${normalized}`) ? `admin-1-border-${normalized}` : 'country-labels';
+        map.addLayer({
+          id: `admin-2-fill-${normalized}`, type: 'fill', source: sourceId, minzoom: ADMIN2_MIN_ZOOM,
+          layout: { visibility: 'none' },
+          paint: { 'fill-color': '#1769e0', 'fill-opacity': ['case', ['boolean', ['feature-state', 'hover'], false], .16, 0] }
+        }, before);
+        map.addLayer({
+          id: `admin-2-border-${normalized}`, type: 'line', source: sourceId, minzoom: ADMIN2_MIN_ZOOM,
+          layout: { visibility: 'none' },
+          paint: {
+            'line-color': '#ffffff',
+            'line-width': ['interpolate', ['linear'], ['zoom'], ADMIN2_MIN_ZOOM, .3, 6, .6, 9, 1],
+            'line-opacity': .6
+          }
+        }, before);
+        let hovered: string | number | undefined;
+        const clearHover = () => {
+          if (hovered !== undefined) map.setFeatureState({ source: sourceId, id: hovered }, { hover: false });
+          hovered = undefined;
+        };
+        map.on('mousemove', `admin-2-fill-${normalized}`, (event: MapLayerMouseEvent) => {
+          const feature = event.features?.[0];
+          if (!feature) return;
+          if (feature.id !== undefined && feature.id !== hovered) {
+            clearHover();
+            hovered = feature.id;
+            map.setFeatureState({ source: sourceId, id: feature.id }, { hover: true });
+          }
+          const native = String(feature.properties?.native_name || '').trim();
+          const english = String(feature.properties?.name || '').trim();
+          const content = document.createElement('strong');
+          content.textContent = native && english && native !== english ? `${native} · ${english}` : native || english;
+          if (content.textContent) popup.setLngLat(event.lngLat).setDOMContent(content).addTo(map);
+        });
+        map.on('mouseleave', `admin-2-fill-${normalized}`, () => { clearHover(); popup.remove(); });
+        syncAdmin1();
+      };
+      loadAdmin1Ref.current = async (code: string) => { await ensureAdmin1(code); await ensureAdmin2(code); };
       const loadVisibleAdmin1 = () => {
         syncAdmin1();
         const selectedCode = selectedRef.current?.countryCode.toUpperCase();
         if (selectedCode) {
-          void ensureAdmin1(selectedCode);
+          void loadAdmin1Ref.current(selectedCode);
           return;
         }
         if (map.getZoom() < 2.8) return;
@@ -547,6 +600,10 @@ export function WorldCoverageMap<T extends WorldCoverageCountry>({
         maxPitch: 0
       });
       map = created;
+      // The county outlines derive from OpenStreetMap through Overture Maps, which asks for visible credit.
+      created.addControl(new maplibre.AttributionControl({
+        compact: true, customAttribution: '© OpenStreetMap contributors, Overture Maps Foundation · Natural Earth'
+      }), 'top-left');
       mapRef.current = created;
       observer = new ResizeObserver(() => created.resize());
       observer.observe(containerRef.current);
