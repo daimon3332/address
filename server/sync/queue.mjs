@@ -40,7 +40,6 @@ const executionCapabilityRevisions = Object.freeze({
 // They are intentionally excluded from source fingerprints, so exhausted and
 // successfully checked sources remain terminal.
 const adapterExecutionCapabilityRevisions = Object.freeze({
-  'japan-abr': { materialize: 'japan-abr-materialize-v5-checkpoint-before-job-limit' },
   'korea-kapt': { materialize: 'korea-kapt-bridge-v3' },
   'google-residential-enrichment': { discover: 'google-checkpoint-discovery-v5-legacy-raw-url' },
   geofabrik: { discover: 'geofabrik-redirect-resolver-v3-dated-probe' }
@@ -56,7 +55,7 @@ const providerEnvironmentVariables = Object.freeze({
   onemap: 'ONEMAP_ACCESS_TOKEN'
 });
 const revisionEmbeddedAdapters = new Set([
-  'japan-abr', 'singapore-hdb', 'korea-kapt', 'inegi-residential', 'ethekwini-residential',
+  'singapore-hdb', 'korea-kapt', 'inegi-residential', 'ethekwini-residential',
   'cape-town-residential', 'taiwan-residential', 'hong-kong-residential', 'mappls-residential',
   'pdok-bag', 'google-residential-enrichment'
 ]);

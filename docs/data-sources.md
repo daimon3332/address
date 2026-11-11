@@ -32,7 +32,7 @@
 | 中国 CN | AreaCity 行政区 + 高德住宅小区；百度/腾讯只作可选增强验证 | AreaCity + 民政部版本对照；6 位源邮编 | 高德住宅分类、行政区一致、数字门牌和机构黑名单门禁 | [CN](strategies/CN-China-address-generation.md) |
 | 中国香港 HK | 屋宇署住宅/综合用途 Tower；房委会单位 + ALS；Geofabrik/Overture | 官方 18 区双语映射与香港坐标；无通用邮编 | 屋宇署住宅用途或房委会公屋库存 | [HK](strategies/HK-address-strategy.md) |
 | 中国台湾 TW | 内政部实价登录 + OA 官方门牌点；Geofabrik/Overture | 县市/区一致 + 中华邮政 3+3 完整门牌精确匹配 | 实价登录住宅主要用途与住宅建筑型态 | [TW](strategies/TW-address-strategy.md) |
-| 日本 JP | 数字厅 ABR/Geolonia + PLATEAU；OSM 住宅轮廓补充 | ABR 行政层级 + 日本邮便 7 位邮编唯一匹配 | ABR 点精确落入 PLATEAU/OSM 明确住宅建筑面 | [JP](strategies/JP-address-strategy.md) |
+| 日本 JP | 数字厅 ABR/Geolonia + PLATEAU；OSM 住宅轮廓补充（来源已于 2026-11-11 停用，仅保留已发布地址） | ABR 行政层级 + 日本邮便 7 位邮编唯一匹配 | ABR 点精确落入 PLATEAU/OSM 明确住宅建筑面 | [JP](strategies/JP-address-strategy.md) |
 | 韩国 KR | K-apt + Geoapify；Juso/OpenAddresses 归档 + Geofabrik OSM | Juso 5 位邮编与行政层级；K-apt 地番地址 | K-apt 官方共同住宅标识；Juso 地址点须与明确住宅建筑相交 | [KR](strategies/KR-address-strategy.md) |
 | 新加坡 SG | HDB Property Information + Existing Building；OneMap；Geofabrik OSM | HDB/OneMap 6 位邮编 | HDB 明确住宅字段与住宅单元数；OSM 住宅建筑 | [SG](strategies/SG-address-strategy.md) |
 | 马来西亚 MY | Geofabrik OSM | 源字段 + catalog；5 位邮编 | OSM 住宅建筑 | [MY](strategies/MY-address-strategy.md) |

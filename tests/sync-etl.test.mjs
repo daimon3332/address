@@ -133,7 +133,7 @@ const source = {
 describe('address source shard catalog', () => {
   it('expands independently supported country shards with explicit refresh intervals', async () => {
     const catalog = await loadSourceCatalog();
-    expect(catalog.shards).toHaveLength(237);
+    expect(catalog.shards).toHaveLength(236);
     expect(catalog.shards.filter((shard) => shard.id !== 'korea-kapt-residential')
       .every((shard) => shard.intervalDays === 30)).toBe(true);
     expect(catalog.shards.some((shard) => shard.countryCode === 'CN')).toBe(false);
@@ -168,16 +168,7 @@ describe('address source shard catalog', () => {
         pilotRequests: 50, minimumPilotAccepted: 1
       }
     });
-    expect(catalog.shards.filter((shard) => shard.countryCode === 'JP')).toHaveLength(1);
-    expect(catalog.shards.find((shard) => shard.id === 'japan-abr-residential')).toMatchObject({
-      countryCode: 'JP', extractId: 'japan', maxRecords: 200000,
-      source: {
-        adapter: 'japan-abr', postalDataUrl: expect.stringContaining('utf_ken_all.zip'),
-        useOsmSupplement: true,
-        plateauBundles: expect.arrayContaining([expect.objectContaining({ cityCode: '13113', bytes: 42731104 })])
-      }
-    });
-    expect(catalog.shards.find((shard) => shard.id === 'japan-abr-residential').source.plateauBundles).toHaveLength(29);
+    expect(catalog.shards.filter((shard) => shard.countryCode === 'JP')).toHaveLength(0);
     expect(catalog.shards.find((shard) => shard.id === 'singapore-hdb-residential')).toMatchObject({
       countryCode: 'SG', maxRecords: 12000,
       source: {
@@ -768,205 +759,6 @@ describe('address source shard catalog', () => {
     expect(parseGeofabrikMd5('0123456789abcdef0123456789ABCDEF  japan-latest.osm.pbf'))
       .toBe('0123456789abcdef0123456789abcdef');
     expect(parseGeofabrikMd5('missing')).toBeNull();
-  });
-
-  it('uses strict Japan PLATEAU evidence when the optional OSM source is unavailable', async () => {
-    const cacheDir = resolve('.data-cache', `japan-abr-${process.pid}-${Date.now()}`);
-    directories.push(cacheDir);
-    const catalog = await loadSourceCatalog();
-    const catalogShard = catalog.shards.find((entry) => entry.id === 'japan-abr-residential');
-    const plateauPayload = 'plateau';
-    const shard = {
-      ...catalogShard,
-      source: {
-        ...catalogShard.source,
-        plateauBundles: [{
-          cityCode: '13113', year: 2023, url: 'https://example.test/plateau.tar.zst',
-          sha256: createHash('sha256').update(plateauPayload).digest('hex'), bytes: plateauPayload.length
-        }]
-      }
-    };
-    const calls = [];
-    const fetchImpl = async (input, init = {}) => {
-      const url = String(input);
-      if (url === shard.source.dataUrl) return Response.json({ meta: { updated: 1_735_102_668 }, data: [] });
-      if (url.endsWith('index-v1-nogeom.json')) return Response.json({ features: [{
-        properties: { id: 'japan', urls: { pbf: 'https://example.test/japan.osm.pbf' } }
-      }] });
-      if (init.method === 'HEAD' && url.endsWith('.pbf')) return new Response(null, { status: 503 });
-      if (init.method === 'HEAD') return new Response(null, { status: 200, headers: {
-        'last-modified': 'Tue, 30 Jun 2026 00:00:00 GMT',
-        'content-length': url.endsWith('.zip') ? '7' : '8'
-      } });
-      if (url.endsWith('.zip')) return new Response('postal!');
-      if (url.endsWith('.pbf')) return new Response('osm-data');
-      if (url.endsWith('.tar.zst')) return new Response(plateauPayload);
-      throw new Error(`Unexpected request: ${url}`);
-    };
-    const checkpoint = {
-      version: 1, abr_complete: false, abr_completed_cities: [], plateau_completed: [],
-      osm_scanned_ways: 0, osm_complete: false, final_complete: false
-    };
-    const execute = async ({ file, args, phase, timeoutMs }) => {
-      calls.push({ file, args, phase, timeoutMs });
-      if (phase.startsWith('extract:')) {
-        const directory = args[args.indexOf('-C') + 1];
-        await mkdir(directory, { recursive: true });
-        await writeFile(resolve(directory, 'buildings.parquet'), plateauPayload, 'utf8');
-      } else {
-        const stage = args[args.indexOf('--stage') + 1];
-        if (stage === 'abr') await writeFile(args[args.indexOf('--store-file') + 1], 'fixture-candidate-store', 'utf8');
-        if (stage === 'abr') checkpoint.abr_complete = true;
-        if (stage === 'plateau') checkpoint.plateau_completed = ['13113'];
-        if (stage === 'osm') checkpoint.osm_complete = true;
-        if (stage === 'final') {
-          checkpoint.final_complete = true;
-          await writeFile(args[args.indexOf('--output') + 1], `${JSON.stringify({ id: 'fixture-jp' })}\n`, 'utf8');
-        }
-        await writeFile(args[args.indexOf('--checkpoint-file') + 1], JSON.stringify(checkpoint));
-      }
-    };
-    const adapters = createSourceAdapters({ fetchImpl, execute, pythonBin: 'python-fixture' });
-    const discovery = await adapters.discover(shard);
-    expect(discovery).toMatchObject({
-      adapter: 'japan-abr',
-        version: '1735102668-plateau-only-2026-06-30-abr-rsdt-plateau-osm-chiban-v14',
-      sourceBytes: 14, osmUrl: null, osmVersion: 'plateau-only', osmBytes: null,
-      postalVersion: '2026-06-30', postalBytes: 7, plateauBytes: 7
-    });
-    const options = {
-      cacheDir, maxRecords: 60000, perLocality: 200, maxBytes: 1024, retainRaw: false, sharedRaw: false
-    };
-    for (let stage = 0; stage < 3; stage += 1) {
-      await expect(adapters.materialize(shard, discovery, options)).resolves.toMatchObject({
-        sourceComplete: false, checkpointToken: expect.any(String)
-      });
-    }
-    const materialized = await adapters.materialize(shard, discovery, options);
-    expect(materialized).toMatchObject({ format: 'overture-jsonl', cacheHit: false });
-    expect(materialized.file).toContain('-m60000-p200.jsonl');
-    expect(calls.filter(({ phase }) => phase.startsWith('extract:'))).toHaveLength(1);
-    const materializeCall = calls.find(({ args }) => args.includes('plateau'));
-    expect(materializeCall).toMatchObject({ file: 'python-fixture' });
-    expect(materializeCall.timeoutMs).toBe(90 * 60_000);
-    expect(materializeCall.args).toEqual(expect.arrayContaining([
-      expect.stringContaining('japan-abr-export.py'), '--abr-url', shard.source.dataUrl,
-      '--checkpoint-file', expect.stringContaining('checkpoint.json'),
-      '--store-file', expect.stringContaining('candidates.duckdb'),
-      '--max-records', '60000', '--per-locality', '200', '--plateau-parquet',
-      expect.stringContaining('buildings.parquet')
-    ]));
-    expect(materializeCall.args).toEqual(expect.arrayContaining(['--plateau-city-code', '13113']));
-    expect(materializeCall.args).toContain('--land-lot');
-    expect(materializeCall.args).not.toContain('--osm-pbf');
-    await expect(readFile(dirname(materializeCall.args[materializeCall.args.indexOf('--checkpoint-file') + 1]), 'utf8'))
-      .rejects.toMatchObject({ code: 'ENOENT' });
-  });
-
-  it('uses a verified Geofabrik checksum when Japan PBF metadata HEAD is unavailable', async () => {
-    const catalog = await loadSourceCatalog();
-    const shard = catalog.shards.find((entry) => entry.id === 'japan-abr-residential');
-    const checksum = '0123456789abcdef0123456789abcdef';
-    const fetchImpl = async (input, init = {}) => {
-      const url = String(input);
-      if (url === shard.source.dataUrl) return Response.json({ meta: { updated: 1_735_102_668 }, data: [] });
-      if (url.endsWith('index-v1-nogeom.json')) return Response.json({ features: [{
-        properties: { id: 'japan', urls: { pbf: 'https://example.test/japan.osm.pbf' } }
-      }] });
-      if (url.endsWith('.pbf.md5')) return new Response(`${checksum}  japan.osm.pbf`);
-      if (init.method === 'HEAD' && url.endsWith('.pbf')) return new Response(null, { status: 502 });
-      if (init.method === 'HEAD' && url.endsWith('.zip')) return new Response(null, { status: 200, headers: {
-        'last-modified': 'Tue, 30 Jun 2026 00:00:00 GMT', 'content-length': '7'
-      } });
-      throw new Error(`Unexpected request: ${url}`);
-    };
-    const discovery = await createSourceAdapters({ fetchImpl }).discover(shard);
-    expect(discovery).toMatchObject({
-      osmUrl: 'https://example.test/japan.osm.pbf', osmMd5: checksum,
-      osmVersion: checksum, osmBytes: null,
-      version: `1735102668-${checksum}-2026-06-30-abr-rsdt-plateau-osm-chiban-v14`
-    });
-  });
-
-  it('turns a Japan timeout with durable progress into an automatic resumable checkpoint', async () => {
-    const cacheDir = resolve('.data-cache', `japan-resume-${process.pid}-${Date.now()}`);
-    directories.push(cacheDir);
-    const catalog = await loadSourceCatalog();
-    const catalogShard = catalog.shards.find((entry) => entry.id === 'japan-abr-residential');
-    const plateauPayload = 'plateau';
-    const shard = {
-      ...catalogShard,
-      source: {
-        ...catalogShard.source,
-        useOsmSupplement: false,
-        plateauBundles: [{
-          cityCode: '13113', year: 2023, url: 'https://example.test/plateau.tar.zst',
-          sha256: createHash('sha256').update(plateauPayload).digest('hex'), bytes: plateauPayload.length
-        }]
-      }
-    };
-    const fetchImpl = async (input, init = {}) => {
-      const url = String(input);
-      if (url === shard.source.dataUrl) return Response.json({ meta: { updated: 1_735_102_668 }, data: [] });
-      if (init.method === 'HEAD') return new Response(null, { status: 200, headers: {
-        'last-modified': 'Tue, 30 Jun 2026 00:00:00 GMT',
-        'content-length': url.endsWith('.zip') ? '7' : '8'
-      } });
-      if (url.endsWith('.zip')) return new Response('postal!');
-      if (url.endsWith('.tar.zst')) return new Response(plateauPayload);
-      throw new Error(`Unexpected request: ${url}`);
-    };
-    const calls = [];
-    let attempt = 0;
-    const execute = async ({ args, phase }) => {
-      calls.push({ args, phase });
-      if (phase.startsWith('extract:')) {
-        const directory = args[args.indexOf('-C') + 1];
-        await mkdir(directory, { recursive: true });
-        await writeFile(resolve(directory, 'buildings.parquet'), plateauPayload);
-        return;
-      }
-      attempt += 1;
-      const stage = args[args.indexOf('--stage') + 1];
-      const checkpointFile = args[args.indexOf('--checkpoint-file') + 1];
-      if (stage === 'abr') await writeFile(args[args.indexOf('--store-file') + 1], 'fixture-candidate-store', 'utf8');
-      const state = JSON.parse(await readFile(checkpointFile, 'utf8').catch(() => JSON.stringify({
-        version: 1, abr_complete: false, abr_completed_cities: [], plateau_completed: [],
-        osm_scanned_ways: 0, osm_complete: false, final_complete: false
-      })));
-      if (stage === 'abr') state.abr_complete = true;
-      if (stage === 'plateau') state.plateau_completed = ['13113'];
-      if (stage === 'osm') state.osm_complete = true;
-      if (stage === 'final') state.final_complete = true;
-      await writeFile(checkpointFile, JSON.stringify(state));
-      if (attempt === 1) {
-        throw Object.assign(new Error('fixture timeout'), { code: 'SYNC_PROCESS_TIMEOUT' });
-      }
-      if (stage === 'final') {
-        await writeFile(args[args.indexOf('--output') + 1], `${JSON.stringify({ id: 'fixture-jp' })}\n`);
-      }
-    };
-    const adapters = createSourceAdapters({ fetchImpl, execute, pythonBin: 'python-fixture' });
-    const discovery = await adapters.discover(shard);
-    const options = {
-      cacheDir, maxRecords: 60000, perLocality: 200, maxBytes: 1024,
-      retainRaw: false, sharedRaw: false
-    };
-
-    await expect(adapters.materialize(shard, discovery, options)).rejects.toMatchObject({
-      code: 'SOURCE_PARTIAL', sourceComplete: false, checkpointToken: expect.any(String)
-    });
-    await expect(adapters.materialize(shard, discovery, options)).resolves.toMatchObject({ sourceComplete: false });
-    await expect(adapters.materialize(shard, discovery, options)).resolves.toMatchObject({ sourceComplete: false });
-    await expect(adapters.materialize(shard, discovery, options)).resolves.toMatchObject({
-      format: 'overture-jsonl', cacheHit: false
-    });
-
-    expect(calls.filter(({ phase }) => phase.startsWith('extract:'))).toHaveLength(1);
-    const materializeCalls = calls.filter(({ phase }) => phase === 'materialize:japan-abr-residential');
-    expect(materializeCalls).toHaveLength(4);
-    expect(materializeCalls[1].args).toContain('--plateau-parquet');
-    expect(materializeCalls[2].args).not.toContain('--plateau-parquet');
   });
 
   it('discovers and materializes the official Singapore HDB residential source', async () => {
@@ -2428,7 +2220,6 @@ describe('built-in ETL planning and publishing', () => {
   it('uses bounded multi-asset Overture sampling and addressed OSM ways', async () => {
     const overture = (await readFile('server/sync/overture-export.py', 'utf8')).replace(/\r\n/g, '\n');
     const geofabrik = (await readFile('server/sync/geofabrik-export.py', 'utf8')).replace(/\r\n/g, '\n');
-    const japanAbr = (await readFile('server/sync/japan-abr-export.py', 'utf8')).replace(/\r\n/g, '\n');
     const openAddresses = (await readFile('server/sync/openaddresses-export.py', 'utf8')).replace(/\r\n/g, '\n');
     const inegiResidential = (await readFile('server/sync/inegi-residential-export.py', 'utf8')).replace(/\r\n/g, '\n');
     const adapterSource = (await readFile('server/sync/source-adapters.mjs', 'utf8')).replace(/\r\n/g, '\n');
@@ -2499,32 +2290,6 @@ describe('built-in ETL planning and publishing', () => {
     expect(geofabrik).toContain('if args.postcode_html and args.country != "PH"');
     expect(geofabrik).toContain('residential_selected = sorted(');
     expect(geofabrik).toContain('residential_selected + selected');
-    expect(japanAbr).toContain('def match_plateau_buildings(connection, parquet_path, start_offset=0, progress=None):');
-    expect(japanAbr).toContain('max(city_limit, 2_000)');
-    expect(japanAbr).toContain('heapq.heapreplace(candidates, item)');
-    expect(japanAbr).toContain("WHERE usage='residential'");
-    expect(japanAbr).toContain('self.tree.query(geometries, predicate="contains")');
-    expect(japanAbr).toContain('match_residential_buildings(');
-    expect(japanAbr).toContain('POSTAL_RANGE_PATTERN');
-    expect(japanAbr).toContain('street = clean(lines[0])');
-    expect(japanAbr).toContain('if not district or district == street or not postcode:');
-    expect(japanAbr).toContain('building_class not in RESIDENTIAL_BUILDINGS');
-    expect(japanAbr).toContain('any(clean(tags.get(key)) not in {"", "no", "none"}');
-    expect(japanAbr).toContain('checkpoint["osm_scanned_ways"] = scanned_ways');
-    expect(japanAbr).toContain('FROM candidates WHERE building_id IS NOT NULL');
-    expect(japanAbr).toContain('"residential_building_id": building_id');
-    expect(japanAbr).toContain('def match_city_lots(connection, lots, buildings, claimed_buildings, progress=None):');
-    expect(japanAbr).toContain('def insert_land_lot_candidates(connection, candidates, batch_size=LAND_LOT_INSERT_BATCH, progress=None):');
-    expect(japanAbr).toContain('connection.executemany');
-    expect(japanAbr).toContain('INSERT INTO candidates');
-    expect(japanAbr).not.toContain('source_id TEXT UNIQUE');
-    expect(japanAbr).toContain('checkpoint["plateau_building_completed"]');
-    expect(japanAbr).toContain('checkpoint["land_lot_candidate_count"]');
-    expect(japanAbr).toContain('SET memory_limit=?');
-    expect(japanAbr).toContain('SET temp_directory=?');
-    expect(japanAbr).toContain('residential_matches[lot_id] == 1 and blocked_matches[lot_id] == 0');
-    expect(japanAbr).toContain('if building_lot_counts.get(building_uid) != 1:');
-    expect(japanAbr).toContain('if building_id in claimed_buildings:');
   });
 
   it('corrects a conflicting region from its polygon and rejects points outside the country', async () => {

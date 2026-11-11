@@ -382,14 +382,12 @@ describe('attempt evaluation and latching', () => {
 
   it('releases only adapter-specific materialize failures without changing source fingerprints', () => {
     const sourceFingerprint = countryFingerprint({
-      adapterRevisions: [['japan-abr-residential', 'abr-v1']], sourceVersions: [['japan-abr-residential', 'v1']]
+      adapterRevisions: [['korea-kapt-residential', 'kapt-v1']], sourceVersions: [['korea-kapt-residential', 'v1']]
     });
-    const japan = executionFailureFingerprint(sourceFingerprint, '', 'materialize', 'japan-abr');
     const korea = executionFailureFingerprint(sourceFingerprint, '', 'materialize', 'korea-kapt');
-    expect(japan).not.toBe(executionFailureFingerprint(sourceFingerprint, '', 'materialize', 'overture'));
-    expect(japan).not.toBe(korea);
+    expect(korea).not.toBe(executionFailureFingerprint(sourceFingerprint, '', 'materialize', 'overture'));
     expect(countryFingerprint({
-      adapterRevisions: [['japan-abr-residential', 'abr-v1']], sourceVersions: [['japan-abr-residential', 'v1']]
+      adapterRevisions: [['korea-kapt-residential', 'kapt-v1']], sourceVersions: [['korea-kapt-residential', 'v1']]
     })).toBe(sourceFingerprint);
   });
 

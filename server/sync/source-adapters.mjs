@@ -29,7 +29,6 @@ const adminBoundaryFormats = new Set(['overture-jsonl', 'geofabrik-geojsonseq'])
 const overtureExporter = resolve(syncRoot, 'overture-export.py');
 const geofabrikExporter = resolve(syncRoot, 'geofabrik-export.py');
 const googleResidentialSeedExporter = resolve(syncRoot, 'google-residential-seeds.py');
-const japanAbrExporter = resolve(syncRoot, 'japan-abr-export.py');
 const singaporeHdbExporter = resolve(syncRoot, 'singapore-hdb-export.py');
 const koreaKaptExporter = resolve(syncRoot, 'korea-kapt-export.py');
 const openAddressesExporter = resolve(syncRoot, 'openaddresses-export.py');
@@ -46,7 +45,6 @@ const hongKongResidentialExporter = resolve(syncRoot, 'hong-kong-residential-exp
 const overtureResidentialRevision = 'addresses-streets-residential-subset-v8-popular-ranks';
 const geofabrikExportRevision = 'g70-streets';
 const googleResidentialRevision = 'osm-address-street-google-geocoding-v10-city-level';
-const japanAbrExportRevision = 'abr-rsdt-plateau-osm-chiban-v14';
 const singaporeHdbExportRevision = 'hdb-property-address-onemap-streets-v6';
 const koreaKaptExportRevision = 'kapt-official-addresses-geoapify-streets-v7';
 const openAddressesExportRevision = 'archive-address-streets-v3';
@@ -67,7 +65,6 @@ export const sourceAdapterRevisions = Object.freeze({
   overture: `${overtureResidentialRevision}+${capacityRevision}`,
   geofabrik: `${geofabrikExportRevision}+${capacityRevision}`,
   'google-residential-enrichment': googleResidentialRevision,
-  'japan-abr': `${japanAbrExportRevision}+${capacityRevision}`,
   'singapore-hdb': singaporeHdbExportRevision,
   'korea-kapt': koreaKaptExportRevision,
   'openaddresses-archive': `${openAddressesExportRevision}+${capacityRevision}`,
@@ -598,16 +595,6 @@ export const loadSourceCatalog = async (file = catalogFile, environment = proces
           ...(extract.capabilityInputs ? { capabilityInputs: { ...(source.capabilityInputs || {}), ...extract.capabilityInputs } } : {})
         } : source
       });
-    } else if (source.adapter === 'japan-abr') {
-      shards.push({
-        id: source.id,
-        countryCode: 'JP',
-        extractId: source.extractId || 'japan',
-        maxRecords: source.maxRecords,
-        qualityGate: source.qualityGate,
-        intervalDays,
-        source
-      });
     } else if (source.adapter === 'singapore-hdb') {
       shards.push({
         id: source.id,
@@ -806,14 +793,6 @@ export const createSourceAdapters = ({
   const processWaiters = [];
   let activeProcesses = 0;
   const processLimit = Number.isSafeInteger(processConcurrency) ? Math.max(1, processConcurrency) : 3;
-  const configuredJapanTimeout = Number(environment.ADDRESS_SYNC_JAPAN_PROCESS_TIMEOUT_MS);
-  // Japan saves a checkpoint when its exporter times out; the limit leaves room for download and import within the
-  // 150-minute job limit so the checkpoint is written before the job itself is cancelled.
-  const japanProcessTimeoutMs = Number.isInteger(configuredJapanTimeout)
-    ? Math.min(Math.max(configuredJapanTimeout, processTimeoutMs), 95 * 60_000)
-    : Math.min(Math.max(processTimeoutMs, 90 * 60_000), 95 * 60_000);
-  const timeoutForPhase = (phase) => String(phase || '').startsWith('materialize:japan-abr-')
-    ? japanProcessTimeoutMs : processTimeoutMs;
   const acquireProcessSlot = (runSignal) => {
     runSignal?.throwIfAborted();
     if (activeProcesses < processLimit) {
@@ -854,7 +833,7 @@ export const createSourceAdapters = ({
       return await execute({
         ...options,
         signal: runSignal,
-        timeoutMs: options.timeoutMs || timeoutForPhase(options.phase)
+        timeoutMs: options.timeoutMs || processTimeoutMs
       });
     }
     finally {
@@ -1253,81 +1232,6 @@ export const createSourceAdapters = ({
       rawVersion: source.version,
       publishedAt: null,
       estimateMethod: 'fixed-residential-seed-cap'
-    };
-  };
-
-  const discoverJapanAbr = async (shard) => {
-    const abr = await fetchJson(shard.source.dataUrl);
-    const postalUrl = shard.source.postalDataUrl;
-    if (!String(postalUrl || '').startsWith('https://')) throw new Error('Japan Post data URL is missing');
-    const postalResponse = await fetchHead(postalUrl);
-    if (!postalResponse.ok) throw new Error(`Japan Post metadata request failed (${postalResponse.status}): ${postalUrl}`);
-    const abrUpdated = Number(abr.meta?.updated);
-    if (!Number.isSafeInteger(abrUpdated) || abrUpdated <= 0 || !Array.isArray(abr.data)) {
-      throw new Error('Geolonia ABR metadata is invalid');
-    }
-    const postalModified = postalResponse.headers.get('last-modified');
-    const postalVersion = postalModified ? new Date(postalModified).toISOString().slice(0, 10) : 'latest';
-    const plateauBundles = (shard.source.plateauBundles || []).map((bundle) => {
-      if (!/^https:\/\//u.test(bundle.url || '') || !/^[a-f\d]{64}$/u.test(bundle.sha256 || '')
-        || !Number.isSafeInteger(bundle.bytes) || bundle.bytes < 1 || !/^\d{5}$/u.test(bundle.cityCode || '')) {
-        throw new Error(`Japan PLATEAU bundle metadata is invalid: ${bundle.cityCode || '(missing)'}`);
-      }
-      return bundle;
-    });
-    let osmUrl = null;
-    let osmResponse = null;
-    let osmMd5 = null;
-    if (!plateauBundles.length || shard.source.useOsmSupplement === true) {
-      try {
-        const index = await geofabrikIndex();
-        const feature = index.features?.find((entry) => entry.properties?.id === shard.extractId);
-        const candidateUrl = await geofabrikPbfUrl(feature?.properties?.urls?.pbf);
-        if (candidateUrl) {
-          const candidateResponse = await fetchHead(candidateUrl);
-          if (candidateResponse.ok) {
-            osmUrl = candidateUrl;
-            osmResponse = candidateResponse;
-          } else {
-            const checksumResponse = await fetchImpl(`${candidateUrl}.md5`, { signal });
-            if (checksumResponse.ok) {
-              osmMd5 = parseGeofabrikMd5(await checksumResponse.text());
-              if (osmMd5) osmUrl = candidateUrl;
-            }
-          }
-        }
-      } catch {
-        if (signal?.aborted) signal.throwIfAborted();
-      }
-    }
-    if (!plateauBundles.length && !osmUrl) {
-      throw new Error('Japan residential building source is unavailable');
-    }
-    const osmModified = osmResponse?.headers.get('last-modified');
-    const osmVersion = osmUrl
-      ? (osmModified ? new Date(osmModified).toISOString().slice(0, 10) : osmMd5 || 'latest')
-      : 'plateau-only';
-    const version = `${abrUpdated}-${osmVersion}-${postalVersion}-${japanAbrExportRevision}`;
-    const osmBytes = osmResponse ? headerNumber(osmResponse.headers, 'content-length') : null;
-    const postalBytes = headerNumber(postalResponse.headers, 'content-length');
-    const plateauBytes = plateauBundles.reduce((total, bundle) => total + bundle.bytes, 0);
-    return {
-      adapter: 'japan-abr',
-      version,
-      publishedAt: new Date(abrUpdated * 1000).toISOString(),
-      dataUrl: shard.source.dataUrl,
-      osmUrl,
-      postalUrl,
-      osmVersion,
-      osmMd5,
-      postalVersion,
-      osmBytes,
-      postalBytes,
-      plateauBundles,
-      plateauBytes,
-      sourceBytes: postalBytes !== null && (!osmUrl || osmBytes !== null)
-        ? (osmBytes || 0) + postalBytes + plateauBytes : null,
-      estimateMethod: osmUrl ? 'geofabrik-plateau-and-japan-post-content-length' : 'plateau-and-japan-post-content-length'
     };
   };
 
@@ -1790,7 +1694,6 @@ export const createSourceAdapters = ({
     if (shard.source.adapter === 'overture') return discoverOverture(shard, options);
     if (shard.source.adapter === 'geofabrik') return discoverGeofabrik(shard, options);
     if (shard.source.adapter === 'google-residential-enrichment') return discoverGoogleResidential(shard, options);
-    if (shard.source.adapter === 'japan-abr') return discoverJapanAbr(shard, options);
     if (shard.source.adapter === 'singapore-hdb') return discoverSingaporeHdb(shard, options);
     if (shard.source.adapter === 'korea-kapt') return discoverKoreaKapt(shard, options);
     if (shard.source.adapter === 'openaddresses-archive') return discoverOpenAddresses(shard, options);
@@ -2309,206 +2212,6 @@ export const createSourceAdapters = ({
       cacheHit: false,
       sourceComplete: true,
       metrics
-    };
-  };
-
-  const materializeJapanAbr = async (shard, discovery, options) => {
-    const version = safeVersion(discovery.version);
-    const sourceMaximum = Math.min(options.maxRecords, Number(shard.maxRecords || options.maxRecords));
-    const candidateBudget = Number(shard.maxRecords || options.maxRecords);
-    const policyIdentity = normalizedCachePolicyIdentity(sourceMaximum, options.perLocality);
-    const output = resolve(options.cacheDir, 'normalized',
-      `${shard.id}-${version}-${japanAbrExportRevision}-${policyIdentity}.jsonl`);
-    const cachedSize = await existingFileSize(output);
-    if (cachedSize > 0) return { file: output, format: 'overture-jsonl', cacheBytes: cachedSize, checksum: await sha256File(output), cacheHit: true };
-    const rawRoot = resolve(options.cacheDir, 'raw');
-    const stateIdentity = createHash('sha256')
-      .update(`${version}\u001f${japanAbrExportRevision}\u001f${candidateBudget}`).digest('hex').slice(0, 20);
-    const statePrefix = `${shard.id}-state-`;
-    const stateDirectory = resolve(rawRoot, `${statePrefix}${stateIdentity}`);
-    const checkpointFile = resolve(stateDirectory, 'checkpoint.json');
-    const storeFile = resolve(stateDirectory, 'candidates.duckdb');
-    await mkdir(stateDirectory, { recursive: true });
-    for (const entry of await readdir(rawRoot, { withFileTypes: true })) {
-      if (entry.isDirectory() && entry.name.startsWith(statePrefix) && entry.name !== basename(stateDirectory)) {
-        await rm(resolve(rawRoot, entry.name), { recursive: true, force: true });
-      }
-    }
-    const readCheckpoint = async () => {
-      const value = await readPersistedJson(checkpointFile, 'Japan residential checkpoint');
-      if (value === undefined) return null;
-      const list = (candidate) => candidate === undefined
-        || Array.isArray(candidate) && candidate.every((item) => typeof item === 'string');
-      const integerMap = (candidate) => candidate === undefined || candidate && typeof candidate === 'object'
-        && !Array.isArray(candidate) && Object.values(candidate).every((item) => Number.isSafeInteger(item) && item >= 0);
-      const integer = (candidate) => candidate === undefined || Number.isSafeInteger(candidate) && candidate >= 0;
-      const boolean = (candidate) => candidate === undefined || typeof candidate === 'boolean';
-      if (!value || typeof value !== 'object' || Array.isArray(value) || value.version !== 1
-        || !list(value.abr_completed_cities) || !list(value.plateau_completed)
-        || !list(value.plateau_building_completed) || !integerMap(value.abr_attempts)
-        || !integerMap(value.plateau_offsets) || !integerMap(value.plateau_match_totals)
-        || !integer(value.land_lot_candidate_count) || !integer(value.osm_scanned_ways)
-        || !integer(value.candidate_count) || !integer(value.plateau_matches)
-        || !integer(value.land_lot_additions) || !integer(value.osm_matches)
-        || !boolean(value.abr_complete) || !boolean(value.osm_complete) || !boolean(value.final_complete)) {
-        throw sourceStateError('Japan residential checkpoint');
-      }
-      return value;
-    };
-    const checkpointToken = (checkpoint) => checkpoint ? createHash('sha256').update(JSON.stringify({
-      abrComplete: checkpoint.abr_complete === true,
-      abrCompletedCities: [...(checkpoint.abr_completed_cities || [])].sort(),
-      abrAttempts: Object.fromEntries(Object.entries(checkpoint.abr_attempts || {}).sort()),
-      plateauCompleted: [...(checkpoint.plateau_completed || [])].sort(),
-      plateauBuildingCompleted: [...(checkpoint.plateau_building_completed || [])].sort(),
-      plateauOffsets: Object.fromEntries(Object.entries(checkpoint.plateau_offsets || {}).sort()),
-      landLotCandidateCount: Number(checkpoint.land_lot_candidate_count || 0),
-      osmScannedWays: Number(checkpoint.osm_scanned_ways || 0),
-      osmComplete: checkpoint.osm_complete === true,
-      finalComplete: checkpoint.final_complete === true
-    })).digest('hex') : null;
-    const existingCheckpoint = await readCheckpoint();
-    if (existingCheckpoint?.abr_complete === true) {
-      try { await stat(storeFile); }
-      catch (error) {
-        if (error?.code === 'ENOENT') throw sourceStateError('Japan residential candidate store', error);
-        throw error;
-      }
-    }
-    const completedBundles = new Set(existingCheckpoint?.plateau_completed || []);
-    const nextBundle = (discovery.plateauBundles || []).find((bundle) => !completedBundles.has(bundle.cityCode));
-    const stage = existingCheckpoint?.abr_complete !== true ? 'abr'
-      : nextBundle ? 'plateau'
-        : existingCheckpoint?.osm_complete !== true ? 'osm' : 'final';
-    const osmFile = discovery.osmUrl
-      ? resolve(stateDirectory, basename(new URL(discovery.osmUrl).pathname)) : null;
-    const postalFile = resolve(stateDirectory, basename(new URL(discovery.postalUrl).pathname));
-    const plateauArtifact = nextBundle ? {
-      ...nextBundle,
-      directory: resolve(stateDirectory, `plateau-${nextBundle.cityCode}-${nextBundle.year}`),
-      bundleFile: resolve(stateDirectory, basename(new URL(nextBundle.url).pathname))
-    } : null;
-    if (plateauArtifact) plateauArtifact.parquetFile = resolve(plateauArtifact.directory, 'buildings.parquet');
-    const temporary = `${output}.${process.pid}.tmp`;
-    await mkdir(resolve(options.cacheDir, 'normalized'), { recursive: true });
-    let completed = false;
-    let unitCompleted = false;
-    const currentAssets = () => stage === 'abr' ? [postalFile]
-      : stage === 'plateau' ? [postalFile, plateauArtifact.bundleFile, plateauArtifact.parquetFile]
-        : stage === 'osm' && osmFile ? [osmFile] : [];
-    const progressToken = async (checkpoint) => {
-      const assetBytes = [];
-      for (const file of currentAssets()) {
-        const completeBytes = (await existingFileSize(file)) || 0;
-        const partialBytes = (await existingFileSize(`${file}.part`)) || 0;
-        assetBytes.push([basename(file), completeBytes, partialBytes]);
-      }
-      if (!checkpoint && !assetBytes.some(([, completeBytes, partialBytes]) => completeBytes || partialBytes)) return null;
-      return createHash('sha256').update(JSON.stringify({
-        checkpoint: checkpointToken(checkpoint), stage, assetBytes
-      })).digest('hex');
-    };
-    const initialProgressToken = await progressToken(existingCheckpoint);
-    try {
-      try {
-        if (stage === 'abr' || stage === 'plateau') {
-          await sharedDownload(discovery.postalUrl, postalFile, {
-            expectedBytes: discovery.postalBytes, maxBytes: Math.min(options.maxBytes, 100 * 1024 * 1024),
-            retainPartial: true
-          });
-        }
-        if (stage === 'plateau') {
-          await sharedDownload(plateauArtifact.url, plateauArtifact.bundleFile, {
-            expectedBytes: plateauArtifact.bytes,
-            maxBytes: Math.min(options.maxBytes, plateauArtifact.bytes + 1024 * 1024), retainPartial: true
-          });
-          const checksum = await sha256File(plateauArtifact.bundleFile);
-          if (checksum !== plateauArtifact.sha256) {
-            await rm(plateauArtifact.bundleFile, { force: true });
-            throw new Error(`Japan PLATEAU checksum mismatch: ${plateauArtifact.cityCode}`);
-          }
-          try {
-            await stat(plateauArtifact.parquetFile);
-          } catch (error) {
-            if (error?.code !== 'ENOENT') throw error;
-            await rm(plateauArtifact.directory, { recursive: true, force: true });
-            await mkdir(plateauArtifact.directory, { recursive: true });
-            await runExecute({
-              file: 'tar',
-              args: ['-xf', plateauArtifact.bundleFile, '-C', plateauArtifact.directory, 'buildings.parquet'],
-              phase: `extract:${shard.id}:${plateauArtifact.cityCode}`
-            });
-          }
-        }
-        if (stage === 'osm' && osmFile) {
-          await verifiedGeofabrikDownload(discovery.osmUrl, osmFile, {
-            expectedBytes: discovery.osmBytes, maxBytes: options.maxBytes, retainPartial: true
-          });
-        }
-        await runExecute({
-          file: pythonBin,
-          args: [japanAbrExporter,
-          '--stage', stage,
-          '--output', temporary,
-          '--checkpoint-file', checkpointFile,
-          '--store-file', storeFile,
-          '--max-records', String(sourceMaximum),
-          '--candidate-budget', String(candidateBudget),
-          '--per-locality', String(options.perLocality),
-          ...(['abr', 'plateau'].includes(stage) ? ['--abr-url', shard.source.dataUrl, '--postal-zip', postalFile] : []),
-          ...(stage === 'abr' ? (discovery.plateauBundles || []).flatMap((bundle) => ['--plateau-city-code', bundle.cityCode]) : []),
-          ...(stage === 'plateau' ? ['--plateau-city-code', plateauArtifact.cityCode,
-            '--plateau-parquet', plateauArtifact.parquetFile] : []),
-          ...(stage === 'plateau' && shard.source.landLot === true ? ['--land-lot'] : []),
-          ...(stage === 'osm' && osmFile ? ['--osm-pbf', osmFile] : [])],
-          phase: `materialize:${shard.id}`
-        });
-        unitCompleted = true;
-      } catch (error) {
-        const checkpoint = await readCheckpoint();
-        const token = await progressToken(checkpoint);
-        if (token && token !== initialProgressToken && checkpoint?.final_complete !== true) {
-          throw Object.assign(new Error(`Japan materialization checkpoint saved after ${error.message}`, { cause: error }), {
-            code: 'SOURCE_PARTIAL', sourceComplete: false, checkpointToken: token,
-            failurePhase: `materialize:${shard.id}`, stderr: error.stderr || null
-          });
-        }
-        throw error;
-      }
-      if (stage !== 'final') {
-        const checkpoint = await readCheckpoint();
-        return {
-          file: null, format: 'checkpoint', cacheBytes: 0, checksum: null, cacheHit: false,
-          sourceComplete: false, checkpointToken: await progressToken(checkpoint), checkpointStage: stage
-        };
-      }
-      await rename(temporary, output);
-      completed = true;
-    } finally {
-      await Promise.all([rm(temporary, { force: true }), rm(`${temporary}.locations.idx`, { force: true })]);
-      if (unitCompleted && stage === 'plateau' && !options.retainRaw) {
-        await Promise.all([
-          rm(plateauArtifact.bundleFile, { force: true }),
-          rm(plateauArtifact.directory, { recursive: true, force: true })
-        ]);
-      }
-      if (unitCompleted && stage === 'osm' && osmFile && !options.retainRaw) await rm(osmFile, { force: true });
-      if (completed && !options.retainRaw) {
-        await rm(stateDirectory, { recursive: true, force: true });
-      }
-    }
-    const size = (await stat(output)).size;
-    const sourceChecksum = createHash('sha256')
-      .update([discovery.osmMd5 || discovery.osmVersion, discovery.postalVersion,
-        ...(discovery.plateauBundles || []).map((bundle) => bundle.sha256)].filter(Boolean).join('\u001f'))
-      .digest('hex');
-    return {
-      file: output,
-      format: 'overture-jsonl',
-      cacheBytes: size,
-      checksum: await sha256File(output),
-      sourceChecksum,
-      cacheHit: false
     };
   };
 
@@ -3685,7 +3388,6 @@ export const createSourceAdapters = ({
     if (['google-residential-enrichment', 'mappls-residential'].includes(discovery.adapter)) {
       result = await materializeResidentialEnrichment(shard, discovery, options);
     }
-    else if (discovery.adapter === 'japan-abr') result = await materializeJapanAbr(shard, discovery, options);
     else if (discovery.adapter === 'singapore-hdb') result = await materializeSingaporeHdb(shard, discovery, options);
     else if (discovery.adapter === 'korea-kapt') result = await materializeKoreaKapt(shard, discovery, options);
     else if (discovery.adapter === 'openaddresses-archive') result = await materializeOpenAddresses(shard, discovery, options);
