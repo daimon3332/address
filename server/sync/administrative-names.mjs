@@ -7,7 +7,11 @@ export const ADMINISTRATIVE_NAMES_REVISION = 'administrative-names-v19';
 // v20: IT rescans rows imported while a region-polygon assignment failed (a Gressoney address left in Biella); FR takes
 // catalog Chinese city names the street-type check had refused (Vivier au Court). IT v21 moves 2026-10-25 imports of
 // Trentino addresses left in Veneto or Bolzano provinces (Ala recorded as Vicenza) to the province their polygon names.
-const countryRevisions = { IT: 'administrative-names-v21', FR: 'administrative-names-v22' };
+// v23 (2026-11-21) judges rows imported since the last pass, which only a postcode fill used to send here (a Port au
+// Port address off the Canadian coastline, overseas French departments without a region), and rejects localities with
+// a number glued on.
+const countryRevisions = { IT: 'administrative-names-v21',
+  ...Object.fromEntries(['CA', 'DE', 'ES', 'FR', 'IN', 'MY', 'NG', 'TH', 'US'].map((country) => [country, 'administrative-names-v23'])) };
 // Rows the structure and administrative-names repairs retired by region polygons the publication check cannot see; only
 // these repairs' own next revision may restore them.
 export const repairRetirement = /^publication-validation:(?:address-structure|administrative-names)-/u;

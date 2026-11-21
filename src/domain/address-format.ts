@@ -114,8 +114,19 @@ const chineseNumber = (value: string): number | undefined => {
   return (tens ? chineseDigits[tens] : 1) * 10 + (ones ? chineseDigits[ones] : 0);
 };
 
-// Taiwanese house numbers in Chunghwa Post English: 34號 with unit 之1 is "No. 34-1", 四樓之2 is "4F.-2", 地下一樓 is
-// "B1F.", a bare room number is "Rm. 5". Returns undefined when the native parts follow no such pattern.
+// Taiwanese house numbers in Chunghwa Post English: 34號 with unit 之1 is "No. 34-1", 四樓之2 is "4F.-2", 地下一樓 (or
+// 地下一層) is "B1F.", a bare room number is "Rm. 5", 之1三樓 is "No. 34-1, 3F.", 底層 (ground floor) is "1F." and an
+// unnumbered 地下 is "Basement". Returns undefined when the native parts follow no such pattern.
+const taiwanFloor = (value: string): string | undefined => {
+  const basement = /^地下(?:室|層)?(?:之(\d+))?$/u.exec(value);
+  if (basement) return `Basement${basement[1] ? `-${basement[1]}` : ''}`;
+  const ground = /^底一?層(?:之(\d+))?$/u.exec(value);
+  if (ground) return `1F.${ground[1] ? `-${ground[1]}` : ''}`;
+  const floor = /^(地下)?第?(\S+?)[樓層](?:之(\d+))?$/u.exec(value);
+  const number = floor ? chineseNumber(floor[2]) : undefined;
+  return number === undefined ? undefined : `${floor![1] ? 'B' : ''}${number}F.${floor![3] ? `-${floor![3]}` : ''}`;
+};
+
 export const taiwanEnglishPremise = (houseNumber: string, unit: string): { houseNumber: string; unit: string } | undefined => {
   const house = /^(\d+)(?:之(\d+))?號?(?:之(\d+))?$/u.exec(houseNumber.trim());
   if (!house) return houseNumber.trim() ? undefined : { houseNumber: '', unit: '' };
@@ -123,12 +134,17 @@ export const taiwanEnglishPremise = (houseNumber: string, unit: string): { house
   let room = '';
   const rest = unit.trim();
   const subUnit = /^之(\d+)號?$/u.exec(rest);
-  const floor = /^(地下)?(\S+?)樓(?:之(\d+))?$/u.exec(rest);
+  const subFloor = /^之(\d+)(.+)$/u.exec(rest);
   if (subUnit && !sub) sub = subUnit[1];
   else if (/^\d+$/u.test(rest)) room = `Rm. ${rest}`;
-  else if (floor && chineseNumber(floor[2]) !== undefined) {
-    room = `${floor[1] ? 'B' : ''}${chineseNumber(floor[2])}F.${floor[3] ? `-${floor[3]}` : ''}`;
-  } else if (rest) return undefined;
+  else if (subFloor && !sub && taiwanFloor(subFloor[2])) {
+    sub = subFloor[1];
+    room = taiwanFloor(subFloor[2])!;
+  } else if (rest) {
+    const floor = taiwanFloor(rest);
+    if (!floor) return undefined;
+    room = floor;
+  }
   return { houseNumber: `No. ${house[1]}${sub ? `-${sub}` : ''}`, unit: room };
 };
 
@@ -248,7 +264,7 @@ const render = (
     A: syntheticUnit && countryCode === 'GB' ? `${syntheticUnit}, ${baseLine}` : baseLine,
     C: ['CN', 'HK', 'SG'].includes(countryCode) && template.includes('%S') && samePlace(locality, admin1) ? '' : distinctFromStreet(locality),
     S: distinctFromStreet(admin1),
-    D: distinctFromStreet(dependentLocality),
+    D: countryCode === 'JP' && dependentLocality && (components.street || '').startsWith(dependentLocality) ? '' : distinctFromStreet(dependentLocality),
     Z: components.postcode
   };
   const seen = new Set<string>();

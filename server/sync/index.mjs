@@ -18,6 +18,7 @@ import { refreshAddressCoverage } from '../control/coverage';
 import { runPostcodeInference } from './postcode-inference.mjs';
 import { repairChineseAddressStrings } from './chinese-address-repair.mjs';
 import { repairTaiwanOfficialNames } from './taiwan-name-repair.mjs';
+import { repairJapaneseLocalizedAddresses } from './japan-english-repair.mjs';
 import { repairCatalogNativeAddresses } from './catalog-native-repair.mjs';
 import { repairIndiaEnglishAddresses } from './india-english-repair.mjs';
 import { repairAddressStructure } from './address-structure-repair.mjs';
@@ -185,6 +186,10 @@ export const createSyncRuntime = async ({
       const summary = await repairTaiwanOfficialNames({ database });
       if (summary.renamed || summary.duplicates) console.log(JSON.stringify({ event: 'taiwan_official_name_repair', ...summary }));
     });
+    await startupStep('japanese romanized names', async () => {
+      const summary = await repairJapaneseLocalizedAddresses({ database });
+      if (summary.repaired || summary.unresolved) console.log(JSON.stringify({ event: 'japanese_romanized_name_repair', ...summary }));
+    });
     await startupStep('catalog native names', async () => {
       for (const summary of await repairCatalogNativeAddresses({ database })) {
         console.log(JSON.stringify({ event: 'catalog_native_name_repair', ...summary }));
@@ -218,6 +223,14 @@ export const createSyncRuntime = async ({
       for (const { country_code: countryCode } of countries) {
         const summary = await retirePostcodeLessRows({ database, countryCode });
         if (summary.retired) console.log(JSON.stringify({ event: 'postcode_required_repair', ...summary }));
+      }
+    });
+    await startupStep('english premise', async () => {
+      const { retireUnlatinizablePremises } = await import('./english-premise.mjs');
+      const countries = (await database.prepare("SELECT country_code FROM sync_country_policies WHERE enabled=1 ORDER BY country_code").all()).results;
+      for (const { country_code: countryCode } of countries) {
+        const summary = await retireUnlatinizablePremises({ database, countryCode });
+        if (summary.retired) console.log(JSON.stringify({ event: 'english_premise_repair', ...summary }));
       }
     });
     // Permanently retired rows are deleted; rows retired for a missing postcode only once their country's official

@@ -136,6 +136,16 @@ describe('postal-grade formats per docs/address-formats.md', () => {
   });
 });
 
+describe('Japanese town lines', () => {
+  it('does not repeat the town a Japanese street already begins with', () => {
+    const address = addressFor('JP', { houseNumber: '32-34', street: 'Kitaterao 6-chome', district: 'Kitaterao',
+      locality: 'Tsurumi-ku, Yokohama-shi', admin1: 'Kanagawa', postcode: '230-0074' });
+    const line = formatAddressPresentation(address, 'en', '').singleLine;
+    expect(line).toContain('Kitaterao 6-chome');
+    expect(line.match(/Kitaterao/gu)).toHaveLength(1);
+  });
+});
+
 describe('Taiwanese English house numbers', () => {
   it('writes 號, 之 and 樓 in Chunghwa Post English', () => {
     expect(taiwanEnglishPremise('34號', '之1')).toEqual({ houseNumber: 'No. 34-1', unit: '' });
@@ -147,6 +157,15 @@ describe('Taiwanese English house numbers', () => {
     expect(taiwanEnglishPremise('5號', '地下一樓')).toEqual({ houseNumber: 'No. 5', unit: 'B1F.' });
     expect(taiwanEnglishPremise('66號', '7')).toEqual({ houseNumber: 'No. 66', unit: 'Rm. 7' });
     expect(taiwanEnglishPremise('', '')).toEqual({ houseNumber: '', unit: '' });
+    expect(taiwanEnglishPremise('46號', '之1三樓')).toEqual({ houseNumber: 'No. 46-1', unit: '3F.' });
+    expect(taiwanEnglishPremise('77號', '之1五樓之2')).toEqual({ houseNumber: 'No. 77-1', unit: '5F.-2' });
+    expect(taiwanEnglishPremise('168號', '地下一層')).toEqual({ houseNumber: 'No. 168', unit: 'B1F.' });
+    expect(taiwanEnglishPremise('7號', '地下二層之197')).toEqual({ houseNumber: 'No. 7', unit: 'B2F.-197' });
+    expect(taiwanEnglishPremise('48號', '地下')).toEqual({ houseNumber: 'No. 48', unit: 'Basement' });
+    expect(taiwanEnglishPremise('100號', '地下之34')).toEqual({ houseNumber: 'No. 100', unit: 'Basement-34' });
+    expect(taiwanEnglishPremise('133號', '底層')).toEqual({ houseNumber: 'No. 133', unit: '1F.' });
+    expect(taiwanEnglishPremise('349號', '底一層之24')).toEqual({ houseNumber: 'No. 349', unit: '1F.-24' });
+    expect(taiwanEnglishPremise('148號', '附2')).toBeUndefined();
     expect(taiwanEnglishPremise('5號', '頂樓加蓋')).toBeUndefined();
     expect(taiwanEnglishPremise('A棟', '')).toBeUndefined();
   });

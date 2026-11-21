@@ -113,6 +113,24 @@ describe('ADDRESS_DB v2 repository', () => {
     source_updated_at: '2026-07-15T00:00:00Z', imported_at: '2026-07-16T00:00:00Z'
   };
 
+  it('serves house numbers and units in Latin script in English and refuses the ones it cannot convert', async () => {
+    const serve = async (country, nativeHouse, unit = '') => {
+      const variants = JSON.parse(row.component_variants_json);
+      const native = { ...variants.native, houseNumber: nativeHouse, unit };
+      const source = { ...row, country_code: country, house_number: nativeHouse, address_variants_json: JSON.stringify({ native: 'x', en: `${nativeHouse} Eifuku` }),
+        component_variants_json: JSON.stringify({ native, en: { ...variants.en, houseNumber: nativeHouse, unit }, 'zh-CN': { ...variants['zh-CN'], houseNumber: nativeHouse, unit } }) };
+      const db = { prepare: (sql) => ({ bind: () => ({ all: async () => ({ results: sql.includes('address_pool_runtime') ? [source] : [{ id: row.id }] }) }) }) };
+      return pickAddressPoolV2Address(db, country, false, {}, undefined, 'latin-premise', new Date('2026-07-20T00:00:00Z'));
+    };
+    const japan = await serve('JP', '11番10号');
+    expect(japan?.componentVariants.en.houseNumber).toBe('11-10');
+    expect(japan?.componentVariants['zh-CN'].houseNumber).toBe('11番10号');
+    expect(japan?.addressVariants.en).toContain('11-10');
+    expect(japan?.addressVariants.en).not.toMatch(/\p{Script=Han}/u);
+    expect((await serve('JP', '3122番地20'))?.componentVariants.en.houseNumber).toBe('3122-20');
+    expect(await serve('JP', '甲5番地')).toBeUndefined();
+  });
+
   it('keeps date-only expiry valid through the end of its UTC date', () => {
     expect(storedAddressPoolV2RowIsPublishable({ ...row, expires_at: '2026-09-19' }, new Date('2026-09-19T23:59:59Z'))).toBe(true);
     expect(storedAddressPoolV2RowCanRecoverTranslations({ ...row, expires_at: '2026-09-19' }, new Date('2026-09-19T12:00:00Z'))).toBe(true);

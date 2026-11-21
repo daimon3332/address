@@ -277,6 +277,8 @@ export const localityIssue = (countryCode, components = {}) => {
     if (!value) continue;
     if (/^\p{N}+$/u.test(value)) return 'locality_number';
     if (/\p{N}{4,}/u.test(value)) return 'locality_postcode';
+    // A place name with a number glued on (Entrevennes0, Burgos11, ALAMILL0) is a source typo, not a locality.
+    if (/\p{L}{3}\p{N}+$/u.test(value)) return 'locality_trailing_number';
     if (/^[A-Z]{1,3}$/u.test(value) && regionCodes.includes(value)) return 'locality_region_code';
     if (clean(countryCode).toUpperCase() === 'TH' && thaiAdministrativeChain(value)) return 'locality_concatenated';
   }

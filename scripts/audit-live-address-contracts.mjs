@@ -173,6 +173,12 @@ const issueFor = (code, address) => {
   if (toTraditional[code] && nativeComponents.some((value) => lane(toTraditional[code](value)) !== lane(value))) issues.push('native_not_traditional');
   if (!latin.test(en)) issues.push('english_missing_latin');
   if (englishComponents.some((value) => foreignEnglishScript.test(value))) issues.push('english_source_script');
+  // Every English field, house numbers and units included, and the rendered English lines must read in Latin script.
+  const englishFields = Object.entries(address.componentVariants?.en || {}).filter(([, value]) => typeof value === 'string');
+  if (englishFields.some(([field, value]) => !semanticFields.includes(field) && foreignEnglishScript.test(value))) issues.push('english_field_script');
+  if (foreignEnglishScript.test(en)) issues.push('english_line_script');
+  const zhFields = Object.values(address.componentVariants?.['zh-CN'] || {}).filter((value) => typeof value === 'string');
+  if (zhFields.some((value) => foreignChineseScript.test(value)) && !chineseComponents.some((value) => foreignChineseScript.test(value))) issues.push('zh_field_script');
   if (!/\p{Script=Han}/u.test(zh) || !chineseComponents.some((value) => /\p{Script=Han}/u.test(value))) issues.push('zh_missing_han');
   if (chineseComponents.some((value) => foreignChineseScript.test(value))) issues.push('zh_source_script');
   if (adminCodes.has(code) && !components.admin1Code) issues.push('missing_admin_code');
@@ -203,8 +209,10 @@ for (const code of codes) {
         for (let index = 0; index < task.count; index += 1) rows.push({ stratified: task.stratified, issues: [payload.error?.code || `http_${response.status}`] });
         continue;
       }
-      for (const { address, profile } of bundles) {
+      for (const bundle of bundles) {
+        const { address, profile } = bundle;
         const issues = [...issueFor(code, address), ...regionIssues(code, address, regionFor), ...placeWarnings(address)];
+        if (foreignEnglishScript.test(bundle.addressFormats?.en?.singleLine || '')) issues.push('english_presentation_script');
         const phone = parsePhoneNumberFromString(String(profile?.phone || ''));
         if (!phone?.isValid() || phone.country !== code) issues.push('invalid_mobile_number');
         if (code === 'GB' && /^7700900\d{3}$/u.test(phone?.nationalNumber || '')) issues.push('reserved_mobile_number');

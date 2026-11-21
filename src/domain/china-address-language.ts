@@ -50,7 +50,7 @@ export const chinaPinyinComponent = (value: string): string => {
 };
 
 export const chinaEnglishPremiseNumber = (value: string): string => {
-  const source = value.replace(/(?:号|號)(?:院|楼|栋|棟)?$/u, '');
+  const source = value.replace(/(?:号|號)(?:院|楼|栋|棟)?$/u, '').replace(/之/gu, '-');
   const lane = source.match(/^([0-9A-Za-z-]+)[弄巷](.+)$/u);
   return lane ? `${lane[2]}, Lane ${lane[1]}` : source;
 };

@@ -2,7 +2,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { initializeTestDatabase, openTestDatabase } from './helpers/postgres-test-database.mjs';
 import { PostgresDatabase } from '../server/database/postgres.mjs';
 import { addressCanonicalKey, localityIssue, validateAddressQuality } from '../src/domain/address-quality.mjs';
-import { createAdministrativeNames, singaporeRegion } from '../server/sync/administrative-names.mjs';
+import { administrativeNamesRevision, createAdministrativeNames, singaporeRegion } from '../server/sync/administrative-names.mjs';
 import { bdnbDepartment, repairAdministrativeNames, wrongPostalArea } from '../server/sync/administrative-names-repair.mjs';
 
 const at = '2026-10-12T00:00:00.000Z';
@@ -222,6 +222,10 @@ describe('administrative names', () => {
     expect(localityIssue('US', { admin1: 'VI', admin1Code: 'VI', locality: 'VI' })).toBe('locality_region_code');
     expect(localityIssue('VN', { admin1: 'Hồ Chí Minh', locality: '9' })).toBe('locality_number');
     expect(localityIssue('ES', { admin1: 'Málaga', locality: '29649' })).toBe('locality_number');
+    expect(localityIssue('FR', { admin1: 'Provence-Alpes-Côte d’Azur', locality: 'Entrevennes0' })).toBe('locality_trailing_number');
+    expect(localityIssue('US', { admin1: 'NM', locality: 'SOCORR0' })).toBe('locality_trailing_number');
+    expect(localityIssue('VN', { admin1: 'Hồ Chí Minh', locality: 'Phường 12' })).toBe('');
+    expect(localityIssue('FR', { admin1: 'Île-de-France', locality: 'Paris 15e Arrondissement' })).toBe('');
     expect(localityIssue('TH', { admin1: 'อุตรดิตถ์', locality: 'ตําบล ท่าอิฐ อําเภอเมืองอุตรดิตถ์ อุตรดิตถ์ 53000' })).toBe('locality_postcode');
     expect(localityIssue('TH', { admin1: 'กรุงเทพมหานคร', locality: 'บางไผ่ บางแค กรุงเทพฯ' })).toBe('locality_concatenated');
     expect(localityIssue('TH', { admin1: 'เชียงราย', locality: 'ตำบลป่าแดด อำเภอเมือง' })).toBe('locality_concatenated');
@@ -273,7 +277,7 @@ describe('administrative names repair', () => {
     expect(rows.get('dorval')).toMatchObject({ admin1_code: 'QC', admin1_code_key: 'qc', active: 1 });
     expect(JSON.parse(rows.get('dorval').component_variants_json)['zh-CN'].admin1).toBe('魁北克省');
     expect(JSON.parse(rows.get('dorval').address_variants_json)['zh-CN']).toContain('魁北克省');
-    expect(rows.get('code-city')).toMatchObject({ active: 0, retired_at: `publication-validation:administrative-names-v19:${at}` });
+    expect(rows.get('code-city')).toMatchObject({ active: 0, retired_at: `publication-validation:${administrativeNamesRevision('CA')}:${at}` });
     expect(rows.get('same-district')).toMatchObject({ admin1_code: 'QC', active: 1 });
     expect(rows.get('v1-retired')).toMatchObject({ active: 1, retired_at: null });
     expect(rows.get('fine')).toMatchObject({ admin1_code: 'NB', active: 1 });
@@ -322,7 +326,7 @@ describe('administrative names repair', () => {
     const rows = new Map((await database.prepare('SELECT * FROM address_pool').all()).results.map((row) => [row.id, row]));
     expect(rows.get('twin-district')).toMatchObject({ district: '', active: 1 });
     expect(JSON.parse(rows.get('twin-district').component_variants_json).native.district).toBeUndefined();
-    expect(rows.get('whole-address')).toMatchObject({ active: 0, retired_at: `publication-validation:administrative-names-v19:${at}` });
+    expect(rows.get('whole-address')).toMatchObject({ active: 0, retired_at: `publication-validation:${administrativeNamesRevision('CA')}:${at}` });
   });
 
   it('fills a missing region with the catalog region nearest the point', async () => {
@@ -387,6 +391,6 @@ describe('administrative names repair', () => {
     expect(await repairAdministrativeNames({ database, countryCode: 'CA', regionLookup, pauseMs: 0, now: () => new Date(at) }))
       .toMatchObject({ retired: 1 });
     expect(await database.prepare("SELECT active,retired_at FROM address_pool WHERE id='crimea'").first())
-      .toEqual({ active: 0, retired_at: `publication-validation:administrative-names-v19:${at}` });
+      .toEqual({ active: 0, retired_at: `publication-validation:${administrativeNamesRevision('ES')}:${at}` });
   });
 });

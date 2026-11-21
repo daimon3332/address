@@ -17,6 +17,7 @@ import {
 } from '../../../src/domain/administrative-integrity.mjs';
 import { findNonResidentialMatch } from '../../../src/domain/non-residential.mjs';
 import { taiwanEnglishPremise } from '../../../src/domain/address-format';
+import { chinesePremise, foreignScript, latinPremise } from '../../../src/domain/latin-premise.mjs';
 import { addressContracts, requiresAdminCode, validateAddressContract } from '../../../src/domain/address-contracts.mjs';
 import { componentLooksLocalized, implausibleChineseTranslation, implausibleEnglishTranslation, preservesAddressIdentifiers, preservesAddressNumbers, semanticAddressFields } from '../../../src/domain/address-localization.mjs';
 import type { AddressComponents, AddressEvidence, CountryCode, PropertyType, VerifiedAddress } from '../../../src/domain/types';
@@ -403,6 +404,19 @@ const rowToAddress = (row: AddressPoolV2Row, now: Date, requireTranslations = tr
     return reject('translation', 'invalid_target_script', { language: 'en', field: 'houseNumber' });
   }
   if (taiwanPremise) componentVariants.en = { ...componentVariants.en, ...taiwanPremise };
+  // Every other house number and unit reads in Latin script in English (11番10号 → 11-10, 1А → 1A, 103호 → 103-ho), and
+  // in Chinese when it is in another non-Han script; one that cannot be converted keeps the address unpublished.
+  let premiseChanged = false;
+  for (const field of taiwanPremise ? [] : ['houseNumber', 'unit'] as const) {
+    const english = String(componentVariants.en[field] || '');
+    const latin = latinPremise(row.country_code, field, english);
+    if (latin === undefined) return reject('translation', 'invalid_target_script', { language: 'en', field });
+    const chinese = String(componentVariants['zh-CN'][field] || '');
+    const han = chinesePremise(row.country_code, field, chinese) ?? latin;
+    if (latin !== english) componentVariants.en = { ...componentVariants.en, [field]: latin };
+    if (han !== chinese) componentVariants['zh-CN'] = { ...componentVariants['zh-CN'], [field]: han };
+    premiseChanged ||= latin !== english || han !== chinese;
+  }
   const addressVariants = ['HK', 'TW'].includes(row.country_code) && hanScript.test(Object.values(componentVariants.native).join(' '))
     ? {
         ...parsedAddresses,
@@ -416,7 +430,10 @@ const rowToAddress = (row: AddressPoolV2Row, now: Date, requireTranslations = tr
         'zh-CN': storedAddress(componentVariants['zh-CN'], row.country_code)
       }
     : parsedAddresses;
-  if (chineseFallback) addressVariants['zh-CN'] = storedAddress(componentVariants['zh-CN'], row.country_code);
+  if (chineseFallback || premiseChanged) addressVariants['zh-CN'] = storedAddress(componentVariants['zh-CN'], row.country_code);
+  if (!taiwanPremise && (premiseChanged || foreignScript.test(addressVariants.en || ''))) {
+    addressVariants.en = storedAddress(componentVariants.en, row.country_code);
+  }
   const propertyType = propertyTypes.has(row.property_type as PropertyType)
     ? row.property_type as PropertyType
     : 'unknown';
