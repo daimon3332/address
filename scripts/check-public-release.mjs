@@ -84,7 +84,7 @@ for (const path of ['.env.example', 'server/sync/.env.example', 'ops/compose.env
   }
 }
 
-for (const path of ['LICENSE', 'README.md', 'README.zh-CN.md', 'README.zh-TW.md', '.github/workflows/ci.yml', '.github/workflows/release.yml']) {
+for (const path of ['LICENSE', 'README.md', 'README.zh-CN.md', 'README.zh-TW.md', 'README.ja.md', '.github/workflows/ci.yml', '.github/workflows/release.yml']) {
   if (!tracked.includes(path)) report(path, 'required-public-file-not-tracked');
 }
 
