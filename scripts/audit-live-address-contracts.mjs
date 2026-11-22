@@ -213,6 +213,11 @@ for (const code of codes) {
         const { address, profile } = bundle;
         const issues = [...issueFor(code, address), ...regionIssues(code, address, regionFor), ...placeWarnings(address)];
         if (foreignEnglishScript.test(bundle.addressFormats?.en?.singleLine || '')) issues.push('english_presentation_script');
+        // Japanese, Thai and Arabic recipient names have no reliable romanization and stay as generated.
+        const englishLines = bundle.addressFormats?.en?.postalLines || [];
+        if (englishLines.slice(['JP', 'TH', 'SA'].includes(code) ? 1 : 0).some((line) => foreignEnglishScript.test(line))) {
+          issues.push('english_recipient_script');
+        }
         const phone = parsePhoneNumberFromString(String(profile?.phone || ''));
         if (!phone?.isValid() || phone.country !== code) issues.push('invalid_mobile_number');
         if (code === 'GB' && /^7700900\d{3}$/u.test(phone?.nationalNumber || '')) issues.push('reserved_mobile_number');

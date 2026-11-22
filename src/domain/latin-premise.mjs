@@ -16,7 +16,7 @@ const cyrillic = {
   ь: '', э: 'e', ю: 'yu', я: 'ya'
 };
 // Russian house numbers carry letter suffixes and designators (1А, 02 к1, 100/3 с1, 10 литА); they are transliterated.
-const transliterateRussian = (value) => value.replace(/[А-Яа-яЁё]/gu, (letter) => {
+export const transliterateRussian = (value) => value.replace(/[А-Яа-яЁё]/gu, (letter) => {
   const latin = cyrillic[letter.toLowerCase()];
   return letter === letter.toLowerCase() ? latin : latin.charAt(0).toUpperCase() + latin.slice(1);
 });

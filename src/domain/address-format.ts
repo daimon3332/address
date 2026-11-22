@@ -309,9 +309,10 @@ export const formatAddressPresentation = (
 export const formatAllAddressPresentations = (
   address: VerifiedAddress,
   recipient: string,
-  generatedUnit?: GeneratedUnit
+  generatedUnit?: GeneratedUnit,
+  latinRecipient = recipient
 ): Record<AddressLanguage, AddressPresentation> => ({
   native: formatAddressPresentation(address, 'native', recipient, generatedUnit),
-  en: formatAddressPresentation(address, 'en', recipient, generatedUnit),
+  en: formatAddressPresentation(address, 'en', latinRecipient, generatedUnit),
   'zh-CN': formatAddressPresentation(address, 'zh-CN', recipient, generatedUnit)
 });

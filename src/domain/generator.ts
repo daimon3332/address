@@ -8,6 +8,7 @@ import { parsePhoneNumberFromString } from 'libphonenumber-js/core';
 import mobileMetadata from 'libphonenumber-js/mobile/metadata';
 import { countryByCode } from './countries';
 import type { GoogleResolution } from './google-geocoder';
+import { latinPersonName } from './latin-name';
 import { googleMapsLinksFromCoordinates } from './maps';
 import { generateBirthDate, generateExtensions } from './profile-model';
 import { generateProfilePresentations } from './profile-presentations';
@@ -104,12 +105,12 @@ const fullNameFor = (
   countryCode: CountryCode,
   gender: 'female' | 'male',
   faker: Faker
-): string => {
+): { fullName: string; latinName: string } => {
   const firstName = faker.person.firstName(gender);
   const lastName = faker.person.lastName(gender);
-  if (['CN', 'TW', 'KR'].includes(countryCode)) return `${lastName}${firstName}`;
-  if (['JP', 'VN'].includes(countryCode)) return `${lastName} ${firstName}`;
-  return `${firstName} ${lastName}`;
+  const fullName = ['CN', 'TW', 'KR'].includes(countryCode) ? `${lastName}${firstName}`
+    : ['JP', 'VN'].includes(countryCode) ? `${lastName} ${firstName}` : `${firstName} ${lastName}`;
+  return { fullName, latinName: latinPersonName(countryCode, fullName, lastName, firstName) ?? fullName };
 };
 
 const digits = (random: () => number, length: number): string =>
@@ -210,7 +211,7 @@ export const generateBundle = (
   const faker = new Faker({ locale: [fakerLocaleByCountry[address.countryCode], en, base] });
   faker.seed(requestSeed);
   const gender = random() < 0.5 ? 'female' as const : 'male' as const;
-  const fullName = fullNameFor(address.countryCode, gender, faker);
+  const { fullName, latinName } = fullNameFor(address.countryCode, gender, faker);
   const birthDate = generateBirthDate(random, now);
   const suffix = String(hashSeed(normalizedSeed) % 10000).padStart(4, '0');
   const generatedUnit = residential && address.countryCode === 'CN' && !address.components.unit
@@ -242,7 +243,7 @@ export const generateBundle = (
     profilePresentations,
     extensions,
     address: presentedAddress,
-    addressFormats: formatAllAddressPresentations(presentedAddress, fullName, generatedUnit),
+    addressFormats: formatAllAddressPresentations(presentedAddress, fullName, generatedUnit, latinName),
     ...(generatedUnit ? { generatedUnit } : {}),
     googleMaps: {
       ...(googleMaps || { status: 'map_query' as const }),

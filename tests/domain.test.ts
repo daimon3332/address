@@ -193,6 +193,18 @@ describe('country postal formats and language variants', () => {
     }
   });
 
+  it('addresses English mail to the romanized recipient name', () => {
+    for (const code of ['CN', 'TW', 'KR', 'RU'] as const) {
+      const fixture = eligibleAddresses(code, false, current)[0];
+      expect(fixture, code).toBeDefined();
+      for (let index = 0; index < 20; index += 1) {
+        const generated = generateBundle(fixture, false, `latin-${index}`, undefined, current);
+        expect(generated.addressFormats.en.postalLines[0], code).toMatch(/^[A-Z][A-Za-z' -]+ [A-Z][A-Za-z' -]+$/u);
+        expect(generated.addressFormats.native.postalLines.join(' '), code).toContain(generated.profile.fullName);
+      }
+    }
+  });
+
   it('uses United Kingdom and Germany postal ordering rather than one global layout', () => {
     const uk = eligibleAddresses('GB', true, current)[0];
     const de = eligibleAddresses('DE', true, current)[0];
